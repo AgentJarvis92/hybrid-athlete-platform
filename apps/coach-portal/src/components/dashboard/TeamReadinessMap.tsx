@@ -142,17 +142,17 @@ export function TeamReadinessMap() {
             <line x1="0" y1="240" x2="600" y2="240" stroke="#2A2F37" strokeWidth="0.4" opacity="0.4" />
 
             {/* Axis scale labels */}
-            <text x="8" y="13" fill="#5E6573" fontSize="8" fontFamily="JetBrains Mono">REC 100</text>
-            <text x="8" y="314" fill="#5E6573" fontSize="8" fontFamily="JetBrains Mono">REC 0</text>
-            <text x="8" y="164" fill="#5E6573" fontSize="8" fontFamily="JetBrains Mono">REC 50</text>
-            <text x="272" y="314" fill="#5E6573" fontSize="8" fontFamily="JetBrains Mono">LOAD 50</text>
-            <text x="556" y="314" fill="#5E6573" fontSize="8" fontFamily="JetBrains Mono">100</text>
+            <text x="8" y="13" fill="#5E6573" fontSize="8" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>REC 100</text>
+            <text x="8" y="314" fill="#5E6573" fontSize="8" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>REC 0</text>
+            <text x="8" y="164" fill="#5E6573" fontSize="8" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>REC 50</text>
+            <text x="272" y="314" fill="#5E6573" fontSize="8" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>LOAD 50</text>
+            <text x="556" y="314" fill="#5E6573" fontSize="8" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>100</text>
 
             {/* Quadrant labels */}
-            <text x="316" y="20" fill="#22C55E" fontSize="9" fontWeight="700" fontFamily="JetBrains Mono" opacity="0.55">PEAK TRAINING</text>
-            <text x="316" y="298" fill="#FACC15" fontSize="9" fontWeight="700" fontFamily="JetBrains Mono" opacity="0.55">READY FOR LOAD</text>
-            <text x="14" y="298" fill="#FF4D4D" fontSize="9" fontWeight="700" fontFamily="JetBrains Mono" opacity="0.55">FATIGUE RISK</text>
-            <text x="14" y="20" fill="#4DA3FF" fontSize="9" fontWeight="700" fontFamily="JetBrains Mono" opacity="0.55">LOW STIMULUS</text>
+            <text x="316" y="20" fill="#22C55E" fontSize="9" fontWeight="700" opacity="0.55" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>PEAK TRAINING</text>
+            <text x="316" y="298" fill="#FACC15" fontSize="9" fontWeight="700" opacity="0.55" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>READY FOR LOAD</text>
+            <text x="14" y="298" fill="#FF4D4D" fontSize="9" fontWeight="700" opacity="0.55" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>FATIGUE RISK</text>
+            <text x="14" y="20" fill="#4DA3FF" fontSize="9" fontWeight="700" opacity="0.55" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>LOW STIMULUS</text>
           </svg>
 
           {/* Athlete dots */}

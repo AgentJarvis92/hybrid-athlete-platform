@@ -63,13 +63,13 @@ export function TeamPerformanceChart() {
 
           {/* Zone 4 band */}
           <rect x="0" y="54" width="900" height="36" fill="rgba(198,255,0,0.04)" />
-          <text x="4" y="48" fill="rgba(198,255,0,0.4)" fontSize="9" fontFamily="JetBrains Mono, monospace">
+          <text x="4" y="48" fill="rgba(198,255,0,0.4)" fontSize="9" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>
             Z4 THRESHOLD
           </text>
 
           {/* Y labels */}
-          <text x="4" y="34" fill="#5E6573" fontSize="9" fontFamily="JetBrains Mono, monospace">HI</text>
-          <text x="4" y="148" fill="#5E6573" fontSize="9" fontFamily="JetBrains Mono, monospace">LO</text>
+          <text x="4" y="34" fill="#5E6573" fontSize="9" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>HI</text>
+          <text x="4" y="148" fill="#5E6573" fontSize="9" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>LO</text>
 
           {/* Fill areas */}
           <path
