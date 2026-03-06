@@ -24,6 +24,7 @@ export interface AttentionAlert {
   id: string;
   severity: AlertSeverity;
   athlete: string;
+  athleteId?: string; // route param for /athletes/[id]
   reason: string;
   meta: string;
   metaHighlight?: { text: string; color: string };

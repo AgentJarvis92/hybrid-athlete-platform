@@ -1,7 +1,18 @@
 "use client";
 import { useState, useRef } from "react";
+import Link from "next/link";
 
-const STATES = [
+type AthleteEntry = { name: string; context: string; id?: string };
+
+const STATES: {
+  key: string;
+  label: string;
+  count: number;
+  color: string;
+  bg: string;
+  glow: string;
+  athletes: AthleteEntry[];
+}[] = [
   {
     key: "peak",
     label: "PEAK",
@@ -10,10 +21,10 @@ const STATES = [
     bg: "rgba(0,255,133,0.07)",
     glow: "rgba(0,255,133,0.18)",
     athletes: [
-      "Emily Chen · high adaptation",
-      "John Doe · strong output",
-      "Alex Park · primed for load",
-      "Lisa Ward · recovery peak",
+      { name: "Emily Chen",  context: "high adaptation",    id: "ec" },
+      { name: "John Doe",    context: "strong output",      id: "jd" },
+      { name: "Alex Park",   context: "primed for load" },
+      { name: "Lisa Ward",   context: "recovery peak" },
     ],
   },
   {
@@ -24,13 +35,13 @@ const STATES = [
     bg: "rgba(198,255,0,0.05)",
     glow: "rgba(198,255,0,0.15)",
     athletes: [
-      "Ryan Torres · load progressing",
-      "Mia Chen · aerobic base phase",
-      "Jake Kim · strength ramp",
-      "Priya Patel · volume building",
-      "Chris Obi · conditioning block",
-      "Tara Singh · early adaptation",
-      "Noah Reed · response tracking",
+      { name: "Ryan Torres", context: "load progressing" },
+      { name: "Mia Chen",    context: "aerobic base phase" },
+      { name: "Jake Kim",    context: "strength ramp" },
+      { name: "Priya Patel", context: "volume building" },
+      { name: "Chris Obi",   context: "conditioning block" },
+      { name: "Tara Singh",  context: "early adaptation" },
+      { name: "Noah Reed",   context: "response tracking" },
     ],
   },
   {
@@ -41,11 +52,11 @@ const STATES = [
     bg: "rgba(138,147,160,0.05)",
     glow: "rgba(138,147,160,0.12)",
     athletes: [
-      "Sam Wells · stable load",
-      "Leila Mora · taper week",
-      "Ben Fox · deload phase",
-      "Grace Kim · maintenance",
-      "Omar Chen · recovery hold",
+      { name: "Sam Wells",  context: "stable load" },
+      { name: "Leila Mora", context: "taper week" },
+      { name: "Ben Fox",    context: "deload phase" },
+      { name: "Grace Kim",  context: "maintenance" },
+      { name: "Omar Chen",  context: "recovery hold" },
     ],
   },
   {
@@ -56,12 +67,12 @@ const STATES = [
     bg: "rgba(250,204,21,0.05)",
     glow: "rgba(250,204,21,0.15)",
     athletes: [
-      "Mike Ross · fatigue risk building",
-      "Tom Hill · sessions missed",
-      "Kai Leong · HRV declining",
-      "Ana Ruiz · sleep deficit",
-      "Jess Park · overreaching signal",
-      "Wei Zhang · nutrition lag",
+      { name: "Mike Ross",  context: "fatigue risk building" },
+      { name: "Tom Hill",   context: "sessions missed" },
+      { name: "Kai Leong",  context: "HRV declining" },
+      { name: "Ana Ruiz",   context: "sleep deficit" },
+      { name: "Jess Park",  context: "overreaching signal" },
+      { name: "Wei Zhang",  context: "nutrition lag" },
     ],
   },
   {
@@ -72,20 +83,27 @@ const STATES = [
     bg: "rgba(255,77,77,0.07)",
     glow: "rgba(255,77,77,0.2)",
     athletes: [
-      "Sarah Lee · load spike + hydration low",
-      "Dan O'Brien · overreach risk",
+      { name: "Sarah Lee",   context: "load spike · hydration low", id: "sl" },
+      { name: "Dan O'Brien", context: "overreach risk" },
     ],
   },
-] as const;
+];
 
 const TOTAL = STATES.reduce((s, st) => s + st.count, 0);
 
 export function AthleteStateStrip() {
   const [hovered, setHovered] = useState<string | null>(null);
   const [tooltipX, setTooltipX] = useState(0);
+  const [tooltipHovered, setTooltipHovered] = useState(false);
   const stripRef = useRef<HTMLDivElement>(null);
 
-  const hoveredState = STATES.find((s) => s.key === hovered);
+  const isVisible = hovered !== null || tooltipHovered;
+  const hoveredState = STATES.find((s) => s.key === hovered) ?? STATES.find((s) => s.key === (tooltipHovered ? hovered : null));
+  const activeState = isVisible ? STATES.find((s) => s.key === hovered) ?? null : null;
+
+  // Keep last hovered state visible while tooltip is hovered
+  const [lastHovered, setLastHovered] = useState<string | null>(null);
+  const displayState = STATES.find((s) => s.key === (hovered ?? (tooltipHovered ? lastHovered : null)));
 
   return (
     <div className="bg-bg-card border border-border rounded-lg px-5 py-4">
@@ -106,16 +124,9 @@ export function AthleteStateStrip() {
         <div className="flex items-center gap-4">
           {STATES.map((s) => (
             <div key={s.key} className="flex items-center gap-1.5">
-              <span
-                className="w-1.5 h-1.5 rounded-full shrink-0"
-                style={{ background: s.color }}
-              />
-              <span className="text-[10px] font-mono text-text-tertiary uppercase tracking-wide">
-                {s.label}
-              </span>
-              <span className="text-[10px] font-mono font-bold" style={{ color: s.color }}>
-                {s.count}
-              </span>
+              <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: s.color }} />
+              <span className="text-[10px] font-mono text-text-tertiary uppercase tracking-wide">{s.label}</span>
+              <span className="text-[10px] font-mono font-bold" style={{ color: s.color }}>{s.count}</span>
             </div>
           ))}
           <div className="w-px h-3 bg-border" />
@@ -132,7 +143,7 @@ export function AthleteStateStrip() {
             return (
               <div
                 key={state.key}
-                className="relative flex items-center justify-center cursor-pointer transition-all duration-200 group"
+                className="relative flex items-center justify-center cursor-pointer transition-all duration-200"
                 style={{
                   width: `${pct}%`,
                   background: isHov ? state.bg : "rgba(255,255,255,0.02)",
@@ -141,11 +152,11 @@ export function AthleteStateStrip() {
                 }}
                 onMouseEnter={(e) => {
                   setHovered(state.key);
+                  setLastHovered(state.key);
                   if (stripRef.current) {
                     const rect = stripRef.current.getBoundingClientRect();
                     const segRect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-                    const midX = segRect.left - rect.left + segRect.width / 2;
-                    setTooltipX(midX);
+                    setTooltipX(segRect.left - rect.left + segRect.width / 2);
                   }
                 }}
                 onMouseLeave={() => setHovered(null)}
@@ -170,41 +181,47 @@ export function AthleteStateStrip() {
         </div>
 
         {/* Hover tooltip */}
-        {hoveredState && (
+        {displayState && (
           <div
-            className="absolute top-[calc(100%+8px)] z-50 pointer-events-none"
-            style={{
-              left: tooltipX,
-              transform: "translateX(-50%)",
-            }}
+            className="absolute top-[calc(100%+8px)] z-50"
+            style={{ left: tooltipX, transform: "translateX(-50%)" }}
+            onMouseEnter={() => setTooltipHovered(true)}
+            onMouseLeave={() => setTooltipHovered(false)}
           >
             <div
-              className="rounded-md border px-3.5 py-3 min-w-[200px] max-w-[260px]"
+              className="rounded-md border px-3.5 py-3 min-w-[210px] max-w-[270px]"
               style={{
                 background: "#161A20",
-                borderColor: hoveredState.color + "40",
-                boxShadow: `0 8px 24px rgba(0,0,0,0.5), 0 0 0 1px ${hoveredState.color}18`,
+                borderColor: displayState.color + "40",
+                boxShadow: `0 8px 24px rgba(0,0,0,0.5), 0 0 0 1px ${displayState.color}18`,
               }}
             >
               {/* Arrow */}
               <div
                 className="absolute -top-[5px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 rotate-45 border-t border-l"
-                style={{ background: "#161A20", borderColor: hoveredState.color + "40" }}
+                style={{ background: "#161A20", borderColor: displayState.color + "40" }}
               />
-              <div
-                className="text-[10px] font-bold uppercase tracking-widest mb-2"
-                style={{ color: hoveredState.color }}
-              >
-                {hoveredState.label}
+              <div className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: displayState.color }}>
+                {displayState.label}
               </div>
               <div className="flex flex-col gap-1.5">
-                {hoveredState.athletes.map((a, i) => (
+                {displayState.athletes.map((a, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span
                       className="w-1 h-1 rounded-full shrink-0 mt-[5px]"
-                      style={{ background: hoveredState.color, opacity: 0.7 }}
+                      style={{ background: displayState.color, opacity: 0.7 }}
                     />
-                    <span className="text-[11px] text-text-secondary leading-snug">{a}</span>
+                    {a.id ? (
+                      <Link href={`/athletes/${a.id}`} className="text-[11px] leading-snug hover:underline" style={{ color: displayState.color }}>
+                        {a.name}
+                        <span className="text-text-tertiary font-normal"> · {a.context}</span>
+                      </Link>
+                    ) : (
+                      <span className="text-[11px] text-text-secondary leading-snug">
+                        <span className="text-text-primary">{a.name}</span>
+                        {" · "}{a.context}
+                      </span>
+                    )}
                   </div>
                 ))}
               </div>

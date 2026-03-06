@@ -82,15 +82,18 @@ export function AthleteSnapshotTable() {
             >
               {/* Athlete */}
               <td className="px-5 py-3 border-b border-border group-hover:text-text-primary">
-                <div className="flex items-center gap-2">
+                <Link
+                  href={`/athletes/${athlete.id.toLowerCase()}`}
+                  className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                >
                   <div className="w-6 h-6 rounded-full bg-bg-elevated border border-border text-[10px] grid place-items-center text-text-secondary">
                     {athlete.initials}
                   </div>
                   <div>
-                    <div className="text-text-primary font-medium text-[13px]">{athlete.name}</div>
+                    <div className="text-text-primary font-medium text-[13px] group-hover:text-accent-lime transition-colors">{athlete.name}</div>
                     <RiskBadge badge={athlete.badge} />
                   </div>
-                </div>
+                </Link>
               </td>
 
               {/* Last Session */}

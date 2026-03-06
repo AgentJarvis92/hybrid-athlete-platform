@@ -59,6 +59,7 @@ export const attentionAlerts: AttentionAlert[] = [
     id: "1",
     severity: "red",
     athlete: "Sarah Lee",
+    athleteId: "sl",
     reason: "Training load spike · 97 ATL",
     meta: "Rec 34% · Hydration low",
     metaHighlight: { text: "CRITICAL", color: "#FF4D4D" },

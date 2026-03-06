@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { attentionAlerts } from "@/data/mock-dashboard";
 import type { AttentionAlert } from "@/types/dashboard";
 
@@ -37,12 +38,10 @@ function AlertCard({ alert }: { alert: AttentionAlert }) {
     blue: { left: "#4DA3FF", icon: "rgba(77,163,255,0.12)", iconBorder: "rgba(77,163,255,0.2)", iconColor: "#4DA3FF" },
   };
   const colors = severityColors[alert.severity];
+  const cardClass = "bg-bg-primary border border-border rounded-md p-2.5 px-3 flex gap-2.5 items-start transition-all duration-150 relative overflow-hidden hover:border-border-highlight hover:bg-bg-elevated";
 
-  return (
-    <div
-      className="bg-bg-primary border border-border rounded-md p-2.5 px-3 flex gap-2.5 items-start cursor-pointer transition-all duration-150 relative overflow-hidden hover:border-border-highlight hover:bg-bg-elevated"
-      style={{ borderLeft: `3px solid ${colors.left}` }}
-    >
+  const inner = (
+    <>
       <div
         className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"
         style={{ background: colors.icon, border: `1px solid ${colors.iconBorder}`, color: colors.iconColor }}
@@ -68,6 +67,27 @@ function AlertCard({ alert }: { alert: AttentionAlert }) {
           {alert.action}
         </button>
       </div>
+    </>
+  );
+
+  if (alert.athleteId) {
+    return (
+      <Link
+        href={`/athletes/${alert.athleteId}`}
+        className={`${cardClass} cursor-pointer`}
+        style={{ borderLeft: `3px solid ${colors.left}` }}
+      >
+        {inner}
+      </Link>
+    );
+  }
+
+  return (
+    <div
+      className={`${cardClass} cursor-default`}
+      style={{ borderLeft: `3px solid ${colors.left}` }}
+    >
+      {inner}
     </div>
   );
 }
