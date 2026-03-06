@@ -9,8 +9,8 @@ interface Props {
 function ProgressBar({ value, max, color }: { value: number; max: number; color: string }) {
   const pct = Math.min(100, Math.round((value / max) * 100));
   return (
-    <div className="h-1 bg-bg-elevated rounded-full overflow-hidden mt-1">
-      <div className="h-full rounded-full" style={{ width: `${pct}%`, background: color }} />
+    <div className="h-[3px] bg-bg-elevated rounded-full overflow-hidden">
+      <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: color }} />
     </div>
   );
 }
@@ -130,23 +130,25 @@ export function PillarDetailCards({ training, recovery, nutrition }: Props) {
           <span className="text-[11px] uppercase tracking-[0.06em] font-bold" style={{ color: "#00FF85" }}>Nutrition</span>
           <span className="text-[10px] font-normal" style={{ color: "#FACC15" }}>{nutrition.adherence}% adherence</span>
         </div>
-        {/* Calories */}
-        <div className="pb-3 border-b border-bg-elevated">
-          <div className="flex justify-between mb-1">
-            <span className="text-[10px] text-text-tertiary">Calories</span>
-            <span className="text-[10px] font-mono text-text-secondary">
-              {nutrition.calories.toLocaleString()}{" "}
-              <span className="text-text-tertiary">/ {nutrition.caloriesTarget.toLocaleString()}</span>
-            </span>
-          </div>
-          <ProgressBar value={nutrition.calories} max={nutrition.caloriesTarget} color="#FF4D4D" />
-          <div className="flex justify-between mt-3 mb-1">
-            <span className="text-[10px] text-text-tertiary">Protein</span>
-            <span className="text-[10px] font-mono text-text-secondary">
-              {nutrition.protein}g <span className="text-text-tertiary">/ {nutrition.proteinTarget}g</span>
-            </span>
-          </div>
-          <ProgressBar value={nutrition.protein} max={nutrition.proteinTarget} color="#FACC15" />
+        {/* Macros */}
+        <div className="pb-3 border-b border-bg-elevated flex flex-col gap-2.5">
+          {[
+            { label: "Calories", value: nutrition.calories.toLocaleString(), target: nutrition.caloriesTarget.toLocaleString(), unit: "kcal", ratio: nutrition.calories / nutrition.caloriesTarget, color: "#FF4D4D" },
+            { label: "Protein",  value: `${nutrition.protein}`,  target: `${nutrition.proteinTarget}`,  unit: "g", ratio: nutrition.protein / nutrition.proteinTarget,  color: "#4DA3FF" },
+            { label: "Carbs",    value: `${nutrition.carbs}`,    target: `${nutrition.carbsTarget}`,    unit: "g", ratio: nutrition.carbs / nutrition.carbsTarget,      color: "#FACC15" },
+            { label: "Fat",      value: `${nutrition.fat}`,      target: `${nutrition.fatTarget}`,      unit: "g", ratio: nutrition.fat / nutrition.fatTarget,          color: "#C6FF00" },
+          ].map((m) => (
+            <div key={m.label}>
+              <div className="flex justify-between mb-1">
+                <span className="text-[10px] text-text-tertiary">{m.label}</span>
+                <span className="text-[10px] font-mono text-text-secondary">
+                  {m.value}{m.unit !== "kcal" ? "g" : ""}{" "}
+                  <span className="text-text-tertiary">/ {m.target}{m.unit !== "kcal" ? "g" : ""}</span>
+                </span>
+              </div>
+              <ProgressBar value={Math.min(m.ratio * 100, 100)} max={100} color={m.color} />
+            </div>
+          ))}
         </div>
         <div className="flex justify-between items-center py-2 border-b border-bg-elevated">
           <span className="text-[11px] text-text-secondary">Hydration</span>

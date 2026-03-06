@@ -89,6 +89,10 @@ export interface PillarNutrition {
   caloriesTarget: number;
   protein: number;
   proteinTarget: number;
+  carbs: number;
+  carbsTarget: number;
+  fat: number;
+  fatTarget: number;
   hydration: number;
   hydrationTarget: number;
   fuelingPattern: string;
