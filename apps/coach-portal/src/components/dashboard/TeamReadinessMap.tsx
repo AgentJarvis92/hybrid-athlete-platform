@@ -114,9 +114,10 @@ export function TeamReadinessMap() {
       {/* Chart + Queue */}
       <div className="grid gap-6" style={{ gridTemplateColumns: "1fr 300px" }}>
         {/* Scatter Plot */}
+        <div className="overflow-x-auto">
         <div
           className="relative h-[320px] border border-border rounded-md overflow-visible"
-          style={{ background: "#0B0D10" }}
+          style={{ background: "#0B0D10", minWidth: "500px" }}
         >
           {/* SVG background */}
           <svg
@@ -170,6 +171,8 @@ export function TeamReadinessMap() {
           >
             ↑ RECOVERY SCORE
           </div>
+        </div>
+
         </div>
 
         {/* Attention Queue */}

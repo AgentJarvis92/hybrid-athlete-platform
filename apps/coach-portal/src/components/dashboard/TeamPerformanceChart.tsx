@@ -34,7 +34,8 @@ export function TeamPerformanceChart() {
       </div>
 
       {/* Chart */}
-      <div className="h-[180px] relative">
+      <div className="overflow-x-auto">
+      <div className="h-[180px] relative" style={{ minWidth: "600px" }}>
         <svg
           viewBox="0 0 900 180"
           preserveAspectRatio="none"
@@ -122,6 +123,7 @@ export function TeamPerformanceChart() {
             {d}
           </span>
         ))}
+      </div>
       </div>
     </div>
   );

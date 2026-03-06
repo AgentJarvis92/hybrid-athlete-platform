@@ -40,7 +40,7 @@ export default function DashboardLayout({
             </div>
           </header>
           {/* Workspace */}
-          <div className="flex-1 overflow-y-auto p-8 px-10 flex flex-col gap-7">
+          <div className="flex-1 overflow-y-auto p-8 px-10 flex flex-col gap-7" style={{ minWidth: "800px" }}>
             {children}
           </div>
         </main>
