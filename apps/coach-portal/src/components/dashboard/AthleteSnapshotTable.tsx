@@ -30,11 +30,12 @@ function NutriBadge({ status, label }: { status: string; label: string }) {
 function RecScore({ score, level, note }: { score: number; level: string; note: string }) {
   const colors = { high: "#22C55E", mid: "#FACC15", low: "#FF4D4D" };
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1.5">
       <span className="font-mono text-[13px] font-semibold" style={{ color: colors[level as "high" | "mid" | "low"] }}>
         {score}%
       </span>
-      <span className="text-[10px] text-text-tertiary opacity-70">{note}</span>
+      <span className="text-[10px] text-text-tertiary opacity-30">·</span>
+      <span className="text-[10px] text-text-tertiary opacity-60">{note}</span>
     </div>
   );
 }

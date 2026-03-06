@@ -150,10 +150,10 @@ export function TeamReadinessMap() {
             <text x="556" y="314" fill="#5E6573" fontSize="8" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>100</text>
 
             {/* Quadrant labels */}
-            <text x="316" y="20" fill="#22C55E" fontSize="9" fontWeight="700" opacity="0.55" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>PEAK TRAINING</text>
+            <text x="316" y="20" fill="#22C55E" fontSize="9" fontWeight="700" opacity="0.55" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>PEAK OUTPUT</text>
             <text x="316" y="298" fill="#FACC15" fontSize="9" fontWeight="700" opacity="0.55" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>READY FOR LOAD</text>
             <text x="14" y="298" fill="#FF4D4D" fontSize="9" fontWeight="700" opacity="0.55" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>FATIGUE RISK</text>
-            <text x="14" y="20" fill="#4DA3FF" fontSize="9" fontWeight="700" opacity="0.55" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>LOW STIMULUS</text>
+            <text x="14" y="20" fill="#4DA3FF" fontSize="9" fontWeight="700" opacity="0.55" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>RECOVERY ZONE</text>
           </svg>
 
           {/* Athlete dots */}
