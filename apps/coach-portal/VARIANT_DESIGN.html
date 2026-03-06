@@ -1,0 +1,1953 @@
+<html lang="en" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">Thresh | Elite Coaching Analytics</title>
+    <style vid="5">
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+        @keyframes drawLine { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
+
+        :root {
+            --bg-primary: #0B0D10;
+            --bg-card: #161A20;
+            --bg-elevated: #1E232B;
+            --bg-hover: #22262E;
+            
+            --accent-lime: #C6FF00;  
+            --accent-secondary: #00FF85;
+            
+            --text-primary: #F5F7FA;
+            --text-secondary: #8A93A0;
+            --text-tertiary: #5E6573;
+            
+            --border: #2A2F37;
+            --border-highlight: #3E4550;
+            
+            --danger: #FF4D4D;
+            --success: #22C55E;
+            --warning: #FACC15;
+            
+            
+            --z1: #4DA3FF;
+            --z2: #22C55E;
+            --z3: #FACC15;
+            --z4: #C6FF00;
+            --z5: #FB923C;
+            --z6: #EF4444;
+
+            
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 12px;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        
+        .topo-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='topo' x='0' y='0' width='400' height='400' patternUnits='userSpaceOnUse'%3E%3Cpath d='M0,200 Q100,100 200,200 T400,200 M0,250 Q150,150 250,250 T400,250 M0,300 Q120,220 220,300 T400,300 M50,0 Q150,100 250,0 M-50,50 Q50,150 150,50' fill='none' stroke='%232A2F37' stroke-width='0.5' opacity='0.4'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23topo)'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        
+        .grid-cross {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .grid-cross::before, .grid-cross::after {
+            content: '';
+            position: absolute;
+            background: var(--text-tertiary);
+        }
+        .grid-cross::before { width: 1px; height: 100%; left: 50%; }
+        .grid-cross::after { width: 100%; height: 1px; top: 50%; }
+
+        
+        .app-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        
+        .sidebar {
+            width: 240px;
+            background-color: var(--bg-primary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 16px 12px;
+            flex-shrink: 0;
+            z-index: 20;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 12px 24px 12px;
+        }
+
+        .brand-logo {
+            width: 28px;
+            height: 28px;
+            background: var(--accent-lime);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            font-weight: 800;
+            font-family: var(--font-mono);
+        }
+
+        .brand-name {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            font-size: 16px;
+        }
+
+        .nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 24px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            padding: 8px 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            background-color: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background-color: rgba(198, 255, 0, 0.05);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 16px;
+            width: 3px;
+            background-color: var(--accent-lime);
+            border-radius: 0 2px 2px 0;
+            box-shadow: 0 0 8px rgba(198, 255, 0, 0.4);
+        }
+
+        .nav-icon {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2px;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+        }
+
+        .coach-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: var(--radius-md);
+        }
+        .coach-profile:hover { background: var(--bg-hover); }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            display: grid;
+            place-items: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        
+        .top-nav {
+            height: 64px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            background: rgba(11, 13, 16, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 10;
+        }
+
+        .page-title {
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .separator { color: var(--border); }
+
+        .command-bar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .search-input {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 6px 12px 6px 36px;
+            border-radius: var(--radius-md);
+            width: 240px;
+            font-size: 13px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238A93A0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 10px center;
+            transition: all 0.2s;
+        }
+        .search-input:focus {
+            border-color: var(--text-secondary);
+            outline: none;
+            width: 320px;
+        }
+
+        .kbd-shortcut {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        
+        .workspace {
+            padding: 32px;
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 8px;
+        }
+
+        .h1-title {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+        
+        .date-display {
+            font-family: var(--font-mono);
+            color: var(--accent-lime);
+            font-size: 12px;
+        }
+
+        
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .card:hover { border-color: rgba(198,255,0,0.25); box-shadow: 0 0 0 1px rgba(198,255,0,0.06), 0 4px 24px rgba(0,0,0,0.4); transform: translateY(-1px); }
+
+        .card-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .metric-large {
+            font-size: 28px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            letter-spacing: -0.05em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .metric-unit {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-family: var(--font-sans);
+        }
+
+        .trend {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .trend.up { color: var(--success); }
+        .trend.down { color: var(--danger); }
+        .trend.neutral { color: var(--text-secondary); }
+
+        
+        .sparkline {
+            height: 24px;
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            margin-top: 12px;
+            opacity: 0.6;
+        }
+        .bar {
+            flex: 1;
+            background: var(--text-secondary);
+            border-radius: 1px;
+        }
+        .bar.active { background: var(--accent-lime); opacity: 1; }
+
+        
+        .content-split {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 16px;
+        }
+
+        /* Hero chart */
+        .chart-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            animation: fadeIn 0.4s ease;
+        }
+        .chart-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .chart-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .chart-section-sub {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+        .chart-legend {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        .legend-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        .chart-area {
+            height: 180px;
+            position: relative;
+        }
+        .chart-area svg {
+            overflow: visible;
+        }
+        .chart-area svg path.line {
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 0;
+            animation: drawLine 1.2s ease forwards;
+        }
+        .chart-area svg .zone-band {
+            opacity: 0.05;
+        }
+        .chart-x-labels {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 8px;
+            margin-top: 8px;
+        }
+        .chart-x-label {
+            font-size: 10px;
+            color: var(--text-tertiary);
+            font-family: var(--font-mono);
+        }
+
+        /* Team insights */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .insight-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: border-color 0.2s;
+        }
+        .insight-card:hover { border-color: var(--border-highlight); }
+        .insight-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-tertiary);
+            font-weight: 600;
+        }
+        .insight-value {
+            font-size: 22px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            letter-spacing: -0.04em;
+        }
+        .insight-sub {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        .insight-bar {
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .insight-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.8s ease;
+        }
+
+        /* Risk badges */
+        .risk-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 1px 5px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .risk-high { color: var(--danger); background: rgba(255,77,77,0.1); border: 1px solid rgba(255,77,77,0.2); }
+        .risk-med { color: var(--warning); background: rgba(250,204,21,0.1); border: 1px solid rgba(250,204,21,0.2); }
+        .risk-pr { color: var(--accent-secondary); background: rgba(0,255,133,0.08); border: 1px solid rgba(0,255,133,0.2); }
+
+        /* Load bar */
+        .load-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .load-bar-bg {
+            width: 64px;
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .load-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+        }
+
+        /* Glow on important numbers */
+        .glow-lime {
+            text-shadow: 0 0 20px rgba(198,255,0,0.3);
+        }
+
+        /* Pillar tabs */
+        .pillar-tabs {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 3px;
+        }
+        .pillar-tab {
+            padding: 4px 14px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all 0.15s;
+            letter-spacing: 0.02em;
+        }
+        .pillar-tab.active { background: var(--bg-card); color: var(--text-primary); }
+        .pillar-tab.training.active { color: var(--accent-lime); }
+        .pillar-tab.recovery.active { color: #4DA3FF; }
+        .pillar-tab.nutrition.active { color: #00FF85; }
+
+        /* Nutrition score */
+        .nutri-score {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nutri-ring {
+            position: relative;
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+        .nutri-ring svg { overflow: visible; }
+        .nutri-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+        .nutri-on { color: #00FF85; background: rgba(0,255,133,0.08); border: 1px solid rgba(0,255,133,0.2); }
+        .nutri-low { color: #FACC15; background: rgba(250,204,21,0.08); border: 1px solid rgba(250,204,21,0.2); }
+        .nutri-under { color: #FF4D4D; background: rgba(255,77,77,0.08); border: 1px solid rgba(255,77,77,0.2); }
+
+        /* Recovery indicator */
+        .rec-score {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .rec-high { color: #22C55E; }
+        .rec-mid { color: #FACC15; }
+        .rec-low { color: #FF4D4D; }
+
+        /* Programming panel */
+        .programming-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+        }
+        .prog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .prog-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .prog-sub {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+        .prog-body {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+        .prog-stacked {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .prog-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .prog-label {
+            width: 100px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+        .prog-bar-track {
+            flex: 1;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .prog-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+        .prog-count {
+            width: 28px;
+            text-align: right;
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: var(--text-tertiary);
+        }
+        .prog-donut {
+            width: 100px;
+            height: 100px;
+            flex-shrink: 0;
+        }
+
+        /* Readiness Map */
+        .readiness-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px 28px;
+        }
+        .readiness-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 24px;
+            margin-top: 18px;
+        }
+        .readiness-chart {
+            position: relative;
+            height: 320px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow: visible;
+            background: var(--bg-primary);
+        }
+        .readiness-chart-bg { position: absolute; inset: 0; }
+        .athlete-dot-wrapper {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            z-index: 4;
+        }
+        .athlete-dot-wrapper:hover { z-index: 10; }
+        .athlete-dot {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-mono);
+            letter-spacing: 0;
+        }
+        .athlete-dot-wrapper:hover .athlete-dot { transform: scale(1.3); }
+        .athlete-dot.green { background: rgba(34,197,94,0.15); border-color: #22C55E; color: #22C55E; box-shadow: 0 0 16px rgba(34,197,94,0.2); }
+        .athlete-dot.yellow { background: rgba(250,204,21,0.15); border-color: #FACC15; color: #FACC15; box-shadow: 0 0 14px rgba(250,204,21,0.18); }
+        .athlete-dot.red { background: rgba(255,77,77,0.15); border-color: #FF4D4D; color: #FF4D4D; box-shadow: 0 0 16px rgba(255,77,77,0.22); }
+        .dot-tooltip {
+            position: absolute;
+            background: var(--bg-elevated);
+            border: 1px solid rgba(198,255,0,0.2);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            font-size: 11px;
+            pointer-events: none;
+            z-index: 20;
+            min-width: 160px;
+            display: none;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+            top: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+        .athlete-dot-wrapper:hover .dot-tooltip { display: block; }
+        .tooltip-name { font-weight: 700; color: var(--text-primary); margin-bottom: 8px; font-size: 13px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+        .tooltip-row { display: flex; justify-content: space-between; gap: 16px; color: var(--text-secondary); margin-bottom: 4px; font-size: 11px; }
+        .tooltip-val { font-family: var(--font-mono); color: var(--text-primary); font-weight: 600; }
+
+        /* Attention queue */
+        .attention-queue {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow-y: auto;
+        }
+        .attention-header {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-tertiary);
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .attention-badge {
+            font-size: 10px;
+            font-weight: 700;
+            background: rgba(255,77,77,0.15);
+            color: var(--danger);
+            border: 1px solid rgba(255,77,77,0.3);
+            border-radius: 10px;
+            padding: 1px 8px;
+            animation: pulse 2s infinite;
+        }
+        .alert-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 10px 12px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            cursor: pointer;
+            transition: all 0.15s;
+            position: relative;
+            overflow: hidden;
+        }
+        .alert-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+        .alert-card.sev-red::before { background: var(--danger); }
+        .alert-card.sev-yellow::before { background: #FACC15; }
+        .alert-card.sev-blue::before { background: #4DA3FF; }
+        .alert-card:hover { border-color: var(--border-highlight); background: var(--bg-elevated); }
+        .alert-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .alert-icon.red { background: rgba(255,77,77,0.12); color: var(--danger); border: 1px solid rgba(255,77,77,0.2); }
+        .alert-icon.yellow { background: rgba(250,204,21,0.12); color: #FACC15; border: 1px solid rgba(250,204,21,0.2); }
+        .alert-icon.blue { background: rgba(77,163,255,0.12); color: #4DA3FF; border: 1px solid rgba(77,163,255,0.2); }
+        .alert-icon.green { background: rgba(0,255,133,0.1); color: #00FF85; border: 1px solid rgba(0,255,133,0.2); }
+        .alert-body { flex: 1; min-width: 0; }
+        .alert-athlete { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+        .alert-reason { font-size: 11px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4; }
+        .alert-meta { font-size: 10px; color: var(--text-tertiary); margin-top: 4px; font-family: var(--font-mono); display: flex; align-items: center; gap: 8px; }
+        .alert-time { font-size: 10px; color: var(--text-tertiary); font-family: var(--font-mono); white-space: nowrap; align-self: flex-start; margin-top: 2px; }
+        .alert-action {
+            font-size: 10px;
+            padding: 4px 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            background: transparent;
+            cursor: pointer;
+            align-self: center;
+            transition: all 0.15s;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+        .alert-action:hover { border-color: var(--accent-lime); color: var(--accent-lime); }
+
+        /* Fueling signals */
+        .fueling-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .fuel-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .fuel-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-tertiary); font-weight: 600; }
+        .fuel-value { font-size: 20px; font-weight: 700; font-family: var(--font-mono); letter-spacing: -0.04em; }
+        .fuel-detail { font-size: 11px; color: var(--text-secondary); }
+        .fuel-row { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+        .fuel-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+        /* Pillar tabs */
+        .pillar-tabs {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 3px;
+        }
+        .pillar-tab {
+            padding: 4px 14px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all 0.15s;
+            letter-spacing: 0.02em;
+        }
+        .pillar-tab.active { background: var(--bg-card); color: var(--text-primary); }
+        .pillar-tab.training.active { color: var(--accent-lime); }
+        .pillar-tab.recovery.active { color: #4DA3FF; }
+        .pillar-tab.nutrition.active { color: #00FF85; }
+
+        /* Nutrition badge */
+        .nutri-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.03em; white-space: nowrap; }
+        .nutri-on { color: #00FF85; background: rgba(0,255,133,0.08); border: 1px solid rgba(0,255,133,0.2); }
+        .nutri-low { color: #FACC15; background: rgba(250,204,21,0.08); border: 1px solid rgba(250,204,21,0.2); }
+        .nutri-under { color: #FF4D4D; background: rgba(255,77,77,0.08); border: 1px solid rgba(255,77,77,0.2); }
+
+        /* Recovery score */
+        .rec-score { font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+        .rec-high { color: #22C55E; }
+        .rec-mid { color: #FACC15; }
+        .rec-low { color: #FF4D4D; }
+
+        /* Programming panel */
+        .programming-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+        }
+        .prog-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .prog-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+        .prog-sub { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+        .prog-body { display: flex; gap: 24px; align-items: center; }
+        .prog-stacked { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .prog-row { display: flex; align-items: center; gap: 10px; }
+        .prog-label { width: 100px; font-size: 11px; color: var(--text-secondary); flex-shrink: 0; }
+        .prog-bar-track { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+        .prog-bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+        .prog-count { width: 28px; text-align: right; font-size: 11px; font-family: var(--font-mono); color: var(--text-tertiary); }
+        .prog-donut { width: 100px; height: 100px; flex-shrink: 0; }
+
+        
+        .table-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .table-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 12px 20px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            border-bottom: 1px solid var(--border);
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .data-table td {
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .data-table tr:hover td {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .athlete-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .athlete-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            font-size: 10px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--border);
+        }
+
+        .zone-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            border: 1px solid transparent;
+        }
+
+        
+        .z1 { color: var(--z1); border-color: rgba(77, 163, 255, 0.2); background: rgba(77, 163, 255, 0.1); }
+        .z2 { color: var(--z2); border-color: rgba(34, 197, 94, 0.2); background: rgba(34, 197, 94, 0.1); }
+        .z3 { color: var(--z3); border-color: rgba(250, 204, 21, 0.2); background: rgba(250, 204, 21, 0.1); }
+        .z4 { color: var(--z4); border-color: rgba(198, 255, 0, 0.2); background: rgba(198, 255, 0, 0.1); }
+        .z5 { color: var(--z5); border-color: rgba(251, 146, 60, 0.2); background: rgba(251, 146, 60, 0.1); }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .status-green { background: var(--success); box-shadow: 0 0 8px rgba(34, 197, 94, 0.4); }
+        .status-yellow { background: var(--warning); }
+        .status-red { background: var(--danger); }
+
+        .btn-sm {
+            padding: 4px 12px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-sm:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        
+        .feed-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .feed-header {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .feed-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            position: relative;
+        }
+
+        
+        .feed-list::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            left: 11px;
+            width: 1px;
+            background: var(--border);
+            z-index: 0;
+        }
+
+        .feed-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feed-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--text-secondary);
+        }
+        .feed-icon.highlight {
+            border-color: var(--accent-lime);
+            color: var(--accent-lime);
+            box-shadow: 0 0 10px rgba(198, 255, 0, 0.1);
+        }
+
+        .feed-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .feed-text {
+            font-size: 13px;
+            line-height: 1.4;
+            color: var(--text-secondary);
+        }
+        .feed-text strong { color: var(--text-primary); font-weight: 500; }
+        .feed-time {
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+        .feed-zone-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+
+        
+        svg { width: 100%; height: 100%; }
+
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+
+    </style>
+</head>
+<body vid="6">
+    <div class="topo-bg" vid="7"></div>
+
+    <div class="app-container" vid="8">
+        
+        <aside class="sidebar" vid="9">
+            <div class="brand" vid="10">
+                <div class="brand-logo" vid="11" style="background: transparent; border: none; position: relative;">
+                    <svg viewBox="0 0 28 28" width="28" height="28" vid="12">
+                        <circle cx="14" cy="14" r="12" fill="none" stroke="#2A2F37" stroke-width="1.5" vid="13"></circle>
+                        <path d="M14 2 A12 12 0 0 1 25.6 19" fill="none" stroke="#C6FF00" stroke-width="2.5" stroke-linecap="round" vid="14"></path>
+                        <path d="M14 2 A12 12 0 0 0 2.4 19" fill="none" stroke="rgba(198,255,0,0.25)" stroke-width="1.5" stroke-linecap="round" vid="15"></path>
+                        <circle cx="14" cy="14" r="3" fill="#C6FF00" vid="16"></circle>
+                        <line x1="14" y1="14" x2="22" y2="8" stroke="#C6FF00" stroke-width="1.5" stroke-linecap="round" vid="17"></line>
+                    </svg>
+                </div>
+                <div class="brand-name" vid="18">Thresh</div>
+            </div>
+
+            <div class="nav-group" vid="19">
+                <div class="nav-label" vid="20">Platform</div>
+                <a href="#" class="nav-item active" vid="21">
+                    <div class="nav-icon" vid="22">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="23"><rect x="3" y="3" width="7" height="7" vid="24"></rect><rect x="14" y="3" width="7" height="7" vid="25"></rect><rect x="14" y="14" width="7" height="7" vid="26"></rect><rect x="3" y="14" width="7" height="7" vid="27"></rect></svg>
+                    </div>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-item" vid="28">
+                    <div class="nav-icon" vid="29">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="30"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" vid="31"></path><circle cx="9" cy="7" r="4" vid="32"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87" vid="33"></path><path d="M16 3.13a4 4 0 0 1 0 7.75" vid="34"></path></svg>
+                    </div>
+                    Athletes
+                </a>
+                <a href="#" class="nav-item" vid="35">
+                    <div class="nav-icon" vid="36">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="37"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" vid="38"></path><polyline points="14 2 14 8 20 8" vid="39"></polyline><line x1="16" y1="13" x2="8" y2="13" vid="40"></line><line x1="16" y1="17" x2="8" y2="17" vid="41"></line><polyline points="10 9 9 9 8 9" vid="42"></polyline></svg>
+                    </div>
+                    Training Plans
+                </a>
+            </div>
+
+            <div class="nav-group" vid="43">
+                <div class="nav-label" vid="44">Management</div>
+                <a href="#" class="nav-item" vid="45">
+                    <div class="nav-icon" vid="46">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="47"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" vid="48"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1" vid="49"></rect></svg>
+                    </div>
+                    Invites
+                </a>
+                <a href="#" class="nav-item" vid="50">
+                    <div class="nav-icon" vid="51">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="52"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" vid="53"></polyline></svg>
+                    </div>
+                    Activity Feed
+                </a>
+            </div>
+
+            <div class="nav-group" vid="54">
+                <div class="nav-label" vid="55">System</div>
+                <a href="#" class="nav-item" vid="56">
+                    <div class="nav-icon" vid="57">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="58"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" vid="59"></path><polyline points="15 3 21 3 21 9" vid="60"></polyline><line x1="10" y1="14" x2="21" y2="3" vid="61"></line></svg>
+                    </div>
+                    Integrations
+                </a>
+                <a href="#" class="nav-item" vid="62">
+                    <div class="nav-icon" vid="63">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="64"><circle cx="12" cy="12" r="3" vid="65"></circle><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" vid="66"></path></svg>
+                    </div>
+                    Settings
+                </a>
+            </div>
+
+
+
+            <div class="sidebar-footer" vid="67">
+                <div class="coach-profile" vid="68">
+                    <div class="avatar" vid="69">JS</div>
+                    <div style="font-size: 13px; font-weight: 500;" vid="70">
+                        <div vid="71">J. Smith</div>
+                        <div style="font-size: 11px; color: var(--text-tertiary);" vid="72">Head Coach</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        
+        <main class="main-content" vid="73">
+            
+            <header class="top-nav" vid="74">
+                <div class="page-title" vid="75">
+                    <span style="color: var(--text-tertiary)" vid="76">Team</span>
+                    <span class="separator" vid="77">/</span>
+                    <span vid="78">Dashboard</span>
+                </div>
+                <div class="command-bar" vid="79">
+                    <div class="search-wrapper" style="position: relative;" vid="80">
+                        <input type="text" class="search-input" placeholder="Search athletes or metrics..." vid="81">
+                        <div style="position: absolute; right: 8px; top: 6px;" class="kbd-shortcut" vid="82">⌘K</div>
+                    </div>
+                    <div class="notification-icon" style="width: 20px; height: 20px; color: var(--text-secondary); cursor: pointer;" vid="83">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="84"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" vid="85"></path><path d="M13.73 21a2 2 0 0 1-3.46 0" vid="86"></path></svg>
+                    </div>
+                </div>
+            </header>
+
+            
+            <div class="workspace" vid="87" style="gap: 28px; padding: 32px 40px;">
+                <div class="section-header" vid="88">
+                    <h1 class="h1-title" vid="89">Performance Overview</h1>
+                    <div style="display: flex; align-items: center; gap: 12px;" vid="90">
+                        <div class="pillar-tabs" vid="91">
+                            <div class="pillar-tab training active" vid="92">Training</div>
+                            <div class="pillar-tab recovery" vid="93">Recovery</div>
+                            <div class="pillar-tab nutrition" vid="94">Nutrition</div>
+                        </div>
+                        <div class="date-display" vid="95">OCT 24, 2023 // 14:00 UTC</div>
+                    </div>
+                </div>
+
+                
+                <div class="kpi-grid" vid="96" style="gap: 20px;">
+                    
+                    <div class="card" vid="97" style="transition: all 0.2s;">
+                        <div class="card-label" vid="98">Total Athletes</div>
+                        <div class="metric-large glow-lime" vid="99" style="color: var(--accent-lime);">24</div>
+                        <div class="trend up" vid="100" style="margin-bottom: 6px;">
+                            <svg style="width: 12px; height: 12px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vid="101"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" vid="102"></polyline><polyline points="17 6 23 6 23 12" vid="103"></polyline></svg>
+                            <span vid="104">+2 this week</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;" vid="105">
+                            <div style="font-size: 11px; color: #22C55E; font-family: var(--font-mono);" vid="106">18 active</div>
+                            <div style="font-size: 11px; color: var(--text-tertiary);" vid="107">·</div>
+                            <div style="font-size: 11px; color: var(--text-tertiary); font-family: var(--font-mono);" vid="108">6 inactive</div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card" vid="109" style="transition: all 0.2s;">
+                        <div class="card-label" vid="110">Active This Week</div>
+                        <div class="metric-large" vid="111">18 <span class="metric-unit" vid="112">/ 24</span></div>
+                        <div style="display: flex; align-items: center; gap: 8px; margin: 6px 0 4px;" vid="113">
+                            <div style="flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;" vid="114">
+                                <div style="width: 75%; height: 100%; background: var(--accent-lime); border-radius: 2px;" vid="115"></div>
+                            </div>
+                            <span style="font-size: 11px; color: var(--accent-lime); font-family: var(--font-mono);" vid="116">75%</span>
+                        </div>
+                        <div style="font-size: 11px; color: var(--text-tertiary); margin-bottom: 4px;" vid="117">Participation rate</div>
+                        <div class="sparkline" vid="118">
+                            <div class="bar" style="height: 40%" vid="119"></div>
+                            <div class="bar" style="height: 60%" vid="120"></div>
+                            <div class="bar" style="height: 45%" vid="121"></div>
+                            <div class="bar" style="height: 80%" vid="122"></div>
+                            <div class="bar" style="height: 30%" vid="123"></div>
+                            <div class="bar active" style="height: 90%" vid="124"></div>
+                            <div class="bar" style="height: 50%" vid="125"></div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card" vid="126" style="transition: all 0.2s;">
+                        <div class="card-label" vid="127">Avg Training Load</div>
+                        <div class="metric-large" vid="128">71 <span class="metric-unit" vid="129">ATL</span></div>
+                        <div class="trend up" vid="130" style="margin-bottom: 6px;">
+                            <svg style="width: 12px; height: 12px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vid="131"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" vid="132"></polyline><polyline points="17 6 23 6 23 12" vid="133"></polyline></svg>
+                            <span vid="134">+12% WoW</span>
+                        </div>
+                        <div style="display: flex; gap: 3px; align-items: flex-end; height: 20px;" vid="135">
+                            <div style="width: 12px; height: 50%; background: rgba(198,255,0,0.2); border-radius: 1px;" vid="136"></div>
+                            <div style="width: 12px; height: 65%; background: rgba(198,255,0,0.3); border-radius: 1px;" vid="137"></div>
+                            <div style="width: 12px; height: 75%; background: rgba(198,255,0,0.5); border-radius: 1px;" vid="138"></div>
+                            <div style="width: 12px; height: 100%; background: var(--accent-lime); border-radius: 1px;" vid="139"></div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card" style="transition: all 0.2s;" vid="140">
+                        <div class="card-label" vid="141">Nutrition Adherence</div>
+                        <div class="metric-large" style="color: var(--accent-secondary);" vid="142">82<span class="metric-unit" vid="143">%</span></div>
+                        <div class="trend up" style="margin-bottom: 6px;" vid="144">
+                            <svg style="width: 12px; height: 12px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vid="145"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" vid="146"></polyline><polyline points="17 6 23 6 23 12" vid="147"></polyline></svg>
+                            <span vid="148">+5% vs last week</span>
+                        </div>
+                        <div style="font-size: 11px; color: var(--text-tertiary);" vid="149">20 of 24 within targets</div>
+                    </div>
+                </div>
+
+                <!-- Hero Chart Section -->
+                <div class="chart-section" vid="150" style="padding: 24px 28px;">
+                    <div class="chart-section-header" vid="151">
+                        <div vid="152">
+                            <div class="chart-section-title" vid="153">Team Performance Load</div>
+                            <div class="chart-section-sub" vid="154">7-day combined training stress, recovery readiness &amp; nutrition compliance</div>
+                        </div>
+                        <div class="chart-legend" vid="155">
+                            <div class="legend-item" vid="156"><div class="legend-dot" style="background: #C6FF00;" vid="157"></div>Training Load</div>
+                            <div class="legend-item" vid="158"><div class="legend-dot" style="background: #4DA3FF;" vid="159"></div>Recovery</div>
+                            <div class="legend-item" vid="160"><div class="legend-dot" style="background: #00FF85;" vid="161"></div>Nutrition</div>
+                            <div style="width: 1px; height: 12px; background: var(--border); margin: 0 4px;" vid="162"></div>
+                            <div style="font-size: 11px; color: var(--text-tertiary); display: flex; align-items: center; gap: 4px;" vid="163">
+                                <div style="width: 12px; height: 8px; background: rgba(198,255,0,0.07); border: 1px solid rgba(198,255,0,0.15); border-radius: 2px;" vid="164"></div>
+                                Z4 band
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-area" vid="165">
+                        <svg viewBox="0 0 900 180" preserveAspectRatio="none" style="height: 100%; width: 100%;" vid="166">
+                            <!-- Grid lines -->
+                            <line x1="0" y1="36" x2="900" y2="36" stroke="#2A2F37" stroke-width="0.5" vid="167"></line>
+                            <line x1="0" y1="72" x2="900" y2="72" stroke="#2A2F37" stroke-width="0.5" vid="168"></line>
+                            <line x1="0" y1="108" x2="900" y2="108" stroke="#2A2F37" stroke-width="0.5" vid="169"></line>
+                            <line x1="0" y1="144" x2="900" y2="144" stroke="#2A2F37" stroke-width="0.5" vid="170"></line>
+                            <!-- Zone 4 band -->
+                            <rect x="0" y="54" width="900" height="36" fill="rgba(198,255,0,0.04)" stroke="none" vid="171"></rect>
+                            <text x="4" y="48" fill="rgba(198,255,0,0.4)" font-size="9" font-family="JetBrains Mono, monospace" vid="172">Z4 THRESHOLD</text>
+                            <!-- Y labels -->
+                            <text x="4" y="34" fill="#5E6573" font-size="9" font-family="JetBrains Mono, monospace" vid="173">HI</text>
+                            <text x="4" y="148" fill="#5E6573" font-size="9" font-family="JetBrains Mono, monospace" vid="174">LO</text>
+                            <!-- Fill areas -->
+                            <defs vid="175">
+                                <linearGradient id="lgLime" x1="0" y1="0" x2="0" y2="1" vid="176"><stop offset="0%" stop-color="#C6FF00" stop-opacity="0.12" vid="177"></stop><stop offset="100%" stop-color="#C6FF00" stop-opacity="0" vid="178"></stop></linearGradient>
+                                <linearGradient id="lgBlue" x1="0" y1="0" x2="0" y2="1" vid="179"><stop offset="0%" stop-color="#4DA3FF" stop-opacity="0.08" vid="180"></stop><stop offset="100%" stop-color="#4DA3FF" stop-opacity="0" vid="181"></stop></linearGradient>
+                                <linearGradient id="lgGreen" x1="0" y1="0" x2="0" y2="1" vid="182"><stop offset="0%" stop-color="#00FF85" stop-opacity="0.08" vid="183"></stop><stop offset="100%" stop-color="#00FF85" stop-opacity="0" vid="184"></stop></linearGradient>
+                            </defs>
+                            <!-- Training Load (lime) -->
+                            <path d="M0,90 C80,85 160,60 250,50 S400,35 480,42 S620,28 720,20 S840,32 900,38 L900,180 L0,180 Z" fill="url(#lgLime)" stroke="none" vid="185"></path>
+                            <path class="line" d="M0,90 C80,85 160,60 250,50 S400,35 480,42 S620,28 720,20 S840,32 900,38" stroke="#C6FF00" stroke-dasharray="1000" stroke-dashoffset="0" vid="186"></path>
+                            <!-- Recovery (blue) -->
+                            <path d="M0,120 C100,110 150,80 200,70 S350,50 400,60 S550,40 650,30 S780,45 900,55 L900,180 L0,180 Z" fill="url(#lgBlue)" stroke="none" vid="187"></path>
+                            <path class="line" d="M0,120 C100,110 150,80 200,70 S350,50 400,60 S550,40 650,30 S780,45 900,55" stroke="#4DA3FF" stroke-dasharray="1000" stroke-dashoffset="0" vid="188"></path>
+                            <!-- Nutrition (green) -->
+                            <path d="M0,140 C90,135 180,120 260,110 S380,95 450,100 S580,85 680,78 S800,88 900,82 L900,180 L0,180 Z" fill="url(#lgGreen)" stroke="none" vid="189"></path>
+                            <path class="line" d="M0,140 C90,135 180,120 260,110 S380,95 450,100 S580,85 680,78 S800,88 900,82" stroke="#00FF85" stroke-dasharray="1000" stroke-dashoffset="0" vid="190"></path>
+                            <!-- Data point markers -->
+                            <circle cx="650" cy="30" r="3" fill="#4DA3FF" opacity="0.8" vid="191"></circle>
+                            <circle cx="720" cy="20" r="3" fill="#C6FF00" opacity="0.9" vid="192"></circle>
+                            <circle cx="680" cy="78" r="3" fill="#00FF85" opacity="0.8" vid="193"></circle>
+                        </svg>
+                    </div>
+                    <div class="chart-x-labels" vid="194">
+                        <span class="chart-x-label" vid="195">MON</span>
+                        <span class="chart-x-label" vid="196">TUE</span>
+                        <span class="chart-x-label" vid="197">WED</span>
+                        <span class="chart-x-label" vid="198">THU</span>
+                        <span class="chart-x-label" vid="199">FRI</span>
+                        <span class="chart-x-label" vid="200">SAT</span>
+                        <span class="chart-x-label" vid="201">SUN</span>
+                    </div>
+                </div>
+
+                <!-- Team Readiness Map -->
+                <div class="readiness-section" vid="202" style="margin-bottom: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;" vid="203">
+                        <div vid="204">
+                            <div style="font-size: 15px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.01em;" vid="205">Team Readiness Map</div>
+                            <div style="font-size: 11px; color: var(--text-tertiary); margin-top: 3px;" vid="206">Training Load × Recovery Score &nbsp;·&nbsp; Hover each dot for athlete detail</div>
+                        </div>
+                        <div style="display: flex; gap: 20px; align-items: center;" vid="207">
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary);" vid="208"><div style="width: 9px; height: 9px; border-radius: 50%; background: #22C55E; box-shadow: 0 0 6px rgba(34,197,94,0.5);" vid="209"></div>Balanced</div>
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary);" vid="210"><div style="width: 9px; height: 9px; border-radius: 50%; background: #FACC15; box-shadow: 0 0 6px rgba(250,204,21,0.4);" vid="211"></div>Moderate Fatigue</div>
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary);" vid="212"><div style="width: 9px; height: 9px; border-radius: 50%; background: #FF4D4D; box-shadow: 0 0 6px rgba(255,77,77,0.5);" vid="213"></div>High Risk</div>
+                        </div>
+                    </div>
+                    <div class="readiness-layout" vid="214">
+                        <div class="readiness-chart" vid="215">
+                            <svg class="readiness-chart-bg" viewBox="0 0 600 320" preserveAspectRatio="none" vid="216">
+                                <!-- Quadrant fills -->
+                                <rect x="0" y="0" width="300" height="160" fill="rgba(77,163,255,0.025)" vid="217"></rect>
+                                <rect x="300" y="0" width="300" height="160" fill="rgba(34,197,94,0.035)" vid="218"></rect>
+                                <rect x="0" y="160" width="300" height="160" fill="rgba(255,77,77,0.045)" vid="219"></rect>
+                                <rect x="300" y="160" width="300" height="160" fill="rgba(250,204,21,0.025)" vid="220"></rect>
+                                <!-- Center dividers -->
+                                <line x1="300" y1="0" x2="300" y2="320" stroke="#2A2F37" stroke-width="1" stroke-dasharray="5 4" vid="221"></line>
+                                <line x1="0" y1="160" x2="600" y2="160" stroke="#2A2F37" stroke-width="1" stroke-dasharray="5 4" vid="222"></line>
+                                <!-- Sub-grid -->
+                                <line x1="150" y1="0" x2="150" y2="320" stroke="#2A2F37" stroke-width="0.4" opacity="0.4" vid="223"></line>
+                                <line x1="450" y1="0" x2="450" y2="320" stroke="#2A2F37" stroke-width="0.4" opacity="0.4" vid="224"></line>
+                                <line x1="0" y1="80" x2="600" y2="80" stroke="#2A2F37" stroke-width="0.4" opacity="0.4" vid="225"></line>
+                                <line x1="0" y1="240" x2="600" y2="240" stroke="#2A2F37" stroke-width="0.4" opacity="0.4" vid="226"></line>
+                                <!-- Axis scale labels -->
+                                <text x="8" y="13" fill="#5E6573" font-size="8" font-family="JetBrains Mono" vid="227">REC 100</text>
+                                <text x="8" y="314" fill="#5E6573" font-size="8" font-family="JetBrains Mono" vid="228">REC 0</text>
+                                <text x="8" y="164" fill="#5E6573" font-size="8" font-family="JetBrains Mono" vid="229">REC 50</text>
+                                <text x="10" y="314" fill="#5E6573" font-size="8" font-family="JetBrains Mono" vid="230">0</text>
+                                <text x="272" y="314" fill="#5E6573" font-size="8" font-family="JetBrains Mono" vid="231">LOAD 50</text>
+                                <text x="556" y="314" fill="#5E6573" font-size="8" font-family="JetBrains Mono" vid="232">100</text>
+                                <!-- Quadrant labels -->
+                                <text x="316" y="20" fill="#22C55E" font-size="9" font-weight="700" font-family="JetBrains Mono" opacity="0.55" vid="233">PEAK TRAINING</text>
+                                <text x="316" y="298" fill="#FACC15" font-size="9" font-weight="700" font-family="JetBrains Mono" opacity="0.55" vid="234">READY FOR LOAD</text>
+                                <text x="14" y="298" fill="#FF4D4D" font-size="9" font-weight="700" font-family="JetBrains Mono" opacity="0.55" vid="235">FATIGUE RISK</text>
+                                <text x="14" y="20" fill="#4DA3FF" font-size="9" font-weight="700" font-family="JetBrains Mono" opacity="0.55" vid="236">LOW STIMULUS</text>
+                            </svg>
+                            <!-- Athlete dots -->
+                            <div class="athlete-dot-wrapper" style="left: 82%; top: 13%;" vid="237">
+                                <div class="athlete-dot green" vid="238">JD</div>
+                                <div class="dot-tooltip" vid="239">
+                                    <div class="tooltip-name" vid="240">John Doe</div>
+                                    <div class="tooltip-row" vid="241"><span vid="242">Training Load</span><span class="tooltip-val" vid="243">82 ATL</span></div>
+                                    <div class="tooltip-row" vid="244"><span vid="245">Recovery</span><span class="tooltip-val" vid="246">87%</span></div>
+                                    <div class="tooltip-row" vid="247"><span vid="248">Nutrition</span><span class="tooltip-val" vid="249">On Target</span></div>
+                                </div>
+                            </div>
+                            <div class="athlete-dot-wrapper" style="left: 91%; top: 21%;" vid="250">
+                                <div class="athlete-dot green" vid="251">EC</div>
+                                <div class="dot-tooltip" vid="252">
+                                    <div class="tooltip-name" vid="253">Emily Chen</div>
+                                    <div class="tooltip-row" vid="254"><span vid="255">Training Load</span><span class="tooltip-val" vid="256">91 ATL</span></div>
+                                    <div class="tooltip-row" vid="257"><span vid="258">Recovery</span><span class="tooltip-val" vid="259">79%</span></div>
+                                    <div class="tooltip-row" vid="260"><span vid="261">Nutrition</span><span class="tooltip-val" vid="262">On Target</span></div>
+                                </div>
+                            </div>
+                            <div class="athlete-dot-wrapper" style="left: 38%; top: 48%;" vid="263">
+                                <div class="athlete-dot yellow" vid="264">MR</div>
+                                <div class="dot-tooltip" vid="265">
+                                    <div class="tooltip-name" vid="266">Mike Ross</div>
+                                    <div class="tooltip-row" vid="267"><span vid="268">Training Load</span><span class="tooltip-val" vid="269">38 ATL</span></div>
+                                    <div class="tooltip-row" vid="270"><span vid="271">Recovery</span><span class="tooltip-val" vid="272">52%</span></div>
+                                    <div class="tooltip-row" vid="273"><span vid="274">Nutrition</span><span class="tooltip-val" vid="275">Low Protein</span></div>
+                                </div>
+                            </div>
+                            <div class="athlete-dot-wrapper" style="left: 90%; top: 67%;" vid="276">
+                                <div class="athlete-dot red" vid="277">SL</div>
+                                <div class="dot-tooltip" vid="278">
+                                    <div class="tooltip-name" vid="279">Sarah Lee</div>
+                                    <div class="tooltip-row" vid="280"><span vid="281">Training Load</span><span class="tooltip-val" vid="282">97 ATL</span></div>
+                                    <div class="tooltip-row" vid="283"><span vid="284">Recovery</span><span class="tooltip-val" vid="285">34%</span></div>
+                                    <div class="tooltip-row" vid="286"><span vid="287">Nutrition</span><span class="tooltip-val" vid="288">Hydration ↓</span></div>
+                                </div>
+                            </div>
+                            <div class="athlete-dot-wrapper" style="left: 65%; top: 28%;" vid="289">
+                                <div class="athlete-dot green" vid="290">AP</div>
+                                <div class="dot-tooltip" vid="291">
+                                    <div class="tooltip-name" vid="292">Alex Park</div>
+                                    <div class="tooltip-row" vid="293"><span vid="294">Training Load</span><span class="tooltip-val" vid="295">68 ATL</span></div>
+                                    <div class="tooltip-row" vid="296"><span vid="297">Recovery</span><span class="tooltip-val" vid="298">81%</span></div>
+                                    <div class="tooltip-row" vid="299"><span vid="300">Nutrition</span><span class="tooltip-val" vid="301">On Target</span></div>
+                                </div>
+                            </div>
+                            <div class="athlete-dot-wrapper" style="left: 54%; top: 41%;" vid="302">
+                                <div class="athlete-dot yellow" vid="303">TH</div>
+                                <div class="dot-tooltip" vid="304">
+                                    <div class="tooltip-name" vid="305">Tom Hill</div>
+                                    <div class="tooltip-row" vid="306"><span vid="307">Training Load</span><span class="tooltip-val" vid="308">44 ATL</span></div>
+                                    <div class="tooltip-row" vid="309"><span vid="310">Recovery</span><span class="tooltip-val" vid="311">61%</span></div>
+                                    <div class="tooltip-row" vid="312"><span vid="313">Nutrition</span><span class="tooltip-val" vid="314">Low Protein</span></div>
+                                </div>
+                            </div>
+                            <div class="athlete-dot-wrapper" style="left: 22%; top: 19%;" vid="315">
+                                <div class="athlete-dot green" vid="316">LW</div>
+                                <div class="dot-tooltip" vid="317">
+                                    <div class="tooltip-name" vid="318">Lisa Ward</div>
+                                    <div class="tooltip-row" vid="319"><span vid="320">Training Load</span><span class="tooltip-val" vid="321">22 ATL</span></div>
+                                    <div class="tooltip-row" vid="322"><span vid="323">Recovery</span><span class="tooltip-val" vid="324">88%</span></div>
+                                    <div class="tooltip-row" vid="325"><span vid="326">Nutrition</span><span class="tooltip-val" vid="327">On Target</span></div>
+                                </div>
+                            </div>
+                            <div class="athlete-dot-wrapper" style="left: 72%; top: 73%;" vid="328">
+                                <div class="athlete-dot red" vid="329">DO</div>
+                                <div class="dot-tooltip" vid="330">
+                                    <div class="tooltip-name" vid="331">Dan O'Brien</div>
+                                    <div class="tooltip-row" vid="332"><span vid="333">Training Load</span><span class="tooltip-val" vid="334">78 ATL</span></div>
+                                    <div class="tooltip-row" vid="335"><span vid="336">Recovery</span><span class="tooltip-val" vid="337">28%</span></div>
+                                    <div class="tooltip-row" vid="338"><span vid="339">Nutrition</span><span class="tooltip-val" vid="340">Under-fueling</span></div>
+                                </div>
+                            </div>
+                            <!-- Axis labels -->
+                            <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 9px; color: var(--text-tertiary); font-family: var(--font-mono); letter-spacing: 0.07em;" vid="341">TRAINING LOAD →</div>
+                            <div style="position: absolute; left: 7px; top: 50%; transform: translateY(-50%) rotate(-90deg); font-size: 9px; color: var(--text-tertiary); font-family: var(--font-mono); letter-spacing: 0.07em; white-space: nowrap;" vid="342">↑ RECOVERY SCORE</div>
+                        </div>
+
+                        <!-- Attention Queue -->
+                        <div class="attention-queue" vid="343">
+                            <div class="attention-header" vid="344">
+                                <span style="color: var(--text-secondary);" vid="345">Coach Attention</span>
+                                <span class="attention-badge" vid="346">4 ACTIVE</span>
+                            </div>
+                            <div class="alert-card sev-red" vid="347">
+                                <div class="alert-icon red" vid="348">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" vid="349"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" vid="350"></path><line x1="12" y1="9" x2="12" y2="13" vid="351"></line><line x1="12" y1="17" x2="12.01" y2="17" vid="352"></line></svg>
+                                </div>
+                                <div class="alert-body" vid="353">
+                                    <div class="alert-athlete" vid="354">Sarah Lee</div>
+                                    <div class="alert-reason" vid="355">Training load spike · 97 ATL</div>
+                                    <div class="alert-meta" vid="356">Rec 34% · Hydration low · <span style="color: var(--danger);" vid="357">CRITICAL</span></div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;" vid="358">
+                                    <div class="alert-time" vid="359">Today</div>
+                                    <button class="alert-action" vid="360">Review</button>
+                                </div>
+                            </div>
+                            <div class="alert-card sev-red" vid="361">
+                                <div class="alert-icon red" vid="362">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" vid="363"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" vid="364"></path></svg>
+                                </div>
+                                <div class="alert-body" vid="365">
+                                    <div class="alert-athlete" vid="366">Dan O'Brien</div>
+                                    <div class="alert-reason" vid="367">Overreach risk · Rec 28%</div>
+                                    <div class="alert-meta" vid="368">Load 78 ATL · <span style="color: var(--danger);" vid="369">HIGH RISK</span></div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;" vid="370">
+                                    <div class="alert-time" vid="371">2h ago</div>
+                                    <button class="alert-action" vid="372">Review</button>
+                                </div>
+                            </div>
+                            <div class="alert-card sev-yellow" vid="373">
+                                <div class="alert-icon yellow" vid="374">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" vid="375"><circle cx="12" cy="12" r="10" vid="376"></circle><line x1="12" y1="8" x2="12" y2="12" vid="377"></line><line x1="12" y1="16" x2="12.01" y2="16" vid="378"></line></svg>
+                                </div>
+                                <div class="alert-body" vid="379">
+                                    <div class="alert-athlete" vid="380">Mike Ross</div>
+                                    <div class="alert-reason" vid="381">Under-fueling · Low protein</div>
+                                    <div class="alert-meta" vid="382">Nutrition 58% · <span style="color: #FACC15;" vid="383">MODERATE</span></div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;" vid="384">
+                                    <div class="alert-time" vid="385">4h ago</div>
+                                    <button class="alert-action" vid="386">Review</button>
+                                </div>
+                            </div>
+                            <div class="alert-card sev-blue" vid="387">
+                                <div class="alert-icon blue" vid="388">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" vid="389"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" vid="390"></rect><line x1="16" y1="2" x2="16" y2="6" vid="391"></line><line x1="8" y1="2" x2="8" y2="6" vid="392"></line><line x1="3" y1="10" x2="21" y2="10" vid="393"></line></svg>
+                                </div>
+                                <div class="alert-body" vid="394">
+                                    <div class="alert-athlete" vid="395">Tom Hill</div>
+                                    <div class="alert-reason" vid="396">2 sessions missed this week</div>
+                                    <div class="alert-meta" vid="397">Last activity: 3 days ago</div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;" vid="398">
+                                    <div class="alert-time" vid="399">3d ago</div>
+                                    <button class="alert-action" vid="400">Message</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Insights Panel -->
+                <div class="insights-grid" vid="401" style="gap: 16px;">
+                    <div class="insight-card" vid="402">
+                        <div class="insight-label" vid="403">Athletes Improving</div>
+                        <div class="insight-value" style="color: var(--accent-secondary);" vid="404">11</div>
+                        <div class="insight-bar" vid="405"><div class="insight-bar-fill" style="width: 46%; background: var(--accent-secondary);" vid="406"></div></div>
+                        <div class="insight-sub" vid="407">Combined training + recovery trend</div>
+                        <div style="display: flex; align-items: center; gap: 4px; margin-top: 2px; font-size: 10px; color: var(--accent-secondary);" vid="408">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" vid="409"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" vid="410"></polyline><polyline points="17 6 23 6 23 12" vid="411"></polyline></svg>
+                            +3 vs last week
+                        </div>
+                    </div>
+                    <div class="insight-card" vid="412">
+                        <div class="insight-label" vid="413">Athletes At Risk</div>
+                        <div class="insight-value" style="color: var(--danger);" vid="414">4</div>
+                        <div class="insight-bar" vid="415"><div class="insight-bar-fill" style="width: 16%; background: var(--danger);" vid="416"></div></div>
+                        <div class="insight-sub" vid="417">Fatigue, load spike, or under-fueling</div>
+                        <div style="display: flex; align-items: center; gap: 4px; margin-top: 2px; font-size: 10px; color: var(--danger);" vid="418">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" vid="419"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6" vid="420"></polyline><polyline points="17 18 23 18 23 12" vid="421"></polyline></svg>
+                            +1 vs last week
+                        </div>
+                    </div>
+                    <div class="insight-card" vid="422">
+                        <div class="insight-label" vid="423">Avg Recovery Trend</div>
+                        <div class="insight-value" style="color: #4DA3FF;" vid="424">74<span style="font-size: 13px; color: var(--text-secondary); font-family: var(--font-sans);" vid="425">%</span></div>
+                        <div class="insight-bar" vid="426"><div class="insight-bar-fill" style="width: 74%; background: #4DA3FF;" vid="427"></div></div>
+                        <div class="insight-sub" vid="428">HRV + sleep + fatigue signals</div>
+                        <div style="display: flex; align-items: center; gap: 4px; margin-top: 2px; font-size: 10px; color: #4DA3FF;" vid="429">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" vid="430"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" vid="431"></polyline><polyline points="17 6 23 6 23 12" vid="432"></polyline></svg>
+                            +4% this week
+                        </div>
+                    </div>
+                    <div class="insight-card" vid="433">
+                        <div class="insight-label" vid="434">Nutrition Trend</div>
+                        <div class="insight-value" style="color: var(--accent-secondary);" vid="435">82<span style="font-size: 13px; color: var(--text-secondary); font-family: var(--font-sans);" vid="436">%</span></div>
+                        <div class="insight-bar" vid="437"><div class="insight-bar-fill" style="width: 82%; background: linear-gradient(90deg, #00FF85, #C6FF00);" vid="438"></div></div>
+                        <div class="insight-sub" vid="439">Athletes meeting calorie + protein targets</div>
+                        <div style="display: flex; align-items: center; gap: 4px; margin-top: 2px; font-size: 10px; color: var(--accent-secondary);" vid="440">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" vid="441"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" vid="442"></polyline><polyline points="17 6 23 6 23 12" vid="443"></polyline></svg>
+                            +5% vs last week
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Programming Overview + Fueling Signals -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;" vid="444">
+
+                    <!-- Weekly Programming -->
+                    <div class="programming-panel" vid="445">
+                        <div class="prog-header" vid="446">
+                            <div vid="447">
+                                <div class="prog-title" vid="448">Program Distribution</div>
+                                <div class="prog-sub" vid="449">Planned session distribution across team</div>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-tertiary); font-family: var(--font-mono);" vid="450">WK 43</div>
+                        </div>
+                        <div class="prog-body" vid="451">
+                            <div class="prog-stacked" vid="452">
+                                <div class="prog-row" vid="453">
+                                    <div class="prog-label" vid="454">Running</div>
+                                    <div class="prog-bar-track" vid="455"><div class="prog-bar-fill" style="width: 80%; background: var(--accent-lime);" vid="456"></div></div>
+                                    <div class="prog-count" vid="457">48</div>
+                                </div>
+                                <div class="prog-row" vid="458">
+                                    <div class="prog-label" vid="459">Strength</div>
+                                    <div class="prog-bar-track" vid="460"><div class="prog-bar-fill" style="width: 55%; background: #4DA3FF;" vid="461"></div></div>
+                                    <div class="prog-count" vid="462">33</div>
+                                </div>
+                                <div class="prog-row" vid="463">
+                                    <div class="prog-label" vid="464">Conditioning</div>
+                                    <div class="prog-bar-track" vid="465"><div class="prog-bar-fill" style="width: 38%; background: #FB923C;" vid="466"></div></div>
+                                    <div class="prog-count" vid="467">23</div>
+                                </div>
+                                <div class="prog-row" vid="468">
+                                    <div class="prog-label" vid="469">Mobility</div>
+                                    <div class="prog-bar-track" vid="470"><div class="prog-bar-fill" style="width: 25%; background: #FACC15;" vid="471"></div></div>
+                                    <div class="prog-count" vid="472">15</div>
+                                </div>
+                                <div class="prog-row" vid="473">
+                                    <div class="prog-label" vid="474">Recovery</div>
+                                    <div class="prog-bar-track" vid="475"><div class="prog-bar-fill" style="width: 20%; background: #22C55E;" vid="476"></div></div>
+                                    <div class="prog-count" vid="477">12</div>
+                                </div>
+                            </div>
+                            <svg class="prog-donut" viewBox="0 0 80 80" vid="478">
+                                <circle cx="40" cy="40" r="28" fill="none" stroke="var(--border)" stroke-width="10" vid="479"></circle>
+                                <circle cx="40" cy="40" r="28" fill="none" stroke="#C6FF00" stroke-width="10" stroke-dasharray="35.2 140.8" stroke-dashoffset="0" transform="rotate(-90 40 40)" vid="480"></circle>
+                                <circle cx="40" cy="40" r="28" fill="none" stroke="#4DA3FF" stroke-width="10" stroke-dasharray="24.2 151.8" stroke-dashoffset="-35.2" transform="rotate(-90 40 40)" vid="481"></circle>
+                                <circle cx="40" cy="40" r="28" fill="none" stroke="#FB923C" stroke-width="10" stroke-dasharray="16.8 159.2" stroke-dashoffset="-59.4" transform="rotate(-90 40 40)" vid="482"></circle>
+                                <circle cx="40" cy="40" r="28" fill="none" stroke="#FACC15" stroke-width="10" stroke-dasharray="11" stroke-dashoffset="-76.2" transform="rotate(-90 40 40)" vid="483"></circle>
+                                <circle cx="40" cy="40" r="28" fill="none" stroke="#22C55E" stroke-width="10" stroke-dasharray="8.8 167.2" stroke-dashoffset="-87.2" transform="rotate(-90 40 40)" vid="484"></circle>
+                                <text x="40" y="37" text-anchor="middle" fill="var(--text-primary)" font-size="10" font-weight="700" font-family="JetBrains Mono" vid="485">131</text>
+                                <text x="40" y="48" text-anchor="middle" fill="var(--text-tertiary)" font-size="7" font-family="Inter" vid="486">sessions</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Fueling Signals -->
+                    <div class="programming-panel" vid="487">
+                        <div class="prog-header" vid="488">
+                            <div vid="489">
+                                <div class="prog-title" vid="490">Fueling Signals</div>
+                                <div class="prog-sub" vid="491">Team nutrition indicators · Today</div>
+                            </div>
+                            <div style="font-size: 10px; color: var(--accent-secondary); font-weight: 600; letter-spacing: 0.04em;" vid="492">LIVE</div>
+                        </div>
+                        <div class="fueling-grid" vid="493">
+                            <div class="fuel-card" vid="494">
+                                <div class="fuel-label" vid="495">On Target</div>
+                                <div class="fuel-value" style="color: #00FF85;" vid="496">19</div>
+                                <div class="fuel-detail" vid="497">Athletes meeting<br vid="498">all nutrition targets</div>
+                                <div class="fuel-row" vid="499">
+                                    <div class="fuel-dot" style="background: #00FF85;" vid="500"></div>
+                                    <span style="font-size: 10px; color: var(--text-tertiary);" vid="501">79% of roster</span>
+                                </div>
+                            </div>
+                            <div class="fuel-card" vid="502">
+                                <div class="fuel-label" vid="503">Under Fueling</div>
+                                <div class="fuel-value" style="color: #FACC15;" vid="504">3</div>
+                                <div class="fuel-detail" vid="505">Below daily<br vid="506">calorie target</div>
+                                <div class="fuel-row" vid="507">
+                                    <div class="fuel-dot" style="background: #FACC15;" vid="508"></div>
+                                    <span style="font-size: 10px; color: var(--text-tertiary);" vid="509">Avg −340 kcal</span>
+                                </div>
+                            </div>
+                            <div class="fuel-card" vid="510">
+                                <div class="fuel-label" vid="511">Low Protein</div>
+                                <div class="fuel-value" style="color: #FB923C;" vid="512">4</div>
+                                <div class="fuel-detail" vid="513">Below protein<br vid="514">threshold</div>
+                                <div class="fuel-row" vid="515">
+                                    <div class="fuel-dot" style="background: #FB923C;" vid="516"></div>
+                                    <span style="font-size: 10px; color: var(--text-tertiary);" vid="517">Avg −22g / day</span>
+                                </div>
+                            </div>
+                            <div class="fuel-card" vid="518">
+                                <div class="fuel-label" vid="519">Hydration Low</div>
+                                <div class="fuel-value" style="color: #FF4D4D;" vid="520">2</div>
+                                <div class="fuel-detail" vid="521">Below hydration<br vid="522">minimum</div>
+                                <div class="fuel-row" vid="523">
+                                    <div class="fuel-dot" style="background: #FF4D4D;" vid="524"></div>
+                                    <span style="font-size: 10px; color: var(--text-tertiary);" vid="525">Flag: Sarah, Mike</span>
+                                </div>
+                            </div>
+                            <div class="fuel-card" vid="526">
+                                <div class="fuel-label" vid="527">Avg Calories</div>
+                                <div class="fuel-value" style="color: var(--text-primary);" vid="528">2,840</div>
+                                <div class="fuel-detail" vid="529">Team avg<br vid="530">daily intake</div>
+                                <div class="fuel-row" vid="531">
+                                    <div class="fuel-dot" style="background: var(--accent-lime);" vid="532"></div>
+                                    <span style="font-size: 10px; color: var(--text-tertiary);" vid="533">Target: 2,900</span>
+                                </div>
+                            </div>
+                            <div class="fuel-card" vid="534">
+                                <div class="fuel-label" vid="535">Avg Protein</div>
+                                <div class="fuel-value" style="color: var(--text-primary);" vid="536">178<span style="font-size: 11px; color: var(--text-secondary);" vid="537">g</span></div>
+                                <div class="fuel-detail" vid="538">Team avg<br vid="539">protein intake</div>
+                                <div class="fuel-row" vid="540">
+                                    <div class="fuel-dot" style="background: var(--accent-lime);" vid="541"></div>
+                                    <span style="font-size: 10px; color: var(--text-tertiary);" vid="542">Target: 185g</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-split" vid="543" style="gap: 20px;">
+                    
+                    <div class="table-container" vid="544">
+                        <div class="table-header" vid="545">
+                            <div class="table-title" vid="546">Athlete Snapshot</div>
+                            <button class="btn-sm" vid="547">Filter</button>
+                        </div>
+                        <table class="data-table" vid="548">
+                            <thead vid="549">
+                                <tr vid="550">
+                                    <th vid="551">Athlete</th>
+                                    <th vid="552">Last Session</th>
+                                    <th vid="553">Weekly Load</th>
+                                    <th style="min-width: 110px;" vid="554">Recovery</th>
+                                    <th style="min-width: 110px;" vid="555">Nutrition</th>
+                                    <th vid="556">Status</th>
+                                    <th vid="557">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody vid="558">
+                                <tr vid="559">
+                                    <td vid="560">
+                                        <div class="athlete-cell" vid="561" style="gap: 8px;">
+                                            <div class="athlete-avatar" vid="562">JD</div>
+                                            <div vid="563">
+                                                <div vid="564" style="color: var(--text-primary); font-weight: 500;">John Doe</div>
+                                                <div class="risk-badge risk-pr" style="margin-top: 2px;" vid="565">PR</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-family: var(--font-mono); font-size: 12px;" vid="566">Tempo Session</td>
+                                    <td vid="567">
+                                        <div class="load-cell" vid="568">
+                                            <span style="font-family: var(--font-mono); font-size: 12px;" vid="569">82 ATL</span>
+                                            <div class="load-bar-bg" vid="570"><div class="load-bar-fill" style="width: 82%; background: var(--accent-lime);" vid="571"></div></div>
+                                        </div>
+                                    </td>
+                                    <td vid="572">
+                                        <div style="display: flex; align-items: center; gap: 6px;" vid="573">
+                                            <span class="rec-score rec-high" vid="574">87%</span>
+                                            <span style="font-size: 10px; color: var(--text-tertiary);" vid="575">HRV ↑</span>
+                                        </div>
+                                    </td>
+                                    <td vid="576"><span class="nutri-badge nutri-on" vid="577">On Target</span></td>
+                                    <td vid="578"><div class="status-dot status-green" vid="579"></div></td>
+                                    <td vid="580"><button class="btn-sm" vid="581">View</button></td>
+                                </tr>
+                                <tr vid="582">
+                                    <td vid="583">
+                                        <div class="athlete-cell" vid="584" style="gap: 8px;">
+                                            <div class="athlete-avatar" vid="585">EC</div>
+                                            <div vid="586">
+                                                <div vid="587" style="color: var(--text-primary); font-weight: 500;">Emily Chen</div>
+                                                <div class="risk-badge risk-pr" style="margin-top: 2px;" vid="588">VO2↑</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-family: var(--font-mono); font-size: 12px;" vid="589">Power Intervals</td>
+                                    <td vid="590">
+                                        <div class="load-cell" vid="591">
+                                            <span style="font-family: var(--font-mono); font-size: 12px;" vid="592">91 ATL</span>
+                                            <div class="load-bar-bg" vid="593"><div class="load-bar-fill" style="width: 91%; background: var(--z5);" vid="594"></div></div>
+                                        </div>
+                                    </td>
+                                    <td vid="595">
+                                        <div style="display: flex; align-items: center; gap: 6px;" vid="596">
+                                            <span class="rec-score rec-high" vid="597">79%</span>
+                                            <span style="font-size: 10px; color: var(--text-tertiary);" vid="598">Sleep ↑</span>
+                                        </div>
+                                    </td>
+                                    <td vid="599"><span class="nutri-badge nutri-on" vid="600">On Target</span></td>
+                                    <td vid="601"><div class="status-dot status-green" vid="602"></div></td>
+                                    <td vid="603"><button class="btn-sm" vid="604">View</button></td>
+                                </tr>
+                                <tr vid="605">
+                                    <td vid="606">
+                                        <div class="athlete-cell" vid="607" style="gap: 8px;">
+                                            <div class="athlete-avatar" vid="608">MR</div>
+                                            <div vid="609">
+                                                <div vid="610" style="color: var(--text-primary); font-weight: 500;">Mike Ross</div>
+                                                <div class="risk-badge risk-med" style="margin-top: 2px;" vid="611">FATIGUE</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-family: var(--font-mono); font-size: 12px;" vid="612">Endurance Session</td>
+                                    <td vid="613">
+                                        <div class="load-cell" vid="614">
+                                            <span style="font-family: var(--font-mono); font-size: 12px;" vid="615">38 ATL</span>
+                                            <div class="load-bar-bg" vid="616"><div class="load-bar-fill" style="width: 38%; background: var(--warning);" vid="617"></div></div>
+                                        </div>
+                                    </td>
+                                    <td vid="618">
+                                        <div style="display: flex; align-items: center; gap: 6px;" vid="619">
+                                            <span class="rec-score rec-mid" vid="620">52%</span>
+                                            <span style="font-size: 10px; color: var(--text-tertiary);" vid="621">Fatigue ↑</span>
+                                        </div>
+                                    </td>
+                                    <td vid="622"><span class="nutri-badge nutri-low" vid="623">Low Protein</span></td>
+                                    <td vid="624"><div class="status-dot status-yellow" vid="625"></div></td>
+                                    <td vid="626"><button class="btn-sm" vid="627">View</button></td>
+                                </tr>
+                                <tr vid="628">
+                                    <td vid="629">
+                                        <div class="athlete-cell" vid="630" style="gap: 8px;">
+                                            <div class="athlete-avatar" vid="631">SL</div>
+                                            <div vid="632">
+                                                <div vid="633" style="color: var(--text-primary); font-weight: 500;">Sarah Lee</div>
+                                                <div class="risk-badge risk-high" style="margin-top: 2px;" vid="634">LOAD SPIKE</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-family: var(--font-mono); font-size: 12px;" vid="635">Conditioning Circuit</td>
+                                    <td vid="636">
+                                        <div class="load-cell" vid="637">
+                                            <span style="font-family: var(--font-mono); font-size: 12px; color: var(--danger);" vid="638">97 ATL</span>
+                                            <div class="load-bar-bg" vid="639"><div class="load-bar-fill" style="width: 97%; background: var(--danger);" vid="640"></div></div>
+                                        </div>
+                                    </td>
+                                    <td vid="641">
+                                        <div style="display: flex; align-items: center; gap: 6px;" vid="642">
+                                            <span class="rec-score rec-low" vid="643">34%</span>
+                                            <span style="font-size: 10px; color: var(--text-tertiary);" vid="644">Poor sleep</span>
+                                        </div>
+                                    </td>
+                                    <td vid="645"><span class="nutri-badge nutri-under" vid="646">Hydration ↓</span></td>
+                                    <td vid="647"><div class="status-dot status-red" vid="648"></div></td>
+                                    <td vid="649"><button class="btn-sm" vid="650">View</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    
+                    <div class="feed-container" vid="651">
+                        <div class="feed-header" vid="652">Live Performance Feed</div>
+                        <div class="feed-list" vid="653">
+                            <div class="feed-item" vid="654">
+                                <div class="feed-icon highlight" vid="655">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px;" vid="656"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" vid="657"></polyline></svg>
+                                </div>
+                                <div class="feed-content" vid="658">
+                                    <div class="feed-text" vid="659"><span class="feed-zone-dot" style="background: var(--z5);" vid="660"></span><strong vid="661">Emily</strong> set new VO2 Max · 62.1 ml/kg</div>
+                                    <div class="feed-time" vid="662">2 mins ago</div>
+                                </div>
+                            </div>
+                            <div class="feed-item" vid="663">
+                                <div class="feed-icon" style="border-color: rgba(198,255,0,0.3); color: var(--accent-lime);" vid="664">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px;" vid="665"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" vid="666"></polyline><polyline points="17 6 23 6 23 12" vid="667"></polyline></svg>
+                                </div>
+                                <div class="feed-content" vid="668">
+                                    <div class="feed-text" vid="669"><span class="feed-zone-dot" style="background: var(--accent-lime);" vid="670"></span><strong vid="671">John</strong> performance output improved · tempo session</div>
+                                    <div class="feed-time" vid="672">8 mins ago</div>
+                                </div>
+                            </div>
+                            <div class="feed-item" vid="673">
+                                <div class="feed-icon" style="border-color: rgba(0,255,133,0.3); color: #00FF85;" vid="674">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px;" vid="675"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" vid="676"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2" vid="677"></path><line x1="12" y1="19" x2="12" y2="23" vid="678"></line><line x1="8" y1="23" x2="16" y2="23" vid="679"></line></svg>
+                                </div>
+                                <div class="feed-content" vid="680">
+                                    <div class="feed-text" vid="681"><span class="feed-zone-dot" style="background: #00FF85;" vid="682"></span><strong vid="683">Emily</strong> logged nutrition plan · 2,920 kcal</div>
+                                    <div class="feed-time" vid="684">12 mins ago</div>
+                                </div>
+                            </div>
+                            <div class="feed-item" vid="685">
+                                <div class="feed-icon" style="border-color: rgba(0,255,133,0.3); color: #00FF85;" vid="686">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px;" vid="687"><polyline points="20 6 9 17 4 12" vid="688"></polyline></svg>
+                                </div>
+                                <div class="feed-content" vid="689">
+                                    <div class="feed-text" vid="690"><span class="feed-zone-dot" style="background: #00FF85;" vid="691"></span><strong vid="692">John</strong> hit daily protein target · 194g</div>
+                                    <div class="feed-time" vid="693">22 mins ago</div>
+                                </div>
+                            </div>
+                            <div class="feed-item" vid="694">
+                                <div class="feed-icon" style="border-color: rgba(255,77,77,0.3); color: var(--danger);" vid="695">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px;" vid="696"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" vid="697"></path><line x1="12" y1="9" x2="12" y2="13" vid="698"></line><line x1="12" y1="17" x2="12.01" y2="17" vid="699"></line></svg>
+                                </div>
+                                <div class="feed-content" vid="700">
+                                    <div class="feed-text" vid="701"><span class="feed-zone-dot" style="background: var(--danger);" vid="702"></span><strong vid="703">Sarah</strong> training load spike detected</div>
+                                    <div class="feed-time" vid="704">42 mins ago</div>
+                                </div>
+                            </div>
+                            <div class="feed-item" vid="705">
+                                <div class="feed-icon" style="border-color: rgba(255,77,77,0.3); color: var(--danger);" vid="706">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px;" vid="707"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" vid="708"></path></svg>
+                                </div>
+                                <div class="feed-content" vid="709">
+                                    <div class="feed-text" vid="710"><span class="feed-zone-dot" style="background: #4DA3FF;" vid="711"></span><strong vid="712">Sarah</strong> reported poor sleep recovery · HRV –14%</div>
+                                    <div class="feed-time" vid="713">55 mins ago</div>
+                                </div>
+                            </div>
+                            <div class="feed-item" vid="714">
+                                <div class="feed-icon" style="border-color: rgba(198,255,0,0.3); color: var(--accent-lime);" vid="715">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px;" vid="716"><path d="M18 20V10" vid="717"></path><path d="M12 20V4" vid="718"></path><path d="M6 20v-6" vid="719"></path></svg>
+                                </div>
+                                <div class="feed-content" vid="720">
+                                    <div class="feed-text" vid="721"><span class="feed-zone-dot" style="background: var(--accent-lime);" vid="722"></span><strong vid="723">Mike</strong> completed strength session · 52 min</div>
+                                    <div class="feed-time" vid="724">1.5 hrs ago</div>
+                                </div>
+                            </div>
+                            <div class="feed-item" vid="725">
+                                <div class="feed-icon" style="border-color: rgba(0,255,133,0.3); color: #00FF85;" vid="726">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px;" vid="727"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z" vid="728"></path><path d="M12 6v6l4 2" vid="729"></path></svg>
+                                </div>
+                                <div class="feed-content" vid="730">
+                                    <div class="feed-text" vid="731"><span class="feed-zone-dot" style="background: #00FF85;" vid="732"></span><strong vid="733">Lisa</strong> met daily hydration goal · 3.2L</div>
+                                    <div class="feed-time" vid="734">1.8 hrs ago</div>
+                                </div>
+                            </div>
+                            <div class="feed-item" vid="735">
+                                <div class="feed-icon" style="border-color: rgba(251,146,60,0.3); color: #FB923C;" vid="736">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px;" vid="737"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" vid="738"></polygon></svg>
+                                </div>
+                                <div class="feed-content" vid="739">
+                                    <div class="feed-text" vid="740"><span class="feed-zone-dot" style="background: #FB923C;" vid="741"></span><strong vid="742">Alex</strong> completed conditioning circuit · Z4</div>
+                                    <div class="feed-time" vid="743">2 hrs ago</div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main></div>
+    
+    
+
+</body></html>

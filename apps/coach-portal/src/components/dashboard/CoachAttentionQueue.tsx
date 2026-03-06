@@ -52,10 +52,13 @@ function AlertCard({ alert }: { alert: AttentionAlert }) {
       <div className="flex-1 min-w-0">
         <div className="text-xs font-bold text-text-primary">{alert.athlete}</div>
         <div className="text-[11px] text-text-secondary mt-0.5 leading-snug">{alert.reason}</div>
-        <div className="text-[10px] text-text-tertiary mt-1 font-mono flex items-center gap-2">
+        <div className="text-[10px] text-text-tertiary mt-1 font-mono flex items-center gap-1.5">
           {alert.meta}
           {alert.metaHighlight && (
-            <span style={{ color: alert.metaHighlight.color }}>{alert.metaHighlight.text}</span>
+            <>
+              <span className="opacity-40">·</span>
+              <span style={{ color: alert.metaHighlight.color }}>{alert.metaHighlight.text}</span>
+            </>
           )}
         </div>
       </div>
@@ -72,7 +75,7 @@ function AlertCard({ alert }: { alert: AttentionAlert }) {
 export function CoachAttentionQueue() {
   return (
     <div className="flex flex-col gap-2 overflow-y-auto">
-      <div className="text-[11px] uppercase tracking-[0.06em] text-text-tertiary font-bold mb-1.5 flex items-center justify-between">
+      <div className="text-[11px] uppercase tracking-[0.06em] text-text-tertiary font-bold mb-1.5 flex items-center justify-between gap-3">
         <span className="text-text-secondary">Coach Attention</span>
         <span
           className="text-[10px] font-bold px-2 py-0.5 rounded-full animate-pulse"

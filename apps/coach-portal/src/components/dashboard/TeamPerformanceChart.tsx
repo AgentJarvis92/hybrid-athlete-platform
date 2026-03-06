@@ -28,7 +28,7 @@ export function TeamPerformanceChart() {
               className="w-3 h-2 rounded-[2px]"
               style={{ background: "rgba(198,255,0,0.07)", border: "1px solid rgba(198,255,0,0.15)" }}
             />
-            Z4 band
+            Peak Load Band
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@ export function TeamPerformanceChart() {
           {/* Zone 4 band */}
           <rect x="0" y="54" width="900" height="36" fill="rgba(198,255,0,0.04)" />
           <text x="4" y="48" fill="rgba(198,255,0,0.4)" fontSize="9" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>
-            Z4 THRESHOLD
+            PEAK LOAD ZONE
           </text>
 
           {/* Y labels */}

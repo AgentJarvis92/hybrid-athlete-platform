@@ -134,7 +134,7 @@ export const teamInsights: TeamInsight[] = [
 ];
 
 export const programCategories: ProgramCategory[] = [
-  { label: "Running", count: 48, percent: 80, color: "#C6FF00" },
+  { label: "Endurance", count: 48, percent: 80, color: "#C6FF00" },
   { label: "Strength", count: 33, percent: 55, color: "#4DA3FF" },
   { label: "Conditioning", count: 23, percent: 38, color: "#FB923C" },
   { label: "Mobility", count: 15, percent: 25, color: "#FACC15" },
@@ -162,7 +162,7 @@ export const athleteSnapshots: AthleteSnapshot[] = [
   },
   {
     id: "2", initials: "EC", name: "Emily Chen",
-    badge: { text: "VO2↑", type: "pr" },
+    badge: { text: "PEAK", type: "pr" },
     lastSession: "Power Intervals",
     weeklyLoad: 91, weeklyLoadColor: "#FB923C",
     recovery: { score: 79, level: "high", note: "Sleep ↑" },
@@ -172,7 +172,7 @@ export const athleteSnapshots: AthleteSnapshot[] = [
   {
     id: "3", initials: "MR", name: "Mike Ross",
     badge: { text: "FATIGUE", type: "med" },
-    lastSession: "Endurance Session",
+    lastSession: "Aerobic Session",
     weeklyLoad: 38, weeklyLoadColor: "#FACC15",
     recovery: { score: 52, level: "mid", note: "Fatigue ↑" },
     nutrition: { status: "low", label: "Low Protein" },
@@ -190,7 +190,7 @@ export const athleteSnapshots: AthleteSnapshot[] = [
 ];
 
 export const liveFeed: FeedItem[] = [
-  { id: "1", iconStyle: "highlight", dotColor: "#FB923C", athlete: "Emily", text: "set new VO2 Max · 62.1 ml/kg", time: "2 mins ago" },
+  { id: "1", iconStyle: "highlight", dotColor: "#FB923C", athlete: "Emily", text: "set new aerobic output peak · 62.1 ml/kg/min", time: "2 mins ago" },
   { id: "2", iconStyle: "lime", dotColor: "#C6FF00", athlete: "John", text: "performance output improved · tempo session", time: "8 mins ago" },
   { id: "3", iconStyle: "green", dotColor: "#00FF85", athlete: "Emily", text: "logged nutrition plan · 2,920 kcal", time: "12 mins ago" },
   { id: "4", iconStyle: "green", dotColor: "#00FF85", athlete: "John", text: "hit daily protein target · 194g", time: "22 mins ago" },
@@ -198,5 +198,5 @@ export const liveFeed: FeedItem[] = [
   { id: "6", iconStyle: "red", dotColor: "#FF4D4D", athlete: "Sarah", text: "reported poor sleep recovery · HRV –14%", time: "55 mins ago" },
   { id: "7", iconStyle: "lime", dotColor: "#C6FF00", athlete: "Mike", text: "completed strength session · 52 min", time: "1.5 hrs ago" },
   { id: "8", iconStyle: "green", dotColor: "#00FF85", athlete: "Lisa", text: "met daily hydration goal · 3.2L", time: "1.8 hrs ago" },
-  { id: "9", iconStyle: "orange", dotColor: "#FB923C", athlete: "Alex", text: "completed conditioning circuit · Z4", time: "2 hrs ago" },
+  { id: "9", iconStyle: "orange", dotColor: "#FB923C", athlete: "Alex", text: "completed conditioning circuit · peak zone", time: "2 hrs ago" },
 ];
