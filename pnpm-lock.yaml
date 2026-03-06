@@ -41,6 +41,9 @@ importers:
       react:
         specifier: ^18.3.0
         version: 18.3.1
+      react-body-highlighter:
+        specifier: ^2.0.5
+        version: 2.0.5(react@18.3.1)
       react-dom:
         specifier: ^18.3.0
         version: 18.3.1(react@18.3.1)
@@ -3006,6 +3009,12 @@ packages:
   range-parser@1.2.1:
     resolution: {integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==}
     engines: {node: '>= 0.6'}
+
+  react-body-highlighter@2.0.5:
+    resolution: {integrity: sha512-yt37177vKIc+8TGxQw//G/3ah2aw/3E0g1oDt4N+46fMLVZ9BSelhc9S7kiwEkJRvYc3RyUSr9453uMJnvtxRg==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
 
   react-devtools-core@6.1.5:
     resolution: {integrity: sha512-ePrwPfxAnB+7hgnEr8vpKxL9cmnp7F322t8oqcPshbIQQhDKgFDW4tjhF2wjVbdXF9O/nyuy3sQWd9JGpiLPvA==}
@@ -7155,6 +7164,10 @@ snapshots:
       inherits: 2.0.4
 
   range-parser@1.2.1: {}
+
+  react-body-highlighter@2.0.5(react@18.3.1):
+    dependencies:
+      react: 18.3.1
 
   react-devtools-core@6.1.5:
     dependencies:
