@@ -1,3 +1,4 @@
+import { AthleteStateStrip } from "@/components/dashboard/AthleteStateStrip";
 import { KpiCards } from "@/components/dashboard/KpiCards";
 import { TeamPerformanceChart } from "@/components/dashboard/TeamPerformanceChart";
 import { TeamReadinessMap } from "@/components/dashboard/TeamReadinessMap";
@@ -34,6 +35,9 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* Team State Strip */}
+      <AthleteStateStrip />
 
       {/* KPI Grid */}
       <KpiCards />
