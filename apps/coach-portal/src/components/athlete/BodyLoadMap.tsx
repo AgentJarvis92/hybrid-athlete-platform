@@ -50,72 +50,74 @@ export function BodyLoadMap({ callouts }: Props) {
         </div>
       </div>
 
-      {/* Body models + callouts */}
-      <div className="flex items-start gap-4">
+      {/* TOP — Body figures */}
+      <div className="flex justify-center gap-8 pb-4 mb-4 border-b border-border">
         {/* ANTERIOR (Front) */}
-        <div className="flex flex-col items-center gap-1 flex-shrink-0">
+        <div className="flex flex-col items-center gap-1">
           <span className="text-[9px] text-text-tertiary font-mono tracking-[0.12em] uppercase">Front</span>
           <Model
             type="anterior"
             data={SARAH_LOAD_DATA}
             bodyColor={BODY_COLOR}
             highlightedColors={HIGHLIGHT_COLORS}
-            style={{ width: "90px" }}
+            style={{ width: "110px" }}
             svgStyle={{ borderRadius: "4px" }}
           />
         </div>
 
         {/* POSTERIOR (Back) */}
-        <div className="flex flex-col items-center gap-1 flex-shrink-0">
+        <div className="flex flex-col items-center gap-1">
           <span className="text-[9px] text-text-tertiary font-mono tracking-[0.12em] uppercase">Back</span>
           <Model
             type="posterior"
             data={SARAH_LOAD_DATA}
             bodyColor={BODY_COLOR}
             highlightedColors={HIGHLIGHT_COLORS}
-            style={{ width: "90px" }}
+            style={{ width: "110px" }}
             svgStyle={{ borderRadius: "4px" }}
           />
         </div>
 
-        {/* Callouts + Legend */}
-        <div className="flex flex-col gap-2.5 flex-1 min-w-0 self-center">
-          {callouts.map((c, i) => (
-            <div
-              key={i}
-              className="text-[11px] text-text-secondary rounded-r-md py-2 px-3 leading-snug"
-              style={{
-                background: `${CALLOUT_COLOR[c.severity]}08`,
-                borderLeft: `2.5px solid ${CALLOUT_COLOR[c.severity]}`,
-              }}
-            >
+        {/* Legend — right side of figures */}
+        <div className="flex flex-col gap-2 justify-center">
+          {[
+            { label: "High Load",  color: "#FF4D4D" },
+            { label: "Elevated",   color: "#FACC15" },
+            { label: "Productive", color: "#C6FF00" },
+          ].map((l) => (
+            <div key={l.label} className="flex items-center gap-2 text-[10px] text-text-secondary">
+              <div
+                className="w-2.5 h-2.5 rounded-sm shrink-0"
+                style={{ background: `${l.color}30`, border: `1px solid ${l.color}`, boxShadow: `0 0 5px ${l.color}50` }}
+              />
+              {l.label}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* BOTTOM — Callouts */}
+      <div className="flex flex-col gap-2">
+        {callouts.map((c, i) => (
+          <div
+            key={i}
+            className="flex gap-3 items-start py-2 px-3 rounded-md text-[11px] text-text-secondary leading-snug"
+            style={{
+              background: `${CALLOUT_COLOR[c.severity]}07`,
+              borderLeft: `2.5px solid ${CALLOUT_COLOR[c.severity]}`,
+            }}
+          >
+            <div>
               <strong
-                className="block text-[11px] font-semibold mb-0.5"
+                className="block font-semibold mb-0.5"
                 style={{ color: CALLOUT_COLOR[c.severity] }}
               >
                 {c.title}
               </strong>
               {c.description}
             </div>
-          ))}
-
-          {/* Legend */}
-          <div className="flex flex-col gap-1.5 mt-2 pt-2 border-t border-border">
-            {[
-              { label: "High Load", color: "#FF4D4D" },
-              { label: "Elevated",  color: "#FACC15" },
-              { label: "Productive", color: "#C6FF00" },
-            ].map((l) => (
-              <div key={l.label} className="flex items-center gap-2 text-[10px] text-text-secondary">
-                <div
-                  className="w-2.5 h-2.5 rounded-sm shrink-0"
-                  style={{ background: `${l.color}35`, border: `1px solid ${l.color}`, boxShadow: `0 0 4px ${l.color}40` }}
-                />
-                {l.label}
-              </div>
-            ))}
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );
