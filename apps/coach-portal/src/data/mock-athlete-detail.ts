@@ -140,12 +140,12 @@ export const sarahLeeDetail: AthleteDetailData = {
     },
     {
       id: "rs2",
-      name: "Tempo Run",
+      name: "Tempo Session",
       type: "Tempo Session",
       duration: "60 min",
       load: "85 TSS",
       outcome: "completed",
-      note: "Pace target met, effort controlled",
+      note: "Output target met, effort controlled",
     },
     {
       id: "rs3",
@@ -167,18 +167,18 @@ export const sarahLeeDetail: AthleteDetailData = {
     },
     {
       id: "rs5",
-      name: "Endurance Ride",
+      name: "Aerobic Session",
       type: "Endurance Session",
       duration: "90 min",
       load: "110 TSS",
       outcome: "strong",
-      note: "Strong aerobic response, HR stable",
+      note: "Strong aerobic output, power output stable",
     },
   ],
 
   coachNotes: {
     currentFocus: "Manage fatigue accumulation before next build block.",
-    goal: "Maintain strength, increase aerobic base.",
+    goal: "Maintain strength output, build aerobic capacity.",
     nextReview: "Friday, Oct 28",
   },
 

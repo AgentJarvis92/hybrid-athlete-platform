@@ -15,11 +15,11 @@ export function CoachSignals({ signals }: Props) {
       style={{ background: "rgba(255,77,77,0.02)", border: "1px solid rgba(255,77,77,0.08)" }}
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between gap-4 mb-4">
         <span className="text-sm font-semibold text-text-primary">Coach Signals</span>
         {signals.length > 0 && (
           <span
-            className="text-[10px] font-bold px-2 py-0.5 rounded"
+            className="text-[10px] font-bold px-2 py-0.5 rounded shrink-0"
             style={{ background: "rgba(255,77,77,0.1)", color: "#FF4D4D", border: "1px solid rgba(255,77,77,0.2)" }}
           >
             {signals.length} ACTIVE
@@ -41,18 +41,14 @@ export function CoachSignals({ signals }: Props) {
                 borderLeft: `3px solid ${color}`,
               }}
             >
-              <div className="flex items-center justify-between">
-                <span className="text-[12px] font-semibold text-text-primary leading-tight">{signal.title}</span>
-                <span
-                  className="text-[9px] font-mono ml-2 shrink-0 px-1.5 py-0.5 rounded"
-                  style={{
-                    color,
-                    background: `${color}18`,
-                  }}
-                >
-                  {signal.tag}
-                </span>
-              </div>
+              {/* Tag on its own line so it never merges with title */}
+              <span
+                className="self-start text-[9px] font-mono px-1.5 py-0.5 rounded"
+                style={{ color, background: `${color}18` }}
+              >
+                {signal.tag}
+              </span>
+              <span className="text-[12px] font-semibold text-text-primary leading-snug">{signal.title}</span>
               <p className="text-[11px] text-text-secondary leading-snug flex-1">{signal.description}</p>
               <button className="text-left text-[10px] text-text-tertiary underline hover:text-text-primary transition-colors cursor-pointer">
                 {signal.actionLabel}

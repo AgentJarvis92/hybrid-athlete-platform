@@ -61,18 +61,26 @@ export function AthleteHero({ athlete }: Props) {
       {/* Right — integrations + actions */}
       <div className="flex flex-col items-end gap-3">
         {/* Integrations */}
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] text-text-tertiary mr-1 tracking-wide">CONNECTED:</span>
+        <div className="flex items-center gap-1.5 flex-wrap">
           {athlete.integrations.map((int) => (
             <div
               key={int.name}
-              title={int.connected ? `${int.name} Connected` : `${int.name} Not Connected`}
-              className="w-2 h-2 rounded-full"
+              className="flex items-center gap-1.5 text-[10px] font-medium px-2 py-0.5 rounded"
               style={{
-                background: int.connected ? "#22C55E" : "#2A2F37",
-                boxShadow: int.connected ? "0 0 6px rgba(34,197,94,0.4)" : "none",
+                color: int.connected ? "#22C55E" : "#5E6573",
+                background: int.connected ? "rgba(34,197,94,0.07)" : "rgba(30,35,43,0.8)",
+                border: `1px solid ${int.connected ? "rgba(34,197,94,0.2)" : "#2A2F37"}`,
               }}
-            />
+            >
+              <span
+                className="w-1.5 h-1.5 rounded-full shrink-0"
+                style={{
+                  background: int.connected ? "#22C55E" : "#3E4550",
+                  boxShadow: int.connected ? "0 0 4px rgba(34,197,94,0.5)" : "none",
+                }}
+              />
+              {int.name}
+            </div>
           ))}
         </div>
         {/* Action buttons */}

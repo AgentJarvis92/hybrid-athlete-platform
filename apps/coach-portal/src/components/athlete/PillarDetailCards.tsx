@@ -158,9 +158,9 @@ export function PillarDetailCards({ training, recovery, nutrition }: Props) {
             <span className="text-[10px] text-text-tertiary font-normal">/ {nutrition.hydrationTarget}L</span>
           </div>
         </div>
-        <div className="flex justify-between items-center pt-2">
-          <span className="text-[11px] text-text-secondary">Fueling Pattern</span>
-          <span className="text-[10px] text-text-tertiary">{nutrition.fuelingPattern}</span>
+        <div className="flex justify-between items-center gap-3 pt-2">
+          <span className="text-[11px] text-text-secondary shrink-0">Fueling Pattern</span>
+          <span className="text-[10px] text-text-tertiary text-right">{nutrition.fuelingPattern}</span>
         </div>
       </div>
     </div>
