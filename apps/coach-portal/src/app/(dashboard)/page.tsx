@@ -1,88 +1,63 @@
-"use client";
-
-import Link from "next/link";
-
-function StatCard({
-  label,
-  value,
-  sub,
-}: {
-  label: string;
-  value: string;
-  sub: string;
-}) {
-  return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
-      <p className="text-sm text-slate-500 mb-1">{label}</p>
-      <p className="text-3xl font-bold text-slate-900">{value}</p>
-      <p className="text-sm text-slate-400 mt-1">{sub}</p>
-    </div>
-  );
-}
-
-function QuickAction({
-  label,
-  description,
-  href,
-}: {
-  label: string;
-  description: string;
-  href: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className="block bg-white rounded-xl p-5 shadow-sm border border-slate-200 hover:border-brand-500 transition-colors"
-    >
-      <p className="font-semibold text-slate-900">{label}</p>
-      <p className="text-sm text-slate-500 mt-1">{description}</p>
-    </Link>
-  );
-}
+import { KpiCards } from "@/components/dashboard/KpiCards";
+import { TeamPerformanceChart } from "@/components/dashboard/TeamPerformanceChart";
+import { TeamReadinessMap } from "@/components/dashboard/TeamReadinessMap";
+import { TeamInsights } from "@/components/dashboard/TeamInsights";
+import { ProgramDistribution } from "@/components/dashboard/ProgramDistribution";
+import { FuelingSignals } from "@/components/dashboard/FuelingSignals";
+import { AthleteSnapshotTable } from "@/components/dashboard/AthleteSnapshotTable";
+import { LivePerformanceFeed } from "@/components/dashboard/LivePerformanceFeed";
 
 export default function DashboardPage() {
   return (
-    <div className="p-8">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
-        <p className="text-slate-500">Welcome to your coaching portal</p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <StatCard label="Athletes" value="0" sub="No athletes linked yet" />
-        <StatCard label="Active Programs" value="0" sub="Coming in Phase 2" />
-        <StatCard
-          label="Messages"
-          value="--"
-          sub="Coming in Phase 4"
-        />
-      </div>
-
-      <h2 className="text-lg font-semibold text-slate-900 mb-4">
-        Quick Actions
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        <QuickAction
-          label="Invite Athlete"
-          description="Generate an invite code to link an athlete"
-          href="/athletes"
-        />
-        <QuickAction
-          label="Create Program"
-          description="Build a weekly training program"
-          href="/programs"
-        />
-      </div>
-
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
-        <h3 className="font-semibold text-slate-900 mb-2">Recent Activity</h3>
-        <div className="py-8 text-center">
-          <p className="text-slate-400">No recent activity</p>
-          <p className="text-sm text-slate-300 mt-1">
-            Activity from your athletes will appear here
-          </p>
+    <>
+      {/* Section header */}
+      <div className="flex justify-between items-end">
+        <h1 className="text-[32px] font-bold tracking-[-0.03em] text-text-primary">
+          Performance Overview
+        </h1>
+        <div className="flex items-center gap-3">
+          {/* Pillar tabs */}
+          <div className="flex gap-1 bg-bg-elevated border border-border rounded-md p-[3px]">
+            <div className="px-3.5 py-1 rounded text-[12px] font-semibold tracking-wide bg-bg-card text-accent-lime cursor-pointer">
+              Training
+            </div>
+            <div className="px-3.5 py-1 rounded text-[12px] font-semibold tracking-wide text-text-tertiary cursor-pointer">
+              Recovery
+            </div>
+            <div className="px-3.5 py-1 rounded text-[12px] font-semibold tracking-wide text-text-tertiary cursor-pointer">
+              Nutrition
+            </div>
+          </div>
+          {/* Date */}
+          <div className="font-mono text-accent-lime text-[12px]">
+            OCT 24, 2023 // 14:00 UTC
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* KPI Grid */}
+      <KpiCards />
+
+      {/* Hero Chart */}
+      <TeamPerformanceChart />
+
+      {/* Readiness Map + Attention Queue */}
+      <TeamReadinessMap />
+
+      {/* Team Insights */}
+      <TeamInsights />
+
+      {/* Program Distribution + Fueling Signals */}
+      <div className="grid grid-cols-2 gap-5">
+        <ProgramDistribution />
+        <FuelingSignals />
+      </div>
+
+      {/* Athlete Snapshot + Live Feed */}
+      <div className="grid gap-5" style={{ gridTemplateColumns: "2fr 1fr" }}>
+        <AthleteSnapshotTable />
+        <LivePerformanceFeed />
+      </div>
+    </>
   );
 }
