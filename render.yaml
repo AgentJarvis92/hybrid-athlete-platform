@@ -1,0 +1,19 @@
+# Render Blueprint — Hybrid Athlete Training Platform
+# Coach Portal deployment (Next.js)
+# Supabase is hosted on Supabase Cloud (not Render)
+
+services:
+  - type: web
+    name: coach-portal
+    runtime: node
+    region: oregon
+    plan: starter
+    buildCommand: pnpm install && pnpm build:coach
+    startCommand: pnpm --filter @hybrid-athlete/coach-portal start
+    envVars:
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: NODE_ENV
+        value: production

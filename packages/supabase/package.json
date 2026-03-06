@@ -1,0 +1,14 @@
+{
+  "name": "@hybrid-athlete/supabase",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "migrate": "supabase db push --workdir supabase",
+    "seed": "supabase db seed --workdir supabase",
+    "reset": "supabase db reset --workdir supabase",
+    "gen:types": "supabase gen types typescript --local --workdir supabase > ../shared/src/types/database.ts",
+    "start": "supabase start --workdir supabase",
+    "stop": "supabase stop --workdir supabase",
+    "functions:serve": "supabase functions serve --workdir supabase"
+  }
+}

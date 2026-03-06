@@ -1,0 +1,25 @@
+{
+  "name": "hybrid-athlete-platform",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "dev:mobile": "pnpm --filter @hybrid-athlete/mobile start",
+    "dev:coach": "pnpm --filter @hybrid-athlete/coach-portal dev",
+    "build:coach": "pnpm --filter @hybrid-athlete/coach-portal build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "db:migrate": "pnpm --filter @hybrid-athlete/supabase migrate",
+    "db:seed": "pnpm --filter @hybrid-athlete/supabase seed",
+    "db:reset": "pnpm --filter @hybrid-athlete/supabase reset"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@10.30.3"
+}

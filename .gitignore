@@ -9,3 +9,7 @@ build/
 .turbo/
 *.tsbuildinfo
 .DS_Store
+
+# Supabase
+.temp/
+supabase/.temp/
