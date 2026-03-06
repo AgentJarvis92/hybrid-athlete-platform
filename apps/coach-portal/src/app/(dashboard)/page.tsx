@@ -1,4 +1,5 @@
 import { AthleteStateStrip } from "@/components/dashboard/AthleteStateStrip";
+import { LiveClock } from "@/components/LiveClock";
 import { KpiCards } from "@/components/dashboard/KpiCards";
 import { TeamPerformanceChart } from "@/components/dashboard/TeamPerformanceChart";
 import { TeamReadinessMap } from "@/components/dashboard/TeamReadinessMap";
@@ -29,10 +30,8 @@ export default function DashboardPage() {
               Nutrition
             </div>
           </div>
-          {/* Date */}
-          <div className="font-mono text-accent-lime text-[12px]">
-            OCT 24, 2023 // 14:00 UTC
-          </div>
+          {/* Live Clock */}
+          <LiveClock />
         </div>
       </div>
 
