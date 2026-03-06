@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { athleteSnapshots } from "@/data/mock-dashboard";
 import type { AthleteSnapshot } from "@/types/dashboard";
 
@@ -132,9 +133,12 @@ export function AthleteSnapshotTable() {
 
               {/* Action */}
               <td className="px-5 py-3 border-b border-border">
-                <button className="px-3 py-1 border border-border rounded text-text-secondary text-xs cursor-pointer transition-all hover:border-text-primary hover:text-text-primary">
+                <Link
+                  href={`/athletes/${athlete.id === "SL" ? "sl" : athlete.id.toLowerCase()}`}
+                  className="inline-block px-3 py-1 border border-border rounded text-text-secondary text-xs transition-all hover:border-text-primary hover:text-text-primary"
+                >
                   View
-                </button>
+                </Link>
               </td>
             </tr>
           ))}

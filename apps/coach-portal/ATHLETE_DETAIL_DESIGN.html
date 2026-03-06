@@ -1,0 +1,851 @@
+<html lang="en" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">Thresh | Sarah Lee</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17" vid="5"></script>
+    <style vid="6">
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+        @keyframes drawLine { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
+
+        :root {
+            --bg-primary: #0B0D10;
+            --bg-card: #161A20;
+            --bg-elevated: #1E232B;
+            --bg-hover: #22262E;
+            
+            --accent-lime: #C6FF00;  
+            --accent-secondary: #00FF85;
+            
+            --text-primary: #F5F7FA;
+            --text-secondary: #8A93A0;
+            --text-tertiary: #5E6573;
+            
+            --border: #2A2F37;
+            --border-highlight: #3E4550;
+            
+            --danger: #FF4D4D;
+            --success: #22C55E;
+            --warning: #FACC15;
+            
+            --z1: #4DA3FF;
+            --z2: #22C55E;
+            --z3: #FACC15;
+            --z4: #C6FF00;
+            --z5: #FB923C;
+            --z6: #EF4444;
+
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 12px;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .topo-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='topo' x='0' y='0' width='400' height='400' patternUnits='userSpaceOnUse'%3E%3Cpath d='M0,200 Q100,100 200,200 T400,200 M0,250 Q150,150 250,250 T400,250 M0,300 Q120,220 220,300 T400,300 M50,0 Q150,100 250,0 M-50,50 Q50,150 150,50' fill='none' stroke='%232A2F37' stroke-width='0.5' opacity='0.4'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23topo)'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .app-container { display: flex; width: 100%; height: 100%; z-index: 1; }
+
+        
+        .sidebar {
+            width: 240px;
+            background-color: var(--bg-primary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 16px 12px;
+            flex-shrink: 0;
+            z-index: 20;
+        }
+        .brand { display: flex; align-items: center; gap: 12px; padding: 0 12px 24px 12px; }
+        .brand-logo {
+            width: 28px; height: 28px; background: var(--accent-lime); border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center; color: black; font-weight: 800; font-family: var(--font-mono);
+        }
+        .brand-name { font-weight: 700; letter-spacing: -0.02em; font-size: 16px; }
+        .nav-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 24px; }
+        .nav-label { font-size: 11px; text-transform: uppercase; color: var(--text-tertiary); padding: 8px 12px; font-weight: 600; letter-spacing: 0.05em; }
+        .nav-item {
+            display: flex; align-items: center; gap: 12px; padding: 8px 12px; color: var(--text-secondary);
+            text-decoration: none; border-radius: var(--radius-md); transition: all 0.2s ease; font-weight: 500; position: relative;
+        }
+        .nav-item:hover { background-color: var(--bg-hover); color: var(--text-primary); }
+        .nav-item.active { background-color: rgba(198, 255, 0, 0.05); color: var(--text-primary); }
+        .nav-item.active::before {
+            content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+            height: 16px; width: 3px; background-color: var(--accent-lime); border-radius: 0 2px 2px 0;
+            box-shadow: 0 0 8px rgba(198, 255, 0, 0.4);
+        }
+        .nav-icon { width: 18px; height: 18px; stroke-width: 2px; }
+        .sidebar-footer { margin-top: auto; border-top: 1px solid var(--border); padding-top: 16px; }
+        .coach-profile { display: flex; align-items: center; gap: 12px; padding: 8px; cursor: pointer; border-radius: var(--radius-md); }
+        .coach-profile:hover { background: var(--bg-hover); }
+        .avatar {
+            width: 32px; height: 32px; border-radius: 50%; background: var(--bg-elevated);
+            border: 1px solid var(--border); display: grid; place-items: center; font-size: 12px; font-weight: 600; color: var(--text-secondary);
+        }
+
+        
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+        .top-nav {
+            height: 64px; border-bottom: 1px solid var(--border); display: flex; align-items: center;
+            justify-content: space-between; padding: 0 32px; background: rgba(11, 13, 16, 0.8); backdrop-filter: blur(8px); z-index: 10;
+        }
+        .page-title { font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 12px; }
+        .separator { color: var(--border); }
+        .command-bar { display: flex; align-items: center; gap: 16px; }
+        .search-input {
+            background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary);
+            padding: 6px 12px 6px 36px; border-radius: var(--radius-md); width: 240px; font-size: 13px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238A93A0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: 10px center; transition: all 0.2s;
+        }
+        .search-input:focus { border-color: var(--text-secondary); outline: none; width: 320px; }
+
+        .workspace { padding: 32px 40px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 28px; }
+
+        
+        .athlete-hero {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 8px;
+        }
+        .athlete-identity { display: flex; gap: 20px; align-items: center; }
+        .athlete-lg-avatar {
+            width: 64px; height: 64px; border-radius: 50%; background: var(--bg-elevated);
+            border: 2px solid var(--border); color: var(--text-secondary);
+            font-size: 20px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+        }
+        .athlete-info h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); }
+        .athlete-meta { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
+        .sport-badge { font-size: 11px; text-transform: uppercase; color: var(--text-secondary); font-weight: 600; letter-spacing: 0.05em; background: var(--bg-card); padding: 2px 8px; border-radius: 4px; border: 1px solid var(--border); }
+        .status-badge { font-size: 11px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; padding: 2px 8px; border-radius: 4px; border: 1px solid transparent; }
+        .status-red { color: var(--danger); background: rgba(255,77,77,0.1); border-color: rgba(255,77,77,0.2); }
+        
+        .hero-stats { display: flex; gap: 24px; margin-left: 24px; padding-left: 24px; border-left: 1px solid var(--border); }
+        .hero-stat { display: flex; flex-direction: column; gap: 2px; }
+        .hs-label { font-size: 10px; color: var(--text-tertiary); text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em; }
+        .hs-val { font-family: var(--font-mono); font-weight: 700; font-size: 15px; }
+        .hs-val.red { color: var(--danger); }
+        .hs-val.yellow { color: var(--warning); }
+        
+        .hero-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+        .integrations-row { display: flex; gap: 8px; align-items: center; }
+        .int-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .int-dot.green { background: var(--success); box-shadow: 0 0 6px rgba(34,197,94,0.4); }
+        .int-dot.gray { background: var(--border); }
+        .action-btn-row { display: flex; gap: 8px; }
+        
+        
+        .btn-sm {
+            padding: 6px 14px; border: 1px solid var(--border); background: var(--bg-card);
+            color: var(--text-secondary); border-radius: var(--radius-md); font-size: 12px;
+            cursor: pointer; transition: all 0.2s; font-weight: 500; display: flex; align-items: center; gap: 6px;
+        }
+        .btn-sm:hover { border-color: var(--text-primary); color: var(--text-primary); background: var(--bg-hover); }
+        .btn-primary { border-color: rgba(198,255,0,0.3); color: var(--accent-lime); background: rgba(198,255,0,0.05); }
+        .btn-primary:hover { background: rgba(198,255,0,0.1); border-color: var(--accent-lime); color: var(--accent-lime); }
+
+        
+        .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+            padding: 16px; display: flex; flex-direction: column; gap: 4px; transition: all 0.2s;
+        }
+        .card:hover { border-color: var(--border-highlight); transform: translateY(-1px); }
+        .kpi-label { font-size: 11px; color: var(--text-tertiary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .kpi-val { font-size: 20px; font-weight: 700; font-family: var(--font-mono); color: var(--text-primary); margin: 4px 0 2px; }
+        .kpi-val.red { color: var(--danger); }
+        .kpi-sub { font-size: 11px; color: var(--text-secondary); display: flex; align-items: center; gap: 4px; }
+        .trend-icon { width: 12px; height: 12px; stroke-width: 2.5px; }
+        .trend-red { color: var(--danger); }
+        .trend-yellow { color: var(--warning); }
+        .trend-lime { color: var(--accent-lime); }
+
+        
+        .section-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .signals-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .signal-card {
+            background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-md);
+            padding: 14px; display: flex; flex-direction: column; gap: 8px; border-left: 3px solid transparent;
+        }
+        .signal-card.red { border-left-color: var(--danger); }
+        .signal-card.yellow { border-left-color: var(--warning); }
+        .signal-title { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+        .signal-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.4; flex: 1; }
+        .signal-action { align-self: flex-start; font-size: 10px; color: var(--text-tertiary); text-decoration: underline; cursor: pointer; }
+        .signal-action:hover { color: var(--text-primary); }
+
+        
+        .chart-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px 24px; }
+        .chart-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .chart-legend { display: flex; gap: 16px; }
+        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary); }
+        .legend-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+        
+        .body-map-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; position: relative; overflow: hidden; }
+        .body-map-container { display: flex; justify-content: center; gap: 60px; position: relative; padding: 20px 0; }
+        .body-outline { height: 320px; width: 140px; position: relative; }
+        .body-part { fill: var(--bg-elevated); stroke: var(--border); stroke-width: 0.8; transition: all 0.2s; }
+        .body-part:hover { stroke: var(--text-tertiary); filter: brightness(1.2); }
+        .body-part.red { fill: rgba(255,77,77,0.22); stroke: var(--danger); stroke-width: 1; }
+        .body-part.yellow { fill: rgba(250,204,21,0.18); stroke: var(--warning); stroke-width: 1; }
+        .body-part.lime { fill: rgba(198,255,0,0.15); stroke: var(--accent-lime); stroke-width: 1; }
+        .body-part.gray { fill: rgba(42,47,55,0.6); stroke: #3E4550; stroke-width: 0.8; }
+        .map-callouts { display: flex; flex-direction: column; gap: 10px; width: 200px; flex-shrink: 0; justify-content: center; }
+        .callout { font-size: 11px; color: var(--text-secondary); border-left: 2px solid var(--border); padding: 8px 10px; background: var(--bg-elevated); border-radius: 0 4px 4px 0; line-height: 1.5; }
+        .callout strong { display: block; font-size: 11px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+        .callout.red { border-color: var(--danger); }
+        .callout.yellow { border-color: var(--warning); }
+        .callout.lime { border-color: var(--accent-lime); }
+
+        
+        .detail-grid { display: flex; flex-direction: column; gap: 14px; }
+        .pillar-sparkline { display: flex; align-items: flex-end; gap: 2px; height: 28px; }
+        .spark-bar { border-radius: 1px 1px 0 0; min-width: 6px; flex: 1; background: var(--bg-hover); }
+        .progress-bar-track { height: 4px; background: var(--bg-hover); border-radius: 2px; overflow: hidden; margin-top: 4px; }
+        .progress-bar-fill { height: 100%; border-radius: 2px; }
+        .detail-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+        .detail-header { font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 16px; display: flex; justify-content: space-between; }
+        .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--bg-elevated); }
+        .detail-row:last-child { border-bottom: none; }
+        .d-label { font-size: 11px; color: var(--text-secondary); }
+        .d-val { font-size: 12px; font-weight: 600; color: var(--text-primary); font-family: var(--font-mono); }
+        .bar-chart-mini { display: flex; align-items: flex-end; gap: 2px; height: 24px; width: 60px; }
+        .mini-bar { width: 10px; background: var(--border); border-radius: 1px; }
+
+        
+        .table-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .data-table th { text-align: left; padding: 12px 20px; color: var(--text-tertiary); font-weight: 600; border-bottom: 1px solid var(--border); font-size: 11px; text-transform: uppercase; }
+        .data-table td { padding: 12px 20px; border-bottom: 1px solid var(--bg-elevated); color: var(--text-secondary); }
+        .data-table tr:hover td { background: var(--bg-hover); color: var(--text-primary); }
+        .outcome-tag { padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 500; border: 1px solid transparent; }
+        .out-green { color: var(--success); background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.2); }
+        .out-yellow { color: var(--warning); background: rgba(250,204,21,0.1); border-color: rgba(250,204,21,0.2); }
+        .out-gray { color: var(--text-tertiary); background: var(--bg-elevated); border-color: var(--border); }
+
+        
+        .bottom-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+        .notes-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+        .note-item { margin-bottom: 12px; }
+        .n-label { font-size: 10px; color: var(--text-tertiary); text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+        .n-val { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+        
+        .tags-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag-pill { padding: 4px 10px; border-radius: 100px; font-size: 10px; font-weight: 600; border: 1px solid var(--border); color: var(--text-secondary); }
+        .tag-pill.red { border-color: rgba(255,77,77,0.3); color: var(--danger); background: rgba(255,77,77,0.05); }
+        .tag-pill.yellow { border-color: rgba(250,204,21,0.3); color: var(--warning); background: rgba(250,204,21,0.05); }
+        .tag-pill.blue { border-color: rgba(77,163,255,0.3); color: #4DA3FF; background: rgba(77,163,255,0.05); }
+        
+        .timeline-item { position: relative; padding-left: 16px; margin-bottom: 12px; }
+        .timeline-item::before { content: ''; position: absolute; left: 0; top: 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--border); }
+        .timeline-item.active::before { background: var(--accent-lime); box-shadow: 0 0 6px rgba(198,255,0,0.4); }
+        .tl-text { font-size: 12px; color: var(--text-primary); }
+        .tl-date { font-size: 10px; color: var(--text-tertiary); margin-top: 2px; }
+
+    </style>
+</head>
+<body vid="7">
+    <div class="topo-bg" vid="8"></div>
+
+    <div class="app-container" vid="9">
+        
+        <aside class="sidebar" vid="10">
+            <div class="brand" vid="11">
+                <div class="brand-logo" vid="12">
+                    <svg viewBox="0 0 28 28" width="28" height="28" vid="13">
+                        <circle cx="14" cy="14" r="12" fill="none" stroke="#2A2F37" stroke-width="1.5" vid="14"></circle>
+                        <path d="M14 2 A12 12 0 0 1 25.6 19" fill="none" stroke="#C6FF00" stroke-width="2.5" stroke-linecap="round" vid="15"></path>
+                        <path d="M14 2 A12 12 0 0 0 2.4 19" fill="none" stroke="rgba(198,255,0,0.25)" stroke-width="1.5" stroke-linecap="round" vid="16"></path>
+                        <circle cx="14" cy="14" r="3" fill="#C6FF00" vid="17"></circle>
+                        <line x1="14" y1="14" x2="22" y2="8" stroke="#C6FF00" stroke-width="1.5" stroke-linecap="round" vid="18"></line>
+                    </svg>
+                </div>
+                <div class="brand-name" vid="19">Thresh</div>
+            </div>
+
+            <div class="nav-group" vid="20">
+                <div class="nav-label" vid="21">Platform</div>
+                <a href="#" class="nav-item" vid="22">
+                    <div class="nav-icon" vid="23"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="24"><rect x="3" y="3" width="7" height="7" vid="25"></rect><rect x="14" y="3" width="7" height="7" vid="26"></rect><rect x="14" y="14" width="7" height="7" vid="27"></rect><rect x="3" y="14" width="7" height="7" vid="28"></rect></svg></div>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-item active" vid="29">
+                    <div class="nav-icon" vid="30"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="31"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" vid="32"></path><circle cx="9" cy="7" r="4" vid="33"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87" vid="34"></path><path d="M16 3.13a4 4 0 0 1 0 7.75" vid="35"></path></svg></div>
+                    Athletes
+                </a>
+                <a href="#" class="nav-item" vid="36">
+                    <div class="nav-icon" vid="37"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="38"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" vid="39"></path><polyline points="14 2 14 8 20 8" vid="40"></polyline></svg></div>
+                    Training Plans
+                </a>
+            </div>
+
+            <div class="nav-group" vid="41">
+                <div class="nav-label" vid="42">Management</div>
+                <a href="#" class="nav-item" vid="43">
+                    <div class="nav-icon" vid="44"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="45"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" vid="46"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1" vid="47"></rect></svg></div>
+                    Invites
+                </a>
+                <a href="#" class="nav-item" vid="48">
+                    <div class="nav-icon" vid="49"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="50"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" vid="51"></polyline></svg></div>
+                    Activity Feed
+                </a>
+            </div>
+
+            <div class="sidebar-footer" vid="52">
+                <div class="coach-profile" vid="53">
+                    <div class="avatar" vid="54">JS</div>
+                    <div style="font-size: 13px; font-weight: 500;" vid="55">
+                        <div vid="56">J. Smith</div>
+                        <div style="font-size: 11px; color: var(--text-tertiary);" vid="57">Head Coach</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content" vid="58">
+            
+            <header class="top-nav" vid="59">
+                <div class="page-title" vid="60">
+                    <span style="color: var(--text-tertiary)" vid="61">Team</span>
+                    <span class="separator" vid="62">/</span>
+                    <span style="color: var(--text-tertiary)" vid="63">Athletes</span>
+                    <span class="separator" vid="64">/</span>
+                    <span vid="65">Sarah Lee</span>
+                </div>
+                <div class="command-bar" vid="66">
+                    <input type="text" class="search-input" placeholder="Search athlete data..." vid="67">
+                    <div class="notification-icon" style="width: 20px; height: 20px; color: var(--text-secondary); cursor: pointer;" vid="68">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="69"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" vid="70"></path><path d="M13.73 21a2 2 0 0 1-3.46 0" vid="71"></path></svg>
+                    </div>
+                </div>
+            </header>
+
+            <div class="workspace" vid="72">
+                
+                
+                <div class="athlete-hero" vid="73">
+                    <div class="athlete-identity" vid="74">
+                        <div class="athlete-lg-avatar" vid="75">SL</div>
+                        <div class="athlete-info" vid="76">
+                            <h1 vid="77">Sarah Lee</h1>
+                            <div class="athlete-meta" vid="78">
+                                <span class="sport-badge" vid="79">Hybrid Athlete</span>
+                                <span class="status-badge status-red" vid="80">FATIGUE RISK</span>
+                                <div class="hero-stats" vid="81">
+                                    <div class="hero-stat" vid="82">
+                                        <span class="hs-label" vid="83">Recovery</span>
+                                        <span class="hs-val red" vid="84">34%</span>
+                                    </div>
+                                    <div class="hero-stat" vid="85">
+                                        <span class="hs-label" vid="86">Load</span>
+                                        <span class="hs-val red" vid="87">97 ATL</span>
+                                    </div>
+                                    <div class="hero-stat" vid="88">
+                                        <span class="hs-label" vid="89">Nutrition</span>
+                                        <span class="hs-val yellow" vid="90">61%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-actions" vid="91">
+                        <div class="integrations-row" vid="92">
+                            <span style="font-size: 10px; color: var(--text-tertiary); margin-right: 4px;" vid="93">CONNECTED:</span>
+                            <div class="int-dot green" title="Strava Connected" vid="94"></div>
+                            <div class="int-dot green" title="Apple Health Connected" vid="95"></div>
+                            <div class="int-dot gray" title="Garmin Not Connected" vid="96"></div>
+                        </div>
+                        <div class="action-btn-row" vid="97">
+                            <button class="btn-sm" vid="98"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" vid="99"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" vid="100"></path></svg> Message</button>
+                            <button class="btn-sm" vid="101"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" vid="102"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" vid="103"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" vid="104"></path></svg> Note</button>
+                            <button class="btn-sm btn-primary" vid="105"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" vid="106"><circle cx="12" cy="12" r="3" vid="107"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" vid="108"></path></svg> Adjust Training</button>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="kpi-grid" vid="109">
+                    <div class="card" vid="110">
+                        <div class="kpi-label" vid="111">Current State</div>
+                        <div class="kpi-val red" vid="112">Fatigue Risk</div>
+                        <div class="kpi-sub" vid="113">Load high · Rec suppressed</div>
+                    </div>
+                    <div class="card" vid="114">
+                        <div class="kpi-label" vid="115">Training Load</div>
+                        <div class="kpi-val red" vid="116">97 <span style="font-size: 12px; font-weight: 500;" vid="117">ATL</span></div>
+                        <div class="kpi-sub" vid="118"><svg class="trend-icon trend-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="119"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" vid="120"></polyline><polyline points="17 6 23 6 23 12" vid="121"></polyline></svg> +18% vs last week</div>
+                    </div>
+                    <div class="card" vid="122">
+                        <div class="kpi-label" vid="123">Recovery Score</div>
+                        <div class="kpi-val red" vid="124">34<span style="font-size: 12px; font-weight: 500;" vid="125">%</span></div>
+                        <div class="kpi-sub" vid="126"><svg class="trend-icon trend-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="127"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6" vid="128"></polyline><polyline points="17 18 23 18 23 12" vid="129"></polyline></svg> Sleep + HRV down</div>
+                    </div>
+                    <div class="card" vid="130">
+                        <div class="kpi-label" vid="131">Nutrition</div>
+                        <div class="kpi-val" style="color: var(--warning);" vid="132">61<span style="font-size: 12px; font-weight: 500;" vid="133">%</span></div>
+                        <div class="kpi-sub" vid="134"><svg class="trend-icon trend-yellow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vid="135"><line x1="5" y1="12" x2="19" y2="12" vid="136"></line></svg> Hydration below target</div>
+                    </div>
+                    <div class="card" style="border-color:rgba(251,146,60,0.25);background:rgba(251,146,60,0.03);" vid="137">
+                        <div class="kpi-label" vid="138">Adaptation Status</div>
+                        <div class="kpi-val" style="color:#FB923C;font-size:18px;" vid="139">Stalled</div>
+                        <div style="font-size:10px;color:var(--text-tertiary);line-height:1.4;margin-bottom:6px;" vid="140">Stress rising faster than recovery response — fueling consistency may be limiting adaptation</div>
+                        <div style="display:flex;gap:3px;align-items:center;margin-top:4px;" vid="141">
+                          <span style="font-size:8px;color:var(--text-tertiary);font-family:var(--font-mono);white-space:nowrap;" vid="142">Under</span>
+                          <div style="width:8px;height:8px;border-radius:50%;background:var(--bg-elevated);border:1px solid var(--border);" vid="143"></div>
+                          <div style="flex:1;height:1px;background:var(--border);" vid="144"></div>
+                          <div style="width:8px;height:8px;border-radius:50%;background:var(--bg-elevated);border:1px solid var(--border);" vid="145"></div>
+                          <div style="flex:1;height:1px;background:var(--border);" vid="146"></div>
+                          <div style="width:8px;height:8px;border-radius:50%;background:var(--bg-elevated);border:1px solid var(--border);" vid="147"></div>
+                          <div style="flex:1;height:1px;background:#FB923C;opacity:0.4;" vid="148"></div>
+                          <div style="width:10px;height:10px;border-radius:50%;background:#FB923C;border:2px solid #FB923C;box-shadow:0 0 6px rgba(251,146,60,0.4);" vid="149"></div>
+                          <div style="flex:1;height:1px;background:var(--border);" vid="150"></div>
+                          <div style="width:8px;height:8px;border-radius:50%;background:var(--bg-elevated);border:1px solid var(--border);" vid="151"></div>
+                          <span style="font-size:8px;color:var(--text-tertiary);font-family:var(--font-mono);white-space:nowrap;" vid="152">Over</span>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div style="background:rgba(255,77,77,0.02);border:1px solid rgba(255,77,77,0.08);border-radius:var(--radius-lg);padding:20px;" vid="153">
+                    <div class="section-title" style="margin-bottom:14px;" vid="154">Coach Signals <span style="font-size:10px;background:rgba(255,77,77,0.1);padding:2px 8px;border-radius:4px;color:var(--danger);border:1px solid rgba(255,77,77,0.2);font-weight:700;" vid="155">4 ACTIVE</span></div>
+                    <div class="signals-grid" vid="156">
+                        <div class="signal-card red" vid="157">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;" vid="158">
+                              <div class="signal-title" vid="159">Recovery Trending Down</div>
+                              <span style="font-size:9px;font-family:var(--font-mono);color:var(--danger);background:rgba(255,77,77,0.1);padding:1px 5px;border-radius:3px;" vid="160">DAY 3</span>
+                            </div>
+                            <div class="signal-desc" vid="161">HRV and sleep quality declining consecutively. Recovery window may be closing before next key session.</div>
+                            <div class="signal-action" vid="162">Review Sleep Data →</div>
+                        </div>
+                        <div class="signal-card red" vid="163">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;" vid="164">
+                              <div class="signal-title" vid="165">Acute Load Spike</div>
+                              <span style="font-size:9px;font-family:var(--font-mono);color:var(--danger);background:rgba(255,77,77,0.1);padding:1px 5px;border-radius:3px;" vid="166">A:C 1.4</span>
+                            </div>
+                            <div class="signal-desc" vid="167">Weekly load rose 18% above 7-day average — approaching elevated injury risk threshold. May need attention.</div>
+                            <div class="signal-action" vid="168">Adjust Volume →</div>
+                        </div>
+                        <div class="signal-card yellow" vid="169">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;" vid="170">
+                              <div class="signal-title" vid="171">Possible Under-fueling Pattern</div>
+                              <span style="font-size:9px;font-family:var(--font-mono);color:var(--warning);background:rgba(250,204,21,0.1);padding:1px 5px;border-radius:3px;" vid="172">~400kcal</span>
+                            </div>
+                            <div class="signal-desc" vid="173">Caloric intake averaging below expenditure estimate. Adaptation appears suppressed — may be limiting training response.</div>
+                            <div class="signal-action" vid="174">Message Athlete →</div>
+                        </div>
+                        <div class="signal-card yellow" vid="175">
+                            <div class="signal-title" vid="176">Posterior Chain Stress Concentration</div>
+                            <div class="signal-desc" vid="177">Repeated lower-body loading without adequate recovery interval. Consider modality shift or targeted deload.</div>
+                            <div class="signal-action" vid="178">Modify Plan →</div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="chart-container" vid="179">
+                    <div class="chart-header" vid="180">
+                        <div style="font-weight: 600;" vid="181">Performance Trends · 14 Days</div>
+                        <div class="chart-legend" vid="182">
+                            <div class="legend-item" vid="183"><div class="legend-dot" style="background: var(--accent-lime);" vid="184"></div>Load</div>
+                            <div class="legend-item" vid="185"><div class="legend-dot" style="background: #4DA3FF;" vid="186"></div>Recovery</div>
+                            <div class="legend-item" vid="187"><div class="legend-dot" style="background: var(--accent-secondary);" vid="188"></div>Nutrition</div>
+                        </div>
+                    </div>
+                    <div style="height: 240px; width: 100%; position: relative;" vid="189">
+                         <svg viewBox="0 0 1000 240" preserveAspectRatio="none" style="width: 100%; height: 100%; overflow: visible;" vid="190">
+                            
+                            <line x1="0" y1="60" x2="1000" y2="60" stroke="#2A2F37" stroke-width="1" vid="191"></line>
+                            <line x1="0" y1="120" x2="1000" y2="120" stroke="#2A2F37" stroke-width="1" vid="192"></line>
+                            <line x1="0" y1="180" x2="1000" y2="180" stroke="#2A2F37" stroke-width="1" vid="193"></line>
+                            
+                            
+                            <rect x="0" y="80" width="1000" height="40" fill="rgba(198,255,0,0.03)" vid="194"></rect>
+
+                            
+                            <defs vid="195">
+                                <linearGradient id="gradLime" x1="0" y1="0" x2="0" y2="1" vid="196"><stop offset="0" stop-color="#C6FF00" stop-opacity="0.1" vid="197"></stop><stop offset="1" stop-color="#C6FF00" stop-opacity="0" vid="198"></stop></linearGradient>
+                                <linearGradient id="gradBlue" x1="0" y1="0" x2="0" y2="1" vid="199"><stop offset="0" stop-color="#4DA3FF" stop-opacity="0.1" vid="200"></stop><stop offset="1" stop-color="#4DA3FF" stop-opacity="0" vid="201"></stop></linearGradient>
+                            </defs>
+                            
+                            <path d="M0,140 C100,135 200,145 300,130 S500,110 600,80 S800,50 900,40 L1000,30 L1000,240 L0,240 Z" fill="url(#gradLime)" vid="202"></path>
+                            <path d="M0,140 C100,135 200,145 300,130 S500,110 600,80 S800,50 900,40 L1000,30" fill="none" stroke="#C6FF00" stroke-width="2" vid="203"></path>
+
+                            
+                            <path d="M0,80 C100,75 200,85 300,90 S500,120 600,150 S800,180 900,200 L1000,210 L1000,240 L0,240 Z" fill="url(#gradBlue)" vid="204"></path>
+                            <path d="M0,80 C100,75 200,85 300,90 S500,120 600,150 S800,180 900,200 L1000,210" fill="none" stroke="#4DA3FF" stroke-width="2" stroke-dasharray="4 2" vid="205"></path>
+
+                            
+                            <line x1="600" y1="0" x2="600" y2="240" stroke="#5E6573" stroke-width="1" stroke-dasharray="2 2" vid="206"></line>
+                            <text x="605" y="15" fill="#5E6573" font-size="10" font-family="JetBrains Mono" vid="207">LOAD SPIKE</text>
+
+                         </svg>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 8px; padding: 0 10px; color: var(--text-tertiary); font-size: 10px; font-family: var(--font-mono);" vid="208">
+                        <span vid="209">MON</span><span vid="210">TUE</span><span vid="211">WED</span><span vid="212">THU</span><span vid="213">FRI</span><span vid="214">SAT</span><span vid="215">SUN</span>
+                        <span vid="216">MON</span><span vid="217">TUE</span><span vid="218">WED</span><span vid="219">THU</span><span vid="220">FRI</span><span vid="221">SAT</span><span vid="222">SUN</span>
+                    </div>
+                </div>
+
+                
+                <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 20px;" vid="223">
+                    
+                    
+                    <div class="body-map-section" vid="224">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;" vid="225">
+                            <div style="font-weight: 600;" vid="226">Body Load Map</div>
+                            <div style="display: flex; background: var(--bg-elevated); border-radius: 4px; padding: 2px;" vid="227">
+                                <div style="padding: 2px 8px; border-radius: 2px; font-size: 10px; background: var(--bg-card); color: var(--text-primary); box-shadow: 0 1px 2px rgba(0,0,0,0.2);" vid="228">7 Days</div>
+                                <div style="padding: 2px 8px; border-radius: 2px; font-size: 10px; color: var(--text-tertiary); cursor: pointer;" vid="229">14 Days</div>
+                            </div>
+                        </div>
+
+                        <div class="body-map-container" style="display:flex; align-items:center; justify-content:center; gap:32px; padding: 12px 0;" vid="230">
+                            <!-- FRONT -->
+                            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;" vid="231">
+                              <span style="font-family:var(--font-mono);font-size:9px;color:var(--text-tertiary);letter-spacing:0.1em;" vid="232">FRONT</span>
+                              <svg width="90" height="260" viewBox="0 0 90 260" vid="233">
+                                <!-- Head -->
+                                <ellipse cx="45" cy="16" rx="11" ry="13" class="body-part gray" vid="234"></ellipse>
+                                <!-- Neck -->
+                                <path d="M40 28 Q45 32 50 28 L51 38 Q45 40 39 38 Z" class="body-part gray" vid="235"></path>
+                                <!-- Shoulders / Traps -->
+                                <path d="M18 42 Q22 36 32 38 L33 55 Q24 54 18 56 Z" class="body-part gray" vid="236"></path>
+                                <path d="M72 42 Q68 36 58 38 L57 55 Q66 54 72 56 Z" class="body-part gray" vid="237"></path>
+                                <!-- Chest / Pecs (lime) -->
+                                <path d="M33 38 Q38 36 45 37 Q52 36 57 38 L58 62 Q52 68 45 68 Q38 68 32 62 Z" class="body-part lime" vid="238"></path>
+                                <!-- Upper Arms -->
+                                <path d="M18 42 Q14 44 12 52 Q10 62 13 72 Q16 76 20 74 Q22 64 22 55 L24 44 Z" class="body-part gray" vid="239"></path>
+                                <path d="M72 42 Q76 44 78 52 Q80 62 77 72 Q74 76 70 74 Q68 64 68 55 L66 44 Z" class="body-part gray" vid="240"></path>
+                                <!-- Forearms -->
+                                <path d="M13 72 Q10 80 11 92 Q13 98 17 97 Q20 90 20 78 Q20 74 17 73 Z" class="body-part gray" vid="241"></path>
+                                <path d="M77 72 Q80 80 79 92 Q77 98 73 97 Q70 90 70 78 Q70 74 73 73 Z" class="body-part gray" vid="242"></path>
+                                <!-- Abdomen -->
+                                <path d="M33 62 Q38 68 45 68 Q52 68 57 62 L58 100 Q52 104 45 104 Q38 104 32 100 Z" class="body-part gray" vid="243"></path>
+                                <!-- Hip / Pelvis -->
+                                <path d="M32 100 Q38 104 45 104 Q52 104 58 100 L60 118 Q52 122 45 122 Q38 122 30 118 Z" class="body-part gray" vid="244"></path>
+                                <!-- Quads LEFT (red) -->
+                                <path d="M30 118 Q35 120 41 120 L43 178 Q38 182 33 178 Q28 164 28 142 Z" class="body-part red" vid="245"></path>
+                                <!-- Quads RIGHT (red) -->
+                                <path d="M60 118 Q55 120 49 120 L47 178 Q52 182 57 178 Q62 164 62 142 Z" class="body-part red" vid="246"></path>
+                                <!-- Calves LEFT (yellow) -->
+                                <path d="M33 182 Q37 184 41 182 L42 230 Q38 234 34 230 Q31 218 31 202 Z" class="body-part yellow" vid="247"></path>
+                                <!-- Calves RIGHT (yellow) -->
+                                <path d="M57 182 Q53 184 49 182 L48 230 Q52 234 56 230 Q59 218 59 202 Z" class="body-part yellow" vid="248"></path>
+                                <!-- Feet -->
+                                <ellipse cx="37" cy="248" rx="8" ry="5" class="body-part gray" vid="249"></ellipse>
+                                <ellipse cx="53" cy="248" rx="8" ry="5" class="body-part gray" vid="250"></ellipse>
+                              </svg>
+                            </div>
+
+                            <!-- BACK -->
+                            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;" vid="251">
+                              <span style="font-family:var(--font-mono);font-size:9px;color:var(--text-tertiary);letter-spacing:0.1em;" vid="252">BACK</span>
+                              <svg width="90" height="260" viewBox="0 0 90 260" vid="253">
+                                <!-- Head -->
+                                <ellipse cx="45" cy="16" rx="11" ry="13" class="body-part gray" vid="254"></ellipse>
+                                <!-- Neck -->
+                                <path d="M40 28 Q45 32 50 28 L51 38 Q45 40 39 38 Z" class="body-part gray" vid="255"></path>
+                                <!-- Upper Traps (yellow) -->
+                                <path d="M18 42 Q22 36 32 38 L33 52 Q24 52 18 54 Z" class="body-part yellow" vid="256"></path>
+                                <path d="M72 42 Q68 36 58 38 L57 52 Q66 52 72 54 Z" class="body-part yellow" vid="257"></path>
+                                <!-- Rear Delts (yellow) -->
+                                <path d="M18 42 Q14 44 12 54 Q14 60 19 58 L22 46 Z" class="body-part yellow" vid="258"></path>
+                                <path d="M72 42 Q76 44 78 54 Q76 60 71 58 L68 46 Z" class="body-part yellow" vid="259"></path>
+                                <!-- Upper Arms -->
+                                <path d="M12 54 Q10 62 11 72 Q14 77 18 75 Q20 65 20 56 L19 52 Z" class="body-part gray" vid="260"></path>
+                                <path d="M78 54 Q80 62 79 72 Q76 77 72 75 Q70 65 70 56 L71 52 Z" class="body-part gray" vid="261"></path>
+                                <!-- Forearms -->
+                                <path d="M11 72 Q9 82 10 92 Q13 98 16 97 Q18 88 19 76 Q18 72 15 72 Z" class="body-part gray" vid="262"></path>
+                                <path d="M79 72 Q81 82 80 92 Q77 98 74 97 Q72 88 71 76 Q72 72 75 72 Z" class="body-part gray" vid="263"></path>
+                                <!-- Lats (gray with subtle lime) -->
+                                <path d="M33 52 Q38 54 45 54 Q52 54 57 52 L58 96 Q52 102 45 102 Q38 102 32 96 Z" class="body-part lime" vid="264"></path>
+                                <!-- Lower Back -->
+                                <path d="M33 96 Q38 100 45 100 Q52 100 57 96 L58 116 Q52 120 45 120 Q38 120 32 116 Z" class="body-part gray" vid="265"></path>
+                                <!-- Glutes (red) -->
+                                <path d="M30 116 Q36 120 45 120 Q54 120 60 116 L61 142 Q54 150 45 150 Q36 150 29 142 Z" class="body-part red" vid="266"></path>
+                                <!-- Hamstrings LEFT (red) -->
+                                <path d="M29 142 Q34 148 41 148 L42 194 Q37 198 32 194 Q27 180 27 162 Z" class="body-part red" vid="267"></path>
+                                <!-- Hamstrings RIGHT (red) -->
+                                <path d="M61 142 Q56 148 49 148 L48 194 Q53 198 58 194 Q63 180 63 162 Z" class="body-part red" vid="268"></path>
+                                <!-- Calves LEFT (yellow) -->
+                                <path d="M32 198 Q36 200 41 198 L41 236 Q37 240 33 236 Q30 224 30 210 Z" class="body-part yellow" vid="269"></path>
+                                <!-- Calves RIGHT (yellow) -->
+                                <path d="M58 198 Q54 200 49 198 L49 236 Q53 240 57 236 Q60 224 60 210 Z" class="body-part yellow" vid="270"></path>
+                                <!-- Feet -->
+                                <ellipse cx="37" cy="248" rx="8" ry="5" class="body-part gray" vid="271"></ellipse>
+                                <ellipse cx="53" cy="248" rx="8" ry="5" class="body-part gray" vid="272"></ellipse>
+                              </svg>
+                            </div>
+
+                            <div class="map-callouts" vid="273">
+                                <div class="callout red" vid="274">
+                                    <strong vid="275">Posterior Chain Stress Elevated</strong>
+                                    Hamstrings and glutes showing repeated high load over 7 days. Deload may be warranted.
+                                </div>
+                                <div class="callout red" vid="276">
+                                    <strong vid="277">Lower Body Concentration High</strong>
+                                    Lower body stress exceeds current program balance. Consider modality shift.
+                                </div>
+                                <div class="callout yellow" vid="278">
+                                    <strong vid="279">Upper Pull Below Target</strong>
+                                    Upper back and pulling exposure tracking below program intent this week.
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 12px; justify-content: center; margin-top: 10px;" vid="280">
+                            <div style="display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--text-secondary);" vid="281"><div style="width: 8px; height: 8px; background: rgba(255,77,77,0.2); border: 1px solid var(--danger);" vid="282"></div> High</div>
+                            <div style="display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--text-secondary);" vid="283"><div style="width: 8px; height: 8px; background: rgba(250,204,21,0.2); border: 1px solid var(--warning);" vid="284"></div> Elevated</div>
+                            <div style="display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--text-secondary);" vid="285"><div style="width: 8px; height: 8px; background: rgba(198,255,0,0.2); border: 1px solid var(--accent-lime);" vid="286"></div> Productive</div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="detail-grid" vid="287">
+                        <!-- TRAINING -->
+                        <div class="detail-card" vid="288">
+                            <div class="detail-header" vid="289">
+                              <span style="color:var(--accent-lime);letter-spacing:0.06em;font-size:11px;" vid="290">TRAINING</span>
+                              <span style="font-size:10px;color:var(--text-tertiary);font-weight:400;" vid="291">A:C 1.4 <span style="color:var(--danger);" vid="292">↑ elevated</span></span>
+                            </div>
+                            <div class="detail-row" vid="293">
+                                <span class="d-label" vid="294">Weekly Load</span>
+                                <span class="d-val" style="color:var(--danger);" vid="295">97 ATL</span>
+                            </div>
+                            <div class="detail-row" vid="296">
+                                <span class="d-label" vid="297">Sessions</span>
+                                <span class="d-val" vid="298">5 of 6 <span style="color:var(--text-tertiary);font-size:10px;" vid="299">completed</span></span>
+                            </div>
+                            <div style="padding:8px 0 4px;border-bottom:1px solid var(--bg-elevated);" vid="300">
+                              <div style="font-size:10px;color:var(--text-tertiary);margin-bottom:6px;" vid="301">7-DAY SESSION LOAD</div>
+                              <div class="pillar-sparkline" vid="302">
+                                <div class="spark-bar" style="height:40%;background:var(--bg-hover);" vid="303"></div>
+                                <div class="spark-bar" style="height:65%;background:rgba(198,255,0,0.3);" vid="304"></div>
+                                <div class="spark-bar" style="height:55%;background:rgba(198,255,0,0.3);" vid="305"></div>
+                                <div class="spark-bar" style="height:80%;background:rgba(198,255,0,0.4);" vid="306"></div>
+                                <div class="spark-bar" style="height:70%;background:rgba(198,255,0,0.4);" vid="307"></div>
+                                <div class="spark-bar" style="height:95%;background:var(--danger);opacity:0.6;" vid="308"></div>
+                                <div class="spark-bar" style="height:85%;background:var(--danger);opacity:0.5;" vid="309"></div>
+                              </div>
+                            </div>
+                            <div class="detail-row" style="border:none;padding-top:8px;" vid="310">
+                                <span class="d-label" vid="311">Zone Distribution</span>
+                                <div style="display:flex;align-items:flex-end;gap:2px;height:18px;" vid="312">
+                                    <div style="width:8px;height:25%;background:#4DA3FF;border-radius:1px 1px 0 0;opacity:0.7;" vid="313"></div>
+                                    <div style="width:8px;height:40%;background:#22C55E;border-radius:1px 1px 0 0;opacity:0.7;" vid="314"></div>
+                                    <div style="width:8px;height:30%;background:#FACC15;border-radius:1px 1px 0 0;opacity:0.7;" vid="315"></div>
+                                    <div style="width:8px;height:90%;background:#C6FF00;border-radius:1px 1px 0 0;" vid="316"></div>
+                                    <div style="width:8px;height:15%;background:#FB923C;border-radius:1px 1px 0 0;opacity:0.7;" vid="317"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RECOVERY -->
+                        <div class="detail-card" vid="318">
+                            <div class="detail-header" vid="319">
+                              <span style="color:#4DA3FF;letter-spacing:0.06em;font-size:11px;" vid="320">RECOVERY</span>
+                              <span style="font-size:10px;color:var(--danger);font-weight:400;" vid="321">Suppressed ↓</span>
+                            </div>
+                            <div class="detail-row" vid="322">
+                                <span class="d-label" vid="323">Readiness Score</span>
+                                <span class="d-val" style="color:var(--danger);font-size:16px;" vid="324">34%</span>
+                            </div>
+                            <div style="padding:8px 0 4px;border-bottom:1px solid var(--bg-elevated);" vid="325">
+                              <div style="font-size:10px;color:var(--text-tertiary);margin-bottom:6px;" vid="326">HRV TREND · 7 DAYS <span style="color:var(--danger);margin-left:8px;" vid="327">58 → 44ms</span></div>
+                              <svg viewBox="0 0 120 28" width="100%" height="28" style="overflow:visible;" vid="328">
+                                <polyline points="0,4 20,6 40,8 60,12 80,16 100,22 120,24" fill="none" stroke="#4DA3FF" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.8" vid="329"></polyline>
+                                <circle cx="0" cy="4" r="2" fill="#4DA3FF" opacity="0.6" vid="330"></circle>
+                                <circle cx="120" cy="24" r="2" fill="var(--danger)" vid="331"></circle>
+                              </svg>
+                            </div>
+                            <div class="detail-row" vid="332">
+                                <span class="d-label" vid="333">Sleep Avg</span>
+                                <span class="d-val" style="color:var(--warning);" vid="334">5.2h <span style="font-size:10px;color:var(--text-tertiary);" vid="335">/ 8h target</span></span>
+                            </div>
+                            <div class="detail-row" style="border:none;" vid="336">
+                                <span class="d-label" vid="337">Fatigue State</span>
+                                <span style="font-size:11px;padding:2px 6px;background:rgba(255,77,77,0.1);color:var(--danger);border-radius:3px;border:1px solid rgba(255,77,77,0.2);font-weight:600;" vid="338">Elevated</span>
+                            </div>
+                        </div>
+
+                        <!-- NUTRITION -->
+                        <div class="detail-card" vid="339">
+                            <div class="detail-header" vid="340">
+                              <span style="color:var(--accent-secondary);letter-spacing:0.06em;font-size:11px;" vid="341">NUTRITION</span>
+                              <span style="font-size:10px;color:var(--warning);font-weight:400;" vid="342">61% adherence</span>
+                            </div>
+                            <div style="padding:6px 0 10px;border-bottom:1px solid var(--bg-elevated);" vid="343">
+                              <div style="display:flex;justify-content:space-between;margin-bottom:4px;" vid="344">
+                                <span style="font-size:10px;color:var(--text-tertiary);" vid="345">Calories</span>
+                                <span style="font-size:10px;color:var(--text-secondary);font-family:var(--font-mono);" vid="346">1,840 <span style="color:var(--text-tertiary);" vid="347">/ 2,940</span></span>
+                              </div>
+                              <div class="progress-bar-track" vid="348"><div class="progress-bar-fill" style="width:63%;background:var(--danger);" vid="349"></div></div>
+                              <div style="display:flex;justify-content:space-between;margin-top:8px;margin-bottom:4px;" vid="350">
+                                <span style="font-size:10px;color:var(--text-tertiary);" vid="351">Protein</span>
+                                <span style="font-size:10px;color:var(--text-secondary);font-family:var(--font-mono);" vid="352">142g <span style="color:var(--text-tertiary);" vid="353">/ 185g</span></span>
+                              </div>
+                              <div class="progress-bar-track" vid="354"><div class="progress-bar-fill" style="width:77%;background:var(--warning);" vid="355"></div></div>
+                            </div>
+                            <div class="detail-row" vid="356" style="padding-top:10px;">
+                                <span class="d-label" vid="357">Hydration</span>
+                                <span style="display:flex;align-items:center;gap:5px;font-size:11px;font-family:var(--font-mono);color:var(--danger);font-weight:600;" vid="358"><span style="width:6px;height:6px;border-radius:50%;background:var(--danger);display:inline-block;" vid="359"></span>2.1L <span style="color:var(--text-tertiary);font-weight:400;font-size:10px;" vid="360">/ 3.5L</span></span>
+                            </div>
+                            <div class="detail-row" style="border:none;" vid="361">
+                                <span class="d-label" vid="362">Fueling Pattern</span>
+                                <span style="font-size:10px;color:var(--text-tertiary);" vid="363">~400kcal below target</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="table-wrap" vid="364">
+                    <table class="data-table" vid="365">
+                        <thead vid="366">
+                            <tr vid="367">
+                                <th vid="368">Session</th>
+                                <th vid="369">Type</th>
+                                <th vid="370">Duration</th>
+                                <th vid="371">Load</th>
+                                <th vid="372">Outcome</th>
+                                <th vid="373">Note</th>
+                            </tr>
+                        </thead>
+                        <tbody vid="374">
+                            <tr vid="375">
+                                <td style="font-weight: 500; color: var(--text-primary);" vid="376">Conditioning Circuit</td>
+                                <td vid="377">Conditioning</td>
+                                <td vid="378">45 min</td>
+                                <td vid="379">72 TSS</td>
+                                <td vid="380"><span class="outcome-tag out-yellow" vid="381">High RPE</span></td>
+                                <td vid="382">RPE above target — reported heavy legs</td>
+                            </tr>
+                            <tr vid="383">
+                                <td style="font-weight: 500; color: var(--text-primary);" vid="384">Tempo Run</td>
+                                <td vid="385">Tempo Session</td>
+                                <td vid="386">60 min</td>
+                                <td vid="387">85 TSS</td>
+                                <td vid="388"><span class="outcome-tag out-green" vid="389">Completed</span></td>
+                                <td vid="390">Pace target met, effort controlled</td>
+                            </tr>
+                            <tr vid="391">
+                                <td style="font-weight: 500; color: var(--text-primary);" vid="392">Strength A</td>
+                                <td vid="393">Strength Session</td>
+                                <td vid="394">75 min</td>
+                                <td vid="395">65 TSS</td>
+                                <td vid="396"><span class="outcome-tag out-yellow" vid="397">Reduced Output</span></td>
+                                <td vid="398">Output reduced, lower body fatigue noted</td>
+                            </tr>
+                            <tr vid="399">
+                                <td style="font-weight: 500; color: var(--text-primary);" vid="400">Mobility Flow</td>
+                                <td vid="401">Mobility Flow</td>
+                                <td vid="402">30 min</td>
+                                <td vid="403">15 TSS</td>
+                                <td vid="404"><span class="outcome-tag out-gray" vid="405">Skipped</span></td>
+                                <td vid="406">Session missed — scheduling conflict</td>
+                            </tr>
+                            <tr vid="407">
+                                <td style="font-weight: 500; color: var(--text-primary);" vid="408">Endurance Ride</td>
+                                <td vid="409">Endurance Session</td>
+                                <td vid="410">90 min</td>
+                                <td vid="411">110 TSS</td>
+                                <td vid="412"><span class="outcome-tag out-green" vid="413">Strong Response</span></td>
+                                <td vid="414">Strong aerobic response, HR stable</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                
+                <div class="bottom-grid" vid="415">
+                    <div class="notes-card" vid="416">
+                        <div class="section-title" vid="417">Coach Notes</div>
+                        <div class="note-item" vid="418">
+                            <div class="n-label" vid="419">Current Focus</div>
+                            <div class="n-val" vid="420">Manage fatigue accumulation before next build block.</div>
+                        </div>
+                        <div class="note-item" vid="421">
+                            <div class="n-label" vid="422">Goal</div>
+                            <div class="n-val" vid="423">Maintain strength, increase aerobic base.</div>
+                        </div>
+                        <div class="note-item" vid="424">
+                            <div class="n-label" vid="425">Next Review</div>
+                            <div class="n-val" style="color: var(--text-primary);" vid="426">Friday, Oct 28</div>
+                        </div>
+                    </div>
+
+                    <div class="notes-card" vid="427">
+                        <div class="section-title" vid="428">Active Flags</div>
+                        <div style="margin-bottom:8px;" vid="429">
+                          <div style="font-size:9px;color:var(--text-tertiary);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:5px;" vid="430">Critical</div>
+                          <div class="tags-wrap" vid="431">
+                            <div class="tag-pill red" vid="432">Load Spike</div>
+                            <div class="tag-pill red" vid="433">Posterior Chain Stress</div>
+                            <div class="tag-pill red" vid="434">Recovery Suppressed</div>
+                          </div>
+                        </div>
+                        <div vid="435">
+                          <div style="font-size:9px;color:var(--text-tertiary);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:5px;" vid="436">Monitor</div>
+                          <div class="tags-wrap" vid="437">
+                            <div class="tag-pill yellow" vid="438">Low Hydration</div>
+                            <div class="tag-pill yellow" vid="439">Poor Sleep</div>
+                            <div class="tag-pill yellow" vid="440">Under-fueling</div>
+                            <div class="tag-pill blue" vid="441">Low Protein</div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="notes-card" vid="442">
+                        <div class="section-title" vid="443">Recent Interventions</div>
+                        <div style="position:relative;padding-left:16px;" vid="444">
+                          <div style="position:absolute;left:3px;top:6px;bottom:6px;width:1px;background:var(--border);" vid="445"></div>
+                          <div class="timeline-item active" style="margin-bottom:14px;" vid="446">
+                            <div class="tl-text" vid="447">Load reduced 10%</div>
+                            <div class="tl-date" vid="448">Today · 9:30 AM</div>
+                            <div style="font-size:10px;color:var(--success);margin-top:2px;" vid="449">compliance improving</div>
+                          </div>
+                          <div class="timeline-item" style="margin-bottom:14px;" vid="450">
+                            <div class="tl-text" vid="451">Hydration target increased</div>
+                            <div class="tl-date" vid="452">Mon · 2 days ago</div>
+                            <div style="font-size:10px;color:var(--text-tertiary);margin-top:2px;" vid="453">tracking below target</div>
+                          </div>
+                          <div class="timeline-item" vid="454">
+                            <div class="tl-text" vid="455">Recovery emphasis added</div>
+                            <div class="tl-date" vid="456">Last Week</div>
+                            <div style="font-size:10px;color:var(--success);margin-top:2px;" vid="457">sleep trending up slightly</div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="height: 40px;" vid="458"></div> 
+            </div>
+        </main>
+    </div>
+
+</body></html>
