@@ -87,7 +87,7 @@ function FeedIconSvg({ style: s }: { style: FeedIconStyle }) {
 
 export function LivePerformanceFeed() {
   return (
-    <div className="bg-bg-card border border-border rounded-lg p-5 flex flex-col gap-4">
+    <div className="glass-card rounded-2xl p-5 flex flex-col gap-4">
       <div className="text-[11px] uppercase text-text-tertiary font-semibold tracking-wider">
         Live Performance Feed
       </div>

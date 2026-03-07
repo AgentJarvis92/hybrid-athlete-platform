@@ -14,7 +14,7 @@ export function ProgramDistribution() {
   });
 
   return (
-    <div className="bg-bg-card border border-border rounded-lg px-6 py-5">
+    <div className="glass-card rounded-2xl px-6 py-5">
       <div className="flex justify-between items-center mb-4">
         <div>
           <div className="text-sm font-semibold text-text-primary">Program Distribution</div>

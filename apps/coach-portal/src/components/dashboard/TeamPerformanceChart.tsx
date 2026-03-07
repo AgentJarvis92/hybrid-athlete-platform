@@ -1,6 +1,6 @@
 export function TeamPerformanceChart() {
   return (
-    <div className="bg-bg-card border border-border rounded-lg px-7 py-6 animate-fadeIn">
+    <div className="glass-card rounded-2xl px-7 py-6 animate-fadeIn">
       {/* Header */}
       <div className="flex justify-between items-start mb-5">
         <div>

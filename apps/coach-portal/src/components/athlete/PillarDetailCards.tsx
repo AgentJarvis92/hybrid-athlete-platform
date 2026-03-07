@@ -19,7 +19,7 @@ export function PillarDetailCards({ training, recovery, nutrition }: Props) {
   return (
     <div className="flex flex-col gap-3.5">
       {/* TRAINING */}
-      <div className="bg-bg-card border border-border rounded-lg p-5">
+      <div className="glass-card rounded-2xl p-5">
         <div className="flex items-center justify-between mb-4">
           <span className="text-[11px] uppercase tracking-[0.06em] font-bold" style={{ color: "#D4AF37" }}>Training</span>
           <span className="text-[10px] text-text-tertiary font-normal">
@@ -78,7 +78,7 @@ export function PillarDetailCards({ training, recovery, nutrition }: Props) {
       </div>
 
       {/* RECOVERY */}
-      <div className="bg-bg-card border border-border rounded-lg p-5">
+      <div className="glass-card rounded-2xl p-5">
         <div className="flex items-center justify-between mb-4">
           <span className="text-[11px] uppercase tracking-[0.06em] font-bold" style={{ color: "#4DA3FF" }}>Recovery</span>
           <span className="text-[10px] font-normal" style={{ color: "#FF4D4D" }}>Suppressed ↓</span>
@@ -116,7 +116,7 @@ export function PillarDetailCards({ training, recovery, nutrition }: Props) {
         <div className="flex justify-between items-center pt-2">
           <span className="text-[11px] text-text-secondary">Fatigue State</span>
           <span
-            className="text-[11px] font-semibold px-1.5 py-0.5 rounded"
+            className="text-[11px] font-semibold px-1.5 py-0.5 rounded-full"
             style={{ color: recovery.fatigueColor, background: `${recovery.fatigueColor}18`, border: `1px solid ${recovery.fatigueColor}33` }}
           >
             {recovery.fatigueState}
@@ -125,7 +125,7 @@ export function PillarDetailCards({ training, recovery, nutrition }: Props) {
       </div>
 
       {/* NUTRITION */}
-      <div className="bg-bg-card border border-border rounded-lg p-5">
+      <div className="glass-card rounded-2xl p-5">
         <div className="flex items-center justify-between mb-4">
           <span className="text-[11px] uppercase tracking-[0.06em] font-bold" style={{ color: "#00FF85" }}>Nutrition</span>
           <span className="text-[10px] font-normal" style={{ color: "#FACC15" }}>{nutrition.adherence}% adherence</span>

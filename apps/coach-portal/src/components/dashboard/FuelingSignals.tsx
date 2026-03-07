@@ -2,7 +2,7 @@ import { fuelSignals } from "@/data/mock-dashboard";
 
 export function FuelingSignals() {
   return (
-    <div className="bg-bg-card border border-border rounded-lg px-6 py-5">
+    <div className="glass-card rounded-2xl px-6 py-5">
       <div className="flex justify-between items-center mb-4">
         <div>
           <div className="text-sm font-semibold text-text-primary">Fueling Signals</div>
@@ -15,7 +15,7 @@ export function FuelingSignals() {
         {fuelSignals.map((signal) => (
           <div
             key={signal.label}
-            className="bg-bg-elevated border border-border rounded-md px-4 py-3.5 flex flex-col gap-1.5"
+            className="glass-panel rounded-2xl px-4 py-3.5 flex flex-col gap-1.5"
           >
             <div className="text-[10px] uppercase tracking-wider text-text-tertiary font-semibold">
               {signal.label}

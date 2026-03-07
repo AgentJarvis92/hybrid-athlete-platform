@@ -8,7 +8,7 @@ interface Props {
 
 export function RecentInterventionsPanel({ interventions }: Props) {
   return (
-    <div className="bg-bg-card border border-border rounded-lg p-5">
+    <div className="glass-card rounded-2xl p-5">
       <div className="text-sm font-semibold text-text-primary mb-4">Recent Interventions</div>
 
       <div className="relative pl-4">

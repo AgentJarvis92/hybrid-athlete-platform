@@ -89,7 +89,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-[240px] bg-bg-primary border-r border-border flex flex-col p-4 px-3 shrink-0 z-20">
+    <aside className="w-[240px] bg-[rgba(11,13,16,0.85)] backdrop-blur-md border-r border-[rgba(212,175,55,0.08)] flex flex-col p-4 px-3 shrink-0 z-20">
       {/* Brand */}
       <div className="flex items-center gap-3 px-3 pb-6">
         <div className="relative w-7 h-7">
@@ -117,15 +117,12 @@ export function Sidebar() {
                 key={href}
                 href={href}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2 text-text-secondary rounded-md transition-all duration-200 font-medium relative",
+                  "flex items-center gap-3 px-3 py-2 text-text-secondary rounded-full transition-all duration-200 font-medium",
                   isActive
-                    ? "bg-[rgba(212,175,55,0.05)] text-text-primary"
-                    : "hover:bg-bg-hover hover:text-text-primary"
+                    ? "bg-gradient-to-r from-[rgba(212,175,55,0.12)] to-[rgba(245,208,107,0.06)] ring-1 ring-[rgba(212,175,55,0.5)] shadow-[0_0_16px_rgba(212,175,55,0.25),_0_0_4px_rgba(212,175,55,0.1)] text-[#F5D06B]"
+                    : "hover:bg-bg-elevated hover:text-text-primary"
                 )}
               >
-                {isActive && (
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] bg-accent-gold rounded-r-sm shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
-                )}
                 {icon}
                 {label}
               </Link>
@@ -136,7 +133,7 @@ export function Sidebar() {
 
       {/* Footer */}
       <div className="mt-auto border-t border-border pt-4">
-        <div className="flex items-center gap-3 p-2 cursor-pointer rounded-md hover:bg-bg-hover">
+        <div className="flex items-center gap-3 p-2 cursor-pointer rounded-full hover:bg-bg-elevated">
           <div className="w-8 h-8 rounded-full bg-bg-elevated border border-border grid place-items-center text-xs font-semibold text-text-secondary">
             JS
           </div>

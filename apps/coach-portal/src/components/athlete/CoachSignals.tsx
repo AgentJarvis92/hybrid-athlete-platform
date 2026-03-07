@@ -11,7 +11,7 @@ export function CoachSignals({ signals }: Props) {
 
   return (
     <div
-      className="rounded-lg p-5"
+      className="glass-card rounded-2xl p-5"
       style={{ background: "rgba(255,77,77,0.02)", border: "1px solid rgba(255,77,77,0.08)" }}
     >
       {/* Header */}
@@ -19,7 +19,7 @@ export function CoachSignals({ signals }: Props) {
         <span className="text-sm font-semibold text-text-primary">Coach Signals</span>
         {signals.length > 0 && (
           <span
-            className="text-[10px] font-bold px-2 py-0.5 rounded shrink-0"
+            className="text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0"
             style={{ background: "rgba(255,77,77,0.1)", color: "#FF4D4D", border: "1px solid rgba(255,77,77,0.2)" }}
           >
             {signals.length} ACTIVE
@@ -34,7 +34,7 @@ export function CoachSignals({ signals }: Props) {
           return (
             <div
               key={signal.id}
-              className="rounded-md p-3.5 flex flex-col gap-2"
+              className="rounded-2xl p-3.5 flex flex-col gap-2"
               style={{
                 background: "#1E232B",
                 border: "1px solid #2A2F37",
@@ -43,7 +43,7 @@ export function CoachSignals({ signals }: Props) {
             >
               {/* Tag on its own line so it never merges with title */}
               <span
-                className="self-start text-[9px] font-mono px-1.5 py-0.5 rounded"
+                className="self-start text-[9px] font-mono px-1.5 py-0.5 rounded-full"
                 style={{ color, background: `${color}18` }}
               >
                 {signal.tag}

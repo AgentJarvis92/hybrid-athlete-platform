@@ -10,7 +10,7 @@ export function AthleteStateKPIRow({ summary }: Props) {
   return (
     <div className="grid grid-cols-5 gap-4">
       {/* Current State */}
-      <div className="bg-bg-card border border-border rounded-lg p-4 hover:-translate-y-px transition-all">
+      <div className="glass-card-gold rounded-2xl p-4 hover:-translate-y-px transition-all duration-200">
         <div className="text-[11px] uppercase tracking-[0.06em] font-bold text-text-tertiary mb-1">Current State</div>
         <div className="font-mono text-[20px] font-bold" style={{ color: summary.stateColor }}>
           {summary.currentState}
@@ -19,7 +19,7 @@ export function AthleteStateKPIRow({ summary }: Props) {
       </div>
 
       {/* Training Load */}
-      <div className="bg-bg-card border border-border rounded-lg p-4 hover:-translate-y-px transition-all">
+      <div className="glass-card-gold rounded-2xl p-4 hover:-translate-y-px transition-all duration-200">
         <div className="text-[11px] uppercase tracking-[0.06em] font-bold text-text-tertiary mb-1">Training Load</div>
         <div className="font-mono text-[20px] font-bold" style={{ color: summary.trainingLoadColor }}>
           {summary.trainingLoad}{" "}
@@ -34,7 +34,7 @@ export function AthleteStateKPIRow({ summary }: Props) {
       </div>
 
       {/* Recovery Score */}
-      <div className="bg-bg-card border border-border rounded-lg p-4 hover:-translate-y-px transition-all">
+      <div className="glass-card-gold rounded-2xl p-4 hover:-translate-y-px transition-all duration-200">
         <div className="text-[11px] uppercase tracking-[0.06em] font-bold text-text-tertiary mb-1">Recovery Score</div>
         <div className="font-mono text-[20px] font-bold" style={{ color: summary.recoveryColor }}>
           {summary.recoveryScore}<span className="text-[12px] font-medium">%</span>
@@ -48,7 +48,7 @@ export function AthleteStateKPIRow({ summary }: Props) {
       </div>
 
       {/* Nutrition */}
-      <div className="bg-bg-card border border-border rounded-lg p-4 hover:-translate-y-px transition-all">
+      <div className="glass-card-gold rounded-2xl p-4 hover:-translate-y-px transition-all duration-200">
         <div className="text-[11px] uppercase tracking-[0.06em] font-bold text-text-tertiary mb-1">Nutrition</div>
         <div className="font-mono text-[20px] font-bold" style={{ color: summary.nutritionColor }}>
           {summary.nutritionAdherence}<span className="text-[12px] font-medium">%</span>
@@ -63,7 +63,7 @@ export function AthleteStateKPIRow({ summary }: Props) {
 
       {/* Adaptation Status — special card */}
       <div
-        className="rounded-lg p-4 hover:-translate-y-px transition-all"
+        className="rounded-2xl p-4 hover:-translate-y-px transition-all duration-200"
         style={{
           background: `${summary.adaptationColor}08`,
           border: `1px solid ${summary.adaptationColor}28`,

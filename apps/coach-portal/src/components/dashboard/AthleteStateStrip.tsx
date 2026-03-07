@@ -106,7 +106,7 @@ export function AthleteStateStrip() {
   const displayState = STATES.find((s) => s.key === (hovered ?? (tooltipHovered ? lastHovered : null)));
 
   return (
-    <div className="bg-bg-card border border-border rounded-lg px-5 py-4">
+    <div className="glass-card rounded-2xl px-5 py-4">
       {/* Header row */}
       <div className="flex items-center justify-between mb-3.5">
         <div className="flex items-center gap-2.5">
@@ -136,7 +136,7 @@ export function AthleteStateStrip() {
 
       {/* Segmented bar */}
       <div className="relative" ref={stripRef}>
-        <div className="flex h-11 rounded-md overflow-hidden gap-[2px]">
+        <div className="flex h-11 rounded-2xl overflow-hidden gap-[2px]">
           {STATES.map((state) => {
             const pct = (state.count / TOTAL) * 100;
             const isHov = hovered === state.key;

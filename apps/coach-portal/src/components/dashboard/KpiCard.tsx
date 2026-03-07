@@ -20,7 +20,7 @@ function TrendArrow({ direction }: { direction: "up" | "down" | "neutral" }) {
 
 export function KpiCard({ data }: { data: KpiData }) {
   return (
-    <div className="bg-bg-card border border-border rounded-lg p-5 relative overflow-hidden transition-all duration-200 gold-card-glow hover:border-[rgba(212,175,55,0.25)] hover:shadow-[0_0_0_1px_rgba(212,175,55,0.06),0_4px_24px_rgba(0,0,0,0.4)] hover:-translate-y-px">
+    <div className="glass-card-gold rounded-2xl p-5 relative overflow-hidden transition-all duration-300 gold-card-glow hover:border-[rgba(212,175,55,0.3)] hover:shadow-[0_0_0_1px_rgba(212,175,55,0.2),_0_8px_32px_rgba(212,175,55,0.1)] hover:-translate-y-px">
       <div className="text-[11px] uppercase tracking-wider text-text-secondary font-semibold mb-3">
         {data.label}
       </div>

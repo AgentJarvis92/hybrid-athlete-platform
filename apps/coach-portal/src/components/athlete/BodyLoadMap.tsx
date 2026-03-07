@@ -28,16 +28,16 @@ export function BodyLoadMap({ callouts }: Props) {
   const [activeRange, setActiveRange] = useState<"7" | "14">("7");
 
   return (
-    <div className="bg-bg-card border border-border rounded-lg p-5">
+    <div className="glass-card rounded-2xl p-5">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <span className="text-sm font-semibold text-text-primary">Body Load Map</span>
-        <div className="flex bg-bg-elevated rounded p-0.5 gap-0.5">
+        <div className="flex bg-bg-elevated rounded-full p-0.5 gap-0.5">
           {(["7", "14"] as const).map((r) => (
             <button
               key={r}
               onClick={() => setActiveRange(r)}
-              className="px-2.5 py-0.5 rounded text-[10px] cursor-pointer transition-all font-mono"
+              className="px-2.5 py-0.5 rounded-full text-[10px] cursor-pointer transition-all duration-200 font-mono"
               style={
                 activeRange === r
                   ? { background: "#161A20", color: "#F5F7FA", boxShadow: "0 1px 3px rgba(0,0,0,0.3)" }

@@ -78,3 +78,33 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #5E6573;
 }
+
+/* Glass-morphism utilities */
+.glass-card {
+  background: rgba(22, 26, 32, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(42, 47, 55, 0.8);
+}
+
+.glass-card-gold {
+  background: rgba(22, 26, 32, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(212,175,55,0.08) inset;
+}
+
+.pill-gold-active {
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(212,175,55,0.12), rgba(245,208,107,0.06));
+  box-shadow: 0 0 0 1px rgba(212,175,55,0.45), 0 0 16px rgba(212,175,55,0.2), 0 0 4px rgba(212,175,55,0.1) inset;
+  color: #F5D06B;
+}
+
+.glass-panel {
+  background: rgba(30, 35, 43, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(62, 69, 80, 0.5);
+}

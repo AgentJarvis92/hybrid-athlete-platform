@@ -51,6 +51,8 @@ const config: Config = {
         sm: "4px",
         md: "6px",
         lg: "12px",
+        '2xl': "16px",
+        '3xl': "24px",
       },
       keyframes: {
         fadeIn: {

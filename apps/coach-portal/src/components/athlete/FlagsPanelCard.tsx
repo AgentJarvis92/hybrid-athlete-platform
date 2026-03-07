@@ -12,7 +12,7 @@ interface Props {
 
 export function FlagsPanelCard({ flags }: Props) {
   return (
-    <div className="bg-bg-card border border-border rounded-lg p-5">
+    <div className="glass-card rounded-2xl p-5">
       <div className="text-sm font-semibold text-text-primary mb-4">Active Flags</div>
 
       <div className="flex flex-col gap-4">

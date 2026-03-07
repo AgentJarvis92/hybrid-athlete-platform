@@ -86,7 +86,7 @@ function AthleteDot({ athlete }: { athlete: ReadinessAthlete }) {
 
 export function TeamReadinessMap() {
   return (
-    <div className="bg-bg-card border border-border rounded-lg px-7 py-6">
+    <div className="glass-card rounded-2xl px-7 py-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-[18px]">
         <div>

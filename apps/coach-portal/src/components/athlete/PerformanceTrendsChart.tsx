@@ -2,7 +2,7 @@ const DAY_LABELS = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN", "MON", "TUE
 
 export function PerformanceTrendsChart() {
   return (
-    <div className="bg-bg-card border border-border rounded-lg px-6 py-5">
+    <div className="glass-card rounded-2xl px-6 py-5">
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
         <span className="text-sm font-semibold text-text-primary">Performance Trends · 14 Days</span>

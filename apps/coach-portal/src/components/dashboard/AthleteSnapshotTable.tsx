@@ -9,7 +9,7 @@ function RiskBadge({ badge }: { badge: AthleteSnapshot["badge"] }) {
     pr: "text-accent-secondary bg-[rgba(0,255,133,0.08)] border-[rgba(0,255,133,0.2)]",
   };
   return (
-    <span className={`inline-flex items-center gap-0.5 text-[10px] font-semibold px-1.5 py-0.5 rounded border uppercase tracking-wide ${styles[badge.type]}`}>
+    <span className={`inline-flex items-center gap-0.5 text-[10px] font-semibold px-1.5 py-0.5 rounded-full border uppercase tracking-wide ${styles[badge.type]}`}>
       {badge.text}
     </span>
   );
@@ -22,7 +22,7 @@ function NutriBadge({ status, label }: { status: string; label: string }) {
     under: "text-danger bg-[rgba(255,77,77,0.08)] border-[rgba(255,77,77,0.2)]",
   };
   return (
-    <span className={`inline-flex items-center gap-0.5 text-[10px] font-semibold px-1.5 py-0.5 rounded border uppercase tracking-wide whitespace-nowrap ${styles[status as "on" | "low" | "under"]}`}>
+    <span className={`inline-flex items-center gap-0.5 text-[10px] font-semibold px-1.5 py-0.5 rounded-full border uppercase tracking-wide whitespace-nowrap ${styles[status as "on" | "low" | "under"]}`}>
       {label}
     </span>
   );
@@ -54,10 +54,10 @@ function StatusDot({ color }: { color: string }) {
 
 export function AthleteSnapshotTable() {
   return (
-    <div className="bg-bg-card border border-border rounded-lg overflow-hidden flex flex-col">
+    <div className="glass-card rounded-2xl overflow-hidden flex flex-col">
       <div className="px-5 py-4 border-b border-border flex justify-between items-center">
         <div className="text-sm font-semibold text-text-primary">Athlete Snapshot</div>
-        <button className="px-3 py-1 border border-border rounded text-text-secondary text-xs cursor-pointer transition-all hover:border-text-primary hover:text-text-primary">
+        <button className="px-3 py-1 border border-border rounded-full text-text-secondary text-xs cursor-pointer transition-all duration-200 hover:border-text-primary hover:text-text-primary">
           Filter
         </button>
       </div>
@@ -138,7 +138,7 @@ export function AthleteSnapshotTable() {
               <td className="px-5 py-3 border-b border-border">
                 <Link
                   href={`/athletes/${athlete.id === "SL" ? "sl" : athlete.id.toLowerCase()}`}
-                  className="inline-block px-3 py-1 border border-border rounded text-text-secondary text-xs transition-all hover:border-text-primary hover:text-text-primary"
+                  className="inline-block px-3 py-1 border border-border rounded-full text-text-secondary text-xs transition-all duration-200 hover:border-text-primary hover:text-text-primary"
                 >
                   View
                 </Link>

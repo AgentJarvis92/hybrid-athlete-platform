@@ -14,7 +14,7 @@ interface Props {
 
 export function RecentSessionsTable({ sessions }: Props) {
   return (
-    <div className="bg-bg-card border border-border rounded-lg overflow-hidden">
+    <div className="glass-card rounded-2xl overflow-hidden">
       <div className="px-5 py-3 border-b border-border">
         <span className="text-sm font-semibold text-text-primary">Recent Sessions</span>
       </div>
@@ -42,7 +42,7 @@ export function RecentSessionsTable({ sessions }: Props) {
                 <td className="px-5 py-3 text-text-secondary font-mono">{s.load}</td>
                 <td className="px-5 py-3">
                   <span
-                    className="px-1.5 py-0.5 rounded text-[10px] font-medium"
+                    className="px-1.5 py-0.5 rounded-full text-[10px] font-medium"
                     style={{ color: o.color, background: o.bg, border: `1px solid ${o.border}` }}
                   >
                     {o.label}

@@ -23,7 +23,7 @@ export function TeamInsights() {
       {teamInsights.map((insight, i) => (
         <div
           key={i}
-          className="bg-bg-elevated border border-border rounded-md px-4 py-3.5 flex flex-col gap-2 transition-colors hover:border-border-highlight"
+          className="glass-panel rounded-2xl px-4 py-3.5 flex flex-col gap-2 transition-all duration-200 hover:border-border-highlight"
         >
           <div className="text-[10px] uppercase tracking-wider text-text-tertiary font-semibold">
             {insight.label}
