@@ -1,5 +1,4 @@
 import { Sidebar } from "@/components/Sidebar";
-import { FloatingNav } from "@/components/FloatingNav";
 
 export default function DashboardLayout({
   children,
@@ -52,12 +51,11 @@ export default function DashboardLayout({
             </div>
           </header>
           {/* Workspace */}
-          <div className="flex-1 overflow-y-auto p-8 px-10 pb-28 flex flex-col gap-7" style={{ minWidth: "800px" }}>
+          <div className="flex-1 overflow-y-auto p-8 px-10 flex flex-col gap-7" style={{ minWidth: "800px" }}>
             {children}
           </div>
         </main>
       </div>
-      <FloatingNav />
     </>
   );
 }
