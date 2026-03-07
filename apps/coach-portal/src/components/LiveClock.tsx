@@ -34,7 +34,7 @@ export function LiveClock() {
     .pop() ?? "LT";
 
   return (
-    <div className="font-mono text-accent-lime text-[12px] tracking-wide">
+    <div className="font-mono text-accent-gold text-[12px] tracking-wide">
       {day} {month} {date}, {year}
       <span className="text-text-tertiary mx-1.5">//</span>
       {h}:{m}:{s}

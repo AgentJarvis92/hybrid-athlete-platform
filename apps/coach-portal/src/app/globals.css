@@ -24,7 +24,34 @@
 
 /* Glow effect on lime numbers */
 .glow-lime {
-  text-shadow: 0 0 20px rgba(198, 255, 0, 0.3);
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+.glow-gold {
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.5), 0 0 40px rgba(212, 175, 55, 0.2);
+}
+
+.liquid-gold-text {
+  background: linear-gradient(135deg, #9B7D20 0%, #D4AF37 30%, #F5D06B 50%, #D4AF37 70%, #9B7D20 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+.liquid-gold-border {
+  border-image: linear-gradient(135deg, #9B7D20, #D4AF37, #F5D06B, #D4AF37, #9B7D20) 1;
+  border-image-slice: 1;
+}
+
+.gold-card-glow {
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.15), 0 4px 24px rgba(212, 175, 55, 0.08);
+}
+
+.gold-card-glow:hover {
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.3), 0 4px 32px rgba(212, 175, 55, 0.15);
+  transition: box-shadow 0.3s ease;
 }
 
 /* Chart line animation */

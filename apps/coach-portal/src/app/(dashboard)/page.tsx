@@ -14,13 +14,13 @@ export default function DashboardPage() {
     <>
       {/* Section header */}
       <div className="flex justify-between items-end">
-        <h1 className="text-[32px] font-bold tracking-[-0.03em] text-text-primary">
+        <h1 className="text-[32px] font-bold tracking-[-0.03em] text-text-primary liquid-gold-text">
           Performance Overview
         </h1>
         <div className="flex items-center gap-3">
           {/* Pillar tabs */}
           <div className="flex gap-1 bg-bg-elevated border border-border rounded-md p-[3px]">
-            <div className="px-3.5 py-1 rounded text-[12px] font-semibold tracking-wide bg-bg-card text-accent-lime cursor-pointer">
+            <div className="px-3.5 py-1 rounded text-[12px] font-semibold tracking-wide bg-bg-card text-accent-gold cursor-pointer">
               Training
             </div>
             <div className="px-3.5 py-1 rounded text-[12px] font-semibold tracking-wide text-text-tertiary cursor-pointer">

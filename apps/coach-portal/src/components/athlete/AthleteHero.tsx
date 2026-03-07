@@ -45,7 +45,7 @@ export function AthleteHero({ athlete }: Props) {
             <div className="flex gap-5 ml-4 pl-4 border-l border-border">
               {[
                 { label: "Recovery", value: `${athlete.recovery}%`, color: athlete.recovery < 50 ? "#FF4D4D" : athlete.recovery < 70 ? "#FACC15" : "#22C55E" },
-                { label: "Load", value: `${athlete.load} ATL`, color: athlete.load > 85 ? "#FF4D4D" : athlete.load > 70 ? "#FACC15" : "#C6FF00" },
+                { label: "Load", value: `${athlete.load} ATL`, color: athlete.load > 85 ? "#FF4D4D" : athlete.load > 70 ? "#FACC15" : "#D4AF37" },
                 { label: "Nutrition", value: `${athlete.nutrition}%`, color: athlete.nutrition < 60 ? "#FF4D4D" : athlete.nutrition < 80 ? "#FACC15" : "#22C55E" },
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col gap-0.5">
@@ -95,7 +95,7 @@ export function AthleteHero({ athlete }: Props) {
           </button>
           <button
             className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium rounded-md transition-all cursor-pointer"
-            style={{ color: "#C6FF00", background: "rgba(198,255,0,0.05)", border: "1px solid rgba(198,255,0,0.3)" }}
+            style={{ color: "#D4AF37", background: "rgba(212,175,55,0.05)", border: "1px solid rgba(212,175,55,0.3)" }}
           >
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             Adjust Training

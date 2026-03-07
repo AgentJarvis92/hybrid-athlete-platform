@@ -3,8 +3,8 @@ import { liveFeed } from "@/data/mock-dashboard";
 type FeedIconStyle = "highlight" | "lime" | "green" | "red" | "orange" | "blue";
 
 const iconBorderColors: Record<FeedIconStyle, string> = {
-  highlight: "#C6FF00",
-  lime: "rgba(198,255,0,0.3)",
+  highlight: "#D4AF37",
+  lime: "rgba(212,175,55,0.3)",
   green: "rgba(0,255,133,0.3)",
   red: "rgba(255,77,77,0.3)",
   orange: "rgba(251,146,60,0.3)",
@@ -12,8 +12,8 @@ const iconBorderColors: Record<FeedIconStyle, string> = {
 };
 
 const iconColors: Record<FeedIconStyle, string> = {
-  highlight: "#C6FF00",
-  lime: "#C6FF00",
+  highlight: "#D4AF37",
+  lime: "#D4AF37",
   green: "#00FF85",
   red: "#FF4D4D",
   orange: "#FB923C",
@@ -29,7 +29,7 @@ function FeedIcon({ style: iconStyle }: { style: FeedIconStyle }) {
         background: isHighlight ? "transparent" : "#1E232B",
         border: `1px solid ${iconBorderColors[iconStyle]}`,
         color: iconColors[iconStyle],
-        boxShadow: isHighlight ? "0 0 10px rgba(198,255,0,0.1)" : undefined,
+        boxShadow: isHighlight ? "0 0 10px rgba(212,175,55,0.1)" : undefined,
       }}
     >
       <FeedIconSvg style={iconStyle} />

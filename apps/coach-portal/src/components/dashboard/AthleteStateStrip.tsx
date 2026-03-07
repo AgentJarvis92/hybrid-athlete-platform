@@ -31,9 +31,9 @@ const STATES: {
     key: "building",
     label: "BUILDING",
     count: 7,
-    color: "#C6FF00",
-    bg: "rgba(198,255,0,0.05)",
-    glow: "rgba(198,255,0,0.15)",
+    color: "#D4AF37",
+    bg: "rgba(212,175,55,0.05)",
+    glow: "rgba(212,175,55,0.15)",
     athletes: [
       { name: "Ryan Torres", context: "load progressing" },
       { name: "Mia Chen",    context: "aerobic base phase" },

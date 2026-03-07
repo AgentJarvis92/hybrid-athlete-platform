@@ -22,9 +22,9 @@ export function RecentInterventionsPanel({ interventions }: Props) {
               <div
                 className="absolute -left-[13px] top-[5px] w-[7px] h-[7px] rounded-full"
                 style={{
-                  background: item.active ? "#C6FF00" : "#2A2F37",
-                  border: `1px solid ${item.active ? "#C6FF00" : "#3E4550"}`,
-                  boxShadow: item.active ? "0 0 6px rgba(198,255,0,0.4)" : "none",
+                  background: item.active ? "#D4AF37" : "#2A2F37",
+                  border: `1px solid ${item.active ? "#D4AF37" : "#3E4550"}`,
+                  boxShadow: item.active ? "0 0 6px rgba(212,175,55,0.4)" : "none",
                 }}
               />
               <div className="text-[12px] text-text-primary">{item.text}</div>

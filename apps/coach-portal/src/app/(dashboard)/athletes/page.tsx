@@ -10,7 +10,7 @@ const FILTERS: { label: string; value: FilterState; color: string }[] = [
   { label: "All",      value: "ALL",      color: "#8A93A0" },
   { label: "At Risk",  value: "AT RISK",  color: "#FF4D4D" },
   { label: "Fatigued", value: "FATIGUED", color: "#FACC15" },
-  { label: "Building", value: "BUILDING", color: "#C6FF00" },
+  { label: "Building", value: "BUILDING", color: "#D4AF37" },
   { label: "Ready",    value: "READY",    color: "#8A93A0" },
   { label: "Peak",     value: "PEAK",     color: "#00FF85" },
 ];
@@ -89,9 +89,9 @@ export default function AthletesPage() {
           onClick={handleGenerateCode}
           className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all"
           style={{
-            background: "rgba(198,255,0,0.1)",
-            border: "1px solid rgba(198,255,0,0.25)",
-            color: "#C6FF00",
+            background: "rgba(212,175,55,0.1)",
+            border: "1px solid rgba(212,175,55,0.25)",
+            color: "#D4AF37",
           }}
         >
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
@@ -105,18 +105,18 @@ export default function AthletesPage() {
       {inviteCode && (
         <div
           className="rounded-xl border px-5 py-4 flex items-center gap-4"
-          style={{ background: "rgba(198,255,0,0.05)", borderColor: "rgba(198,255,0,0.2)" }}
+          style={{ background: "rgba(212,175,55,0.05)", borderColor: "rgba(212,175,55,0.2)" }}
         >
           <div>
             <p className="text-[11px] text-text-tertiary mb-1">Share this invite code with your athlete:</p>
             <div className="flex items-center gap-3">
-              <code className="text-2xl font-mono font-bold tracking-[0.2em]" style={{ color: "#C6FF00" }}>
+              <code className="text-2xl font-mono font-bold tracking-[0.2em]" style={{ color: "#D4AF37" }}>
                 {inviteCode}
               </code>
               <button
                 onClick={handleCopy}
                 className="text-[11px] font-medium transition-colors"
-                style={{ color: copied ? "#00FF85" : "#C6FF00" }}
+                style={{ color: copied ? "#00FF85" : "#D4AF37" }}
               >
                 {copied ? "✓ Copied" : "Copy"}
               </button>

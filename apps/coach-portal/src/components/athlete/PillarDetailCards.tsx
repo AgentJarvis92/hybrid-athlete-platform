@@ -21,7 +21,7 @@ export function PillarDetailCards({ training, recovery, nutrition }: Props) {
       {/* TRAINING */}
       <div className="bg-bg-card border border-border rounded-lg p-5">
         <div className="flex items-center justify-between mb-4">
-          <span className="text-[11px] uppercase tracking-[0.06em] font-bold" style={{ color: "#C6FF00" }}>Training</span>
+          <span className="text-[11px] uppercase tracking-[0.06em] font-bold" style={{ color: "#D4AF37" }}>Training</span>
           <span className="text-[10px] text-text-tertiary font-normal">
             A:C {training.acRatio}{" "}
             <span style={{ color: training.acColor }}>↑ elevated</span>
@@ -53,7 +53,7 @@ export function PillarDetailCards({ training, recovery, nutrition }: Props) {
                   className="flex-1 rounded-sm"
                   style={{
                     height: `${pct * 100}%`,
-                    background: isHigh ? `rgba(255,77,77,${0.5 + i * 0.05})` : `rgba(198,255,0,${0.25 + i * 0.04})`,
+                    background: isHigh ? `rgba(255,77,77,${0.5 + i * 0.05})` : `rgba(212,175,55,${0.25 + i * 0.04})`,
                   }}
                 />
               );
@@ -68,7 +68,7 @@ export function PillarDetailCards({ training, recovery, nutrition }: Props) {
               { h: "25%", color: "#4DA3FF" },
               { h: "40%", color: "#22C55E" },
               { h: "30%", color: "#FACC15" },
-              { h: "90%", color: "#C6FF00" },
+              { h: "90%", color: "#D4AF37" },
               { h: "15%", color: "#FB923C" },
             ].map((z, i) => (
               <div key={i} className="w-2 rounded-sm" style={{ height: z.h, background: z.color, opacity: 0.7 }} />
@@ -136,7 +136,7 @@ export function PillarDetailCards({ training, recovery, nutrition }: Props) {
             { label: "Calories", value: nutrition.calories.toLocaleString(), target: nutrition.caloriesTarget.toLocaleString(), unit: "kcal", ratio: nutrition.calories / nutrition.caloriesTarget, color: "#FF4D4D" },
             { label: "Protein",  value: `${nutrition.protein}`,  target: `${nutrition.proteinTarget}`,  unit: "g", ratio: nutrition.protein / nutrition.proteinTarget,  color: "#4DA3FF" },
             { label: "Carbs",    value: `${nutrition.carbs}`,    target: `${nutrition.carbsTarget}`,    unit: "g", ratio: nutrition.carbs / nutrition.carbsTarget,      color: "#FACC15" },
-            { label: "Fat",      value: `${nutrition.fat}`,      target: `${nutrition.fatTarget}`,      unit: "g", ratio: nutrition.fat / nutrition.fatTarget,          color: "#C6FF00" },
+            { label: "Fat",      value: `${nutrition.fat}`,      target: `${nutrition.fatTarget}`,      unit: "g", ratio: nutrition.fat / nutrition.fatTarget,          color: "#D4AF37" },
           ].map((m) => (
             <div key={m.label}>
               <div className="flex justify-between mb-1">

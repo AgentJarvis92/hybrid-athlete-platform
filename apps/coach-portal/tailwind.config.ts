@@ -17,7 +17,10 @@ const config: Config = {
         },
         accent: {
           lime: "#C6FF00",
-          secondary: "#00FF85",
+          gold: "#D4AF37",
+          goldLight: "#F5D06B",
+          goldDark: "#9B7D20",
+          secondary: "#C8960C",
         },
         text: {
           primary: "#F5F7FA",
@@ -35,7 +38,7 @@ const config: Config = {
           1: "#4DA3FF",
           2: "#22C55E",
           3: "#FACC15",
-          4: "#C6FF00",
+          4: "#D4AF37",
           5: "#FB923C",
           6: "#EF4444",
         },
@@ -62,11 +65,21 @@ const config: Config = {
           from: { strokeDashoffset: "1000" },
           to: { strokeDashoffset: "0" },
         },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% center" },
+          "100%": { backgroundPosition: "200% center" },
+        },
+        liquidPulse: {
+          "0%, 100%": { opacity: "1", filter: "brightness(1)" },
+          "50%": { opacity: "0.85", filter: "brightness(1.2)" },
+        },
       },
       animation: {
         fadeIn: "fadeIn 0.4s ease",
         pulse: "pulse 2s infinite",
         drawLine: "drawLine 1.2s ease forwards",
+        shimmer: "shimmer 3s linear infinite",
+        liquidPulse: "liquidPulse 2.5s ease-in-out infinite",
       },
     },
   },

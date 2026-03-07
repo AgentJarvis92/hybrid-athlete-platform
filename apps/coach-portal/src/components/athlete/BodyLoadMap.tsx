@@ -5,7 +5,7 @@ import type { IExerciseData } from "react-body-highlighter";
 import type { BodyLoadCallout } from "@/types/athlete";
 
 // Color scale: index 0 = frequency 1 (productive), 1 = frequency 2 (elevated), 2 = frequency 3 (high load)
-const HIGHLIGHT_COLORS = ["#C6FF00", "#FACC15", "#FF4D4D"];
+const HIGHLIGHT_COLORS = ["#D4AF37", "#FACC15", "#FF4D4D"];
 const BODY_COLOR = "#1D2229";
 
 // Sarah Lee's load data — frequency maps to intensity tier
@@ -18,7 +18,7 @@ const SARAH_LOAD_DATA: IExerciseData[] = [
   { name: "Productive", muscles: ["chest", "upper-back"], frequency: 1 },
 ];
 
-const CALLOUT_COLOR = { red: "#FF4D4D", yellow: "#FACC15", lime: "#C6FF00" };
+const CALLOUT_COLOR = { red: "#FF4D4D", yellow: "#FACC15", lime: "#D4AF37" };
 
 interface Props {
   callouts: BodyLoadCallout[];
@@ -83,7 +83,7 @@ export function BodyLoadMap({ callouts }: Props) {
           {[
             { label: "High Load",  color: "#FF4D4D" },
             { label: "Elevated",   color: "#FACC15" },
-            { label: "Productive", color: "#C6FF00" },
+            { label: "Productive", color: "#D4AF37" },
           ].map((l) => (
             <div key={l.label} className="flex items-center gap-2 text-[10px] text-text-secondary">
               <div

@@ -38,7 +38,7 @@ function AlertCard({ alert }: { alert: AttentionAlert }) {
     blue: { left: "#4DA3FF", icon: "rgba(77,163,255,0.12)", iconBorder: "rgba(77,163,255,0.2)", iconColor: "#4DA3FF" },
   };
   const colors = severityColors[alert.severity];
-  const cardClass = "bg-bg-primary border border-border rounded-md p-2.5 px-3 flex gap-2.5 items-start transition-all duration-150 relative overflow-hidden hover:border-border-highlight hover:bg-bg-elevated";
+  const cardClass = "bg-bg-primary border border-border rounded-md p-2.5 px-3 gold-card-glow flex gap-2.5 items-start transition-all duration-150 relative overflow-hidden hover:border-border-highlight hover:bg-bg-elevated";
 
   const inner = (
     <>
@@ -63,7 +63,7 @@ function AlertCard({ alert }: { alert: AttentionAlert }) {
       </div>
       <div className="flex flex-col items-end gap-1.5">
         <span className="text-[10px] text-text-tertiary font-mono whitespace-nowrap">{alert.time}</span>
-        <button className="text-[10px] px-2.5 py-1 border border-border rounded text-text-secondary bg-transparent cursor-pointer transition-all hover:border-accent-lime hover:text-accent-lime font-medium whitespace-nowrap">
+        <button className="text-[10px] px-2.5 py-1 border border-border rounded text-text-secondary bg-transparent cursor-pointer transition-all hover:border-accent-gold hover:text-accent-gold font-medium whitespace-nowrap">
           {alert.action}
         </button>
       </div>

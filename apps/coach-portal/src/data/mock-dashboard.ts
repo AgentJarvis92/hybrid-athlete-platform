@@ -13,7 +13,7 @@ export const kpiCards: KpiData[] = [
   {
     label: "Total Athletes",
     value: 24,
-    color: "#C6FF00",
+    color: "#D4AF37",
     trend: { direction: "up", text: "+2 this week" },
     breakdown: [
       { label: "active", value: "18", color: "#22C55E" },
@@ -135,7 +135,7 @@ export const teamInsights: TeamInsight[] = [
 ];
 
 export const programCategories: ProgramCategory[] = [
-  { label: "Endurance", count: 48, percent: 80, color: "#C6FF00" },
+  { label: "Endurance", count: 48, percent: 80, color: "#D4AF37" },
   { label: "Strength", count: 33, percent: 55, color: "#4DA3FF" },
   { label: "Conditioning", count: 23, percent: 38, color: "#FB923C" },
   { label: "Mobility", count: 15, percent: 25, color: "#FACC15" },
@@ -147,8 +147,8 @@ export const fuelSignals: FuelSignal[] = [
   { label: "Under Fueling", value: 3, color: "#FACC15", detail: "Below daily calorie target", dotColor: "#FACC15", dotLabel: "Avg −340 kcal" },
   { label: "Low Protein", value: 4, color: "#FB923C", detail: "Below protein threshold", dotColor: "#FB923C", dotLabel: "Avg −22g / day" },
   { label: "Hydration Low", value: 2, color: "#FF4D4D", detail: "Below hydration minimum", dotColor: "#FF4D4D", dotLabel: "Flag: Sarah, Mike" },
-  { label: "Avg Calories", value: "2,840", color: "#F5F7FA", detail: "Team avg daily intake", dotColor: "#C6FF00", dotLabel: "Target: 2,900" },
-  { label: "Avg Protein", value: 178, unit: "g", color: "#F5F7FA", detail: "Team avg protein intake", dotColor: "#C6FF00", dotLabel: "Target: 185g" },
+  { label: "Avg Calories", value: "2,840", color: "#F5F7FA", detail: "Team avg daily intake", dotColor: "#D4AF37", dotLabel: "Target: 2,900" },
+  { label: "Avg Protein", value: 178, unit: "g", color: "#F5F7FA", detail: "Team avg protein intake", dotColor: "#D4AF37", dotLabel: "Target: 185g" },
 ];
 
 export const athleteSnapshots: AthleteSnapshot[] = [
@@ -156,7 +156,7 @@ export const athleteSnapshots: AthleteSnapshot[] = [
     id: "1", initials: "JD", name: "John Doe",
     badge: { text: "PR", type: "pr" },
     lastSession: "Tempo Session",
-    weeklyLoad: 82, weeklyLoadColor: "#C6FF00",
+    weeklyLoad: 82, weeklyLoadColor: "#D4AF37",
     recovery: { score: 87, level: "high", note: "HRV ↑" },
     nutrition: { status: "on", label: "On Target" },
     statusColor: "green",
@@ -192,12 +192,12 @@ export const athleteSnapshots: AthleteSnapshot[] = [
 
 export const liveFeed: FeedItem[] = [
   { id: "1", iconStyle: "highlight", dotColor: "#FB923C", athlete: "Emily", text: "set new aerobic output peak · 62.1 ml/kg/min", time: "2 mins ago" },
-  { id: "2", iconStyle: "lime", dotColor: "#C6FF00", athlete: "John", text: "performance output improved · tempo session", time: "8 mins ago" },
+  { id: "2", iconStyle: "lime", dotColor: "#D4AF37", athlete: "John", text: "performance output improved · tempo session", time: "8 mins ago" },
   { id: "3", iconStyle: "green", dotColor: "#00FF85", athlete: "Emily", text: "logged nutrition plan · 2,920 kcal", time: "12 mins ago" },
   { id: "4", iconStyle: "green", dotColor: "#00FF85", athlete: "John", text: "hit daily protein target · 194g", time: "22 mins ago" },
   { id: "5", iconStyle: "red", dotColor: "#FF4D4D", athlete: "Sarah", text: "training load spike detected", time: "42 mins ago" },
   { id: "6", iconStyle: "red", dotColor: "#FF4D4D", athlete: "Sarah", text: "reported poor sleep recovery · HRV –14%", time: "55 mins ago" },
-  { id: "7", iconStyle: "lime", dotColor: "#C6FF00", athlete: "Mike", text: "completed strength session · 52 min", time: "1.5 hrs ago" },
+  { id: "7", iconStyle: "lime", dotColor: "#D4AF37", athlete: "Mike", text: "completed strength session · 52 min", time: "1.5 hrs ago" },
   { id: "8", iconStyle: "green", dotColor: "#00FF85", athlete: "Lisa", text: "met daily hydration goal · 3.2L", time: "1.8 hrs ago" },
   { id: "9", iconStyle: "orange", dotColor: "#FB923C", athlete: "Alex", text: "completed conditioning circuit · peak zone", time: "2 hrs ago" },
 ];

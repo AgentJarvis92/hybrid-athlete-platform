@@ -90,7 +90,7 @@ export function AthleteSnapshotTable() {
                     {athlete.initials}
                   </div>
                   <div>
-                    <div className="text-text-primary font-medium text-[13px] group-hover:text-accent-lime transition-colors">{athlete.name}</div>
+                    <div className="text-text-primary font-medium text-[13px] group-hover:text-accent-gold transition-colors">{athlete.name}</div>
                     <RiskBadge badge={athlete.badge} />
                   </div>
                 </Link>

@@ -11,7 +11,7 @@ export function TeamPerformanceChart() {
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1.5 text-[11px] text-text-secondary">
-            <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#C6FF00" }} />
+            <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#D4AF37" }} />
             Training Load
           </div>
           <div className="flex items-center gap-1.5 text-[11px] text-text-secondary">
@@ -26,7 +26,7 @@ export function TeamPerformanceChart() {
           <div className="flex items-center gap-1 text-[11px] text-text-tertiary">
             <div
               className="w-3 h-2 rounded-[2px]"
-              style={{ background: "rgba(198,255,0,0.07)", border: "1px solid rgba(198,255,0,0.15)" }}
+              style={{ background: "rgba(212,175,55,0.07)", border: "1px solid rgba(212,175,55,0.15)" }}
             />
             Peak Load Band
           </div>
@@ -43,8 +43,8 @@ export function TeamPerformanceChart() {
         >
           <defs>
             <linearGradient id="lgLime" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#C6FF00" stopOpacity="0.12" />
-              <stop offset="100%" stopColor="#C6FF00" stopOpacity="0" />
+              <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.12" />
+              <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
             </linearGradient>
             <linearGradient id="lgBlue" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#4DA3FF" stopOpacity="0.08" />
@@ -63,8 +63,8 @@ export function TeamPerformanceChart() {
           <line x1="0" y1="144" x2="900" y2="144" stroke="#2A2F37" strokeWidth="0.5" />
 
           {/* Zone 4 band */}
-          <rect x="0" y="54" width="900" height="36" fill="rgba(198,255,0,0.04)" />
-          <text x="4" y="48" fill="rgba(198,255,0,0.4)" fontSize="9" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>
+          <rect x="0" y="54" width="900" height="36" fill="rgba(212,175,55,0.04)" />
+          <text x="4" y="48" fill="rgba(212,175,55,0.4)" fontSize="9" style={{ fontFamily: "var(--font-jetbrains, 'JetBrains Mono', ui-monospace, monospace)" }}>
             PEAK LOAD ZONE
           </text>
 
@@ -80,7 +80,7 @@ export function TeamPerformanceChart() {
           <path
             className="chart-line"
             d="M0,90 C80,85 160,60 250,50 S400,35 480,42 S620,28 720,20 S840,32 900,38"
-            stroke="#C6FF00"
+            stroke="#D4AF37"
             strokeDasharray="1000"
             strokeDashoffset="0"
           />
@@ -111,7 +111,7 @@ export function TeamPerformanceChart() {
 
           {/* Data point markers */}
           <circle cx="650" cy="30" r="3" fill="#4DA3FF" opacity="0.8" />
-          <circle cx="720" cy="20" r="3" fill="#C6FF00" opacity="0.9" />
+          <circle cx="720" cy="20" r="3" fill="#D4AF37" opacity="0.9" />
           <circle cx="680" cy="78" r="3" fill="#00FF85" opacity="0.8" />
         </svg>
       </div>

@@ -20,7 +20,7 @@ function TrendArrow({ direction }: { direction: "up" | "down" | "neutral" }) {
 
 export function KpiCard({ data }: { data: KpiData }) {
   return (
-    <div className="bg-bg-card border border-border rounded-lg p-5 relative overflow-hidden transition-all duration-200 hover:border-[rgba(198,255,0,0.25)] hover:shadow-[0_0_0_1px_rgba(198,255,0,0.06),0_4px_24px_rgba(0,0,0,0.4)] hover:-translate-y-px">
+    <div className="bg-bg-card border border-border rounded-lg p-5 relative overflow-hidden transition-all duration-200 gold-card-glow hover:border-[rgba(212,175,55,0.25)] hover:shadow-[0_0_0_1px_rgba(212,175,55,0.06),0_4px_24px_rgba(0,0,0,0.4)] hover:-translate-y-px">
       <div className="text-[11px] uppercase tracking-wider text-text-secondary font-semibold mb-3">
         {data.label}
       </div>
@@ -29,8 +29,8 @@ export function KpiCard({ data }: { data: KpiData }) {
         className="text-[28px] font-bold font-mono tracking-tighter mb-2 flex items-baseline gap-2"
         style={data.color ? { color: data.color } : undefined}
       >
-        {data.color === "#C6FF00" ? (
-          <span className="glow-lime">{data.value}</span>
+        {data.color === "#D4AF37" ? (
+          <span className="glow-gold">{data.value}</span>
         ) : (
           <span>{data.value}</span>
         )}
@@ -53,11 +53,11 @@ export function KpiCard({ data }: { data: KpiData }) {
           <div className="flex items-center gap-2 my-1.5 mb-1">
             <div className="flex-1 h-1 bg-border rounded-sm overflow-hidden">
               <div
-                className="h-full bg-accent-lime rounded-sm"
+                className="h-full bg-accent-gold rounded-sm"
                 style={{ width: `${data.progress.value}%` }}
               />
             </div>
-            <span className="text-[11px] text-accent-lime font-mono">{data.progress.value}%</span>
+            <span className="text-[11px] text-accent-gold font-mono">{data.progress.value}%</span>
           </div>
           <div className="text-[11px] text-text-tertiary mb-1">{data.progress.label}</div>
         </>
@@ -85,7 +85,7 @@ export function KpiCard({ data }: { data: KpiData }) {
             <div
               key={i}
               className={`flex-1 rounded-[1px] ${
-                i === data.sparkline!.length - 2 ? "bg-accent-lime opacity-100" : "bg-text-secondary"
+                i === data.sparkline!.length - 2 ? "bg-accent-gold opacity-100" : "bg-text-secondary"
               }`}
               style={{ height: `${h}%` }}
             />
@@ -105,7 +105,7 @@ export function KpiCard({ data }: { data: KpiData }) {
               className="w-3 rounded-[1px]"
               style={{
                 height: `${h}%`,
-                background: i === 3 ? "#C6FF00" : `rgba(198,255,0,${0.2 + i * 0.15})`,
+                background: i === 3 ? "#D4AF37" : `rgba(212,175,55,${0.2 + i * 0.15})`,
               }}
             />
           ))}

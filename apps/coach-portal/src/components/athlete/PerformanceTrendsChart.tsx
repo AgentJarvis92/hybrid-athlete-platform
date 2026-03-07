@@ -8,7 +8,7 @@ export function PerformanceTrendsChart() {
         <span className="text-sm font-semibold text-text-primary">Performance Trends · 14 Days</span>
         <div className="flex gap-4">
           {[
-            { label: "Load", color: "#C6FF00" },
+            { label: "Load", color: "#D4AF37" },
             { label: "Recovery", color: "#4DA3FF" },
             { label: "Nutrition", color: "#00FF85" },
           ].map((l) => (
@@ -29,12 +29,12 @@ export function PerformanceTrendsChart() {
           <line x1="0" y1="180" x2="1000" y2="180" stroke="#2A2F37" strokeWidth="1" />
 
           {/* Load zone band */}
-          <rect x="0" y="80" width="1000" height="40" fill="rgba(198,255,0,0.03)" />
+          <rect x="0" y="80" width="1000" height="40" fill="rgba(212,175,55,0.03)" />
 
           <defs>
             <linearGradient id="atlGradLime" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#C6FF00" stopOpacity="0.1" />
-              <stop offset="1" stopColor="#C6FF00" stopOpacity="0" />
+              <stop offset="0" stopColor="#D4AF37" stopOpacity="0.1" />
+              <stop offset="1" stopColor="#D4AF37" stopOpacity="0" />
             </linearGradient>
             <linearGradient id="atlGradBlue" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stopColor="#4DA3FF" stopOpacity="0.1" />
@@ -49,7 +49,7 @@ export function PerformanceTrendsChart() {
           />
           <path
             d="M0,140 C100,135 200,145 300,130 S500,110 600,80 S800,50 900,40 L1000,30"
-            fill="none" stroke="#C6FF00" strokeWidth="2"
+            fill="none" stroke="#D4AF37" strokeWidth="2"
           />
 
           {/* Recovery line + fill (dashed) */}

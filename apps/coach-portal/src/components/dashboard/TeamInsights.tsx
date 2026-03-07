@@ -45,7 +45,7 @@ export function TeamInsights() {
               style={{
                 width: `${insight.barPercent}%`,
                 background: insight.label === "Nutrition Trend"
-                  ? "linear-gradient(90deg, #00FF85, #C6FF00)"
+                  ? "linear-gradient(90deg, #00FF85, #D4AF37)"
                   : insight.color,
               }}
             />

@@ -95,13 +95,13 @@ export function Sidebar() {
         <div className="relative w-7 h-7">
           <svg viewBox="0 0 28 28" width="28" height="28">
             <circle cx="14" cy="14" r="12" fill="none" stroke="#2A2F37" strokeWidth="1.5" />
-            <path d="M14 2 A12 12 0 0 1 25.6 19" fill="none" stroke="#C6FF00" strokeWidth="2.5" strokeLinecap="round" />
-            <path d="M14 2 A12 12 0 0 0 2.4 19" fill="none" stroke="rgba(198,255,0,0.25)" strokeWidth="1.5" strokeLinecap="round" />
-            <circle cx="14" cy="14" r="3" fill="#C6FF00" />
-            <line x1="14" y1="14" x2="22" y2="8" stroke="#C6FF00" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M14 2 A12 12 0 0 1 25.6 19" fill="none" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round" />
+            <path d="M14 2 A12 12 0 0 0 2.4 19" fill="none" stroke="rgba(212,175,55,0.25)" strokeWidth="1.5" strokeLinecap="round" />
+            <circle cx="14" cy="14" r="3" fill="#D4AF37" />
+            <line x1="14" y1="14" x2="22" y2="8" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
         </div>
-        <span className="font-bold tracking-tight text-base">Thresh</span>
+        <span className="font-bold tracking-tight text-base liquid-gold-text">Thresh</span>
       </div>
 
       {/* Nav Groups */}
@@ -119,12 +119,12 @@ export function Sidebar() {
                 className={cn(
                   "flex items-center gap-3 px-3 py-2 text-text-secondary rounded-md transition-all duration-200 font-medium relative",
                   isActive
-                    ? "bg-[rgba(198,255,0,0.05)] text-text-primary"
+                    ? "bg-[rgba(212,175,55,0.05)] text-text-primary"
                     : "hover:bg-bg-hover hover:text-text-primary"
                 )}
               >
                 {isActive && (
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] bg-accent-lime rounded-r-sm shadow-[0_0_8px_rgba(198,255,0,0.4)]" />
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] bg-accent-gold rounded-r-sm shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
                 )}
                 {icon}
                 {label}
