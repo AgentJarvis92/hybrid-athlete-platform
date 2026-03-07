@@ -8,7 +8,17 @@ export default function DashboardLayout({
   return (
     <>
       <div className="topo-bg" />
-      <div className="ambient-bg" />
+      {/* Ambient light blobs — required for Liquid Glass blur to be visible */}
+      <div style={{
+        position: "fixed", top: 0, left: 0, width: "100%", height: "100%",
+        pointerEvents: "none", zIndex: 0,
+        background: [
+          "radial-gradient(ellipse 800px 600px at 80% -5%, rgba(212,175,55,0.22) 0%, transparent 60%)",
+          "radial-gradient(ellipse 600px 700px at -5% 80%, rgba(77,163,255,0.14) 0%, transparent 60%)",
+          "radial-gradient(ellipse 500px 400px at 95% 90%, rgba(34,197,94,0.1) 0%, transparent 60%)",
+          "radial-gradient(ellipse 700px 500px at 40% 40%, rgba(155,125,32,0.07) 0%, transparent 60%)",
+        ].join(", "),
+      }} />
       <div className="flex w-full h-screen z-[1] relative">
         <Sidebar />
         <main className="flex-1 flex flex-col overflow-hidden relative">
