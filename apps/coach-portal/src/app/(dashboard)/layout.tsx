@@ -8,6 +8,7 @@ export default function DashboardLayout({
   return (
     <>
       <div className="topo-bg" />
+      <div className="ambient-bg" />
       <div className="flex w-full h-screen z-[1] relative">
         <Sidebar />
         <main className="flex-1 flex flex-col overflow-hidden relative">
