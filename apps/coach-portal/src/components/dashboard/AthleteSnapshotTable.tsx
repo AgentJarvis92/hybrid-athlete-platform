@@ -57,9 +57,7 @@ export function AthleteSnapshotTable() {
     <div className="glass-card rounded-2xl overflow-hidden flex flex-col">
       <div className="px-5 py-4 border-b border-border flex justify-between items-center">
         <div className="text-sm font-semibold text-text-primary">Athlete Snapshot</div>
-        <button className="px-3 py-1 border border-border rounded-full text-text-secondary text-xs cursor-pointer transition-all duration-200 hover:border-text-primary hover:text-text-primary">
-          Filter
-        </button>
+        <button className="btn-pill-ghost text-xs">Filter</button>
       </div>
       <table className="w-full border-collapse text-[13px]">
         <thead>
@@ -138,7 +136,7 @@ export function AthleteSnapshotTable() {
               <td className="px-5 py-3 border-b border-border">
                 <Link
                   href={`/athletes/${athlete.id === "SL" ? "sl" : athlete.id.toLowerCase()}`}
-                  className="inline-block px-3 py-1 border border-border rounded-full text-text-secondary text-xs transition-all duration-200 hover:border-text-primary hover:text-text-primary"
+                  className="inline-block btn-pill-ghost text-xs"
                 >
                   View
                 </Link>

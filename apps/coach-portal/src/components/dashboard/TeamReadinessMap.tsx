@@ -57,10 +57,9 @@ function AthleteDot({ athlete }: { athlete: ReadinessAthlete }) {
 
       {hovered && (
         <div
-          className="absolute top-[calc(100%+6px)] left-1/2 -translate-x-1/2 bg-bg-elevated rounded-md py-3 px-3.5 text-[11px] pointer-events-none z-20 min-w-[160px] whitespace-nowrap"
+          className="absolute top-[calc(100%+6px)] left-1/2 -translate-x-1/2 glass-card rounded-xl py-3 px-3.5 text-[11px] pointer-events-none z-20 min-w-[160px] whitespace-nowrap"
           style={{
-            border: "1px solid rgba(198,255,0,0.2)",
-            boxShadow: "0 12px 32px rgba(0,0,0,0.5)",
+            boxShadow: "0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,175,55,0.15)",
           }}
         >
           <div className="font-bold text-text-primary text-[13px] border-b border-border pb-1.5 mb-2">
@@ -116,8 +115,8 @@ export function TeamReadinessMap() {
         {/* Scatter Plot */}
         <div className="overflow-x-auto">
         <div
-          className="relative h-[320px] border border-border rounded-md overflow-visible"
-          style={{ background: "#0B0D10", minWidth: "500px" }}
+          className="relative h-[320px] border border-border rounded-2xl overflow-visible"
+          style={{ background: "rgba(8,10,13,0.95)", minWidth: "500px" }}
         >
           {/* SVG background */}
           <svg

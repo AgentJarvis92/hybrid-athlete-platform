@@ -63,7 +63,7 @@ function AlertCard({ alert }: { alert: AttentionAlert }) {
       </div>
       <div className="flex flex-col items-end gap-1.5">
         <span className="text-[10px] text-text-tertiary font-mono whitespace-nowrap">{alert.time}</span>
-        <button className="text-[10px] px-2.5 py-1 border border-border rounded-full text-text-secondary bg-transparent cursor-pointer transition-all duration-200 hover:border-accent-gold hover:text-accent-gold font-medium whitespace-nowrap">
+        <button className="btn-pill-ghost text-[10px] whitespace-nowrap">
           {alert.action}
         </button>
       </div>

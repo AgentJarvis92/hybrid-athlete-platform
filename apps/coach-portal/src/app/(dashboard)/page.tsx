@@ -19,16 +19,10 @@ export default function DashboardPage() {
         </h1>
         <div className="flex items-center gap-3">
           {/* Pillar tabs */}
-          <div className="flex gap-1 bg-bg-elevated border border-border rounded-md p-[3px]">
-            <div className="px-3.5 py-1 rounded text-[12px] font-semibold tracking-wide bg-bg-card text-accent-gold cursor-pointer">
-              Training
-            </div>
-            <div className="px-3.5 py-1 rounded text-[12px] font-semibold tracking-wide text-text-tertiary cursor-pointer">
-              Recovery
-            </div>
-            <div className="px-3.5 py-1 rounded text-[12px] font-semibold tracking-wide text-text-tertiary cursor-pointer">
-              Nutrition
-            </div>
+          <div className="pill-switcher">
+            <div className="pill-tab-active">Training</div>
+            <div className="pill-tab-inactive">Recovery</div>
+            <div className="pill-tab-inactive">Nutrition</div>
           </div>
           {/* Live Clock */}
           <LiveClock />

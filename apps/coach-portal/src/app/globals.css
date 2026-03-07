@@ -9,7 +9,7 @@
   }
 }
 
-/* Topo background pattern */
+/* ─── Topo Background ─── */
 .topo-bg {
   position: fixed;
   top: 0;
@@ -22,7 +22,7 @@
   opacity: 0.6;
 }
 
-/* Glow effect on lime numbers */
+/* ─── Text Effects ─── */
 .glow-lime {
   text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
 }
@@ -45,16 +45,187 @@
   border-image-slice: 1;
 }
 
+/* ─── Glass Surfaces ─── */
+.glass-sidebar {
+  background: rgba(11, 13, 16, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid rgba(212, 175, 55, 0.12);
+  box-shadow: 4px 0 40px rgba(0, 0, 0, 0.4);
+}
+
+.glass-card {
+  background: rgba(22, 26, 32, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(42, 47, 55, 0.9);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(212, 175, 55, 0.22);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(212, 175, 55, 0.08);
+}
+
+.glass-card-gold {
+  background: rgba(20, 24, 30, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(212, 175, 55, 0.05) inset;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.glass-card-gold:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 0 28px rgba(212, 175, 55, 0.12), 0 0 0 1px rgba(212, 175, 55, 0.1) inset;
+  transform: translateY(-1px);
+}
+
+.glass-panel {
+  background: rgba(18, 22, 28, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(42, 47, 55, 0.7);
+  transition: border-color 0.2s ease;
+}
+
+.glass-panel:hover {
+  border-color: rgba(212, 175, 55, 0.18);
+}
+
+.glass-header {
+  background: rgba(11, 13, 16, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(42, 47, 55, 0.8);
+}
+
+/* ─── Gold Card Glow (legacy + enhanced) ─── */
 .gold-card-glow {
-  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.15), 0 4px 24px rgba(212, 175, 55, 0.08);
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.15), 0 4px 24px rgba(212, 175, 55, 0.06);
 }
-
 .gold-card-glow:hover {
-  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.3), 0 4px 32px rgba(212, 175, 55, 0.15);
-  transition: box-shadow 0.3s ease;
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.3), 0 6px 32px rgba(212, 175, 55, 0.14);
+  transition: box-shadow 0.25s ease;
 }
 
-/* Chart line animation */
+/* ─── Nav Item States ─── */
+.nav-item-active {
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.18) 0%, rgba(245, 208, 107, 0.08) 100%);
+  box-shadow:
+    0 0 0 1.5px rgba(212, 175, 55, 0.55),
+    0 0 24px rgba(212, 175, 55, 0.22),
+    0 0 8px rgba(212, 175, 55, 0.12) inset,
+    0 2px 10px rgba(0, 0, 0, 0.4);
+  color: #F5D06B;
+}
+
+.nav-item-inactive {
+  border-radius: 9999px;
+  color: #8A93A0;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-item-inactive:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #F5F7FA;
+}
+
+/* ─── Pill Tab Switcher ─── */
+.pill-switcher {
+  background: rgba(22, 26, 32, 0.8);
+  border: 1px solid rgba(42, 47, 55, 0.9);
+  border-radius: 9999px;
+  padding: 3px;
+  display: flex;
+  gap: 2px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.pill-tab-active {
+  border-radius: 9999px;
+  padding: 5px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(245, 208, 107, 0.12));
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.5), 0 0 16px rgba(212, 175, 55, 0.18), 0 2px 6px rgba(0, 0, 0, 0.3);
+  color: #F5D06B;
+  cursor: pointer;
+}
+
+.pill-tab-inactive {
+  border-radius: 9999px;
+  padding: 5px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #5E6573;
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.pill-tab-inactive:hover {
+  color: #8A93A0;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ─── Pill Buttons ─── */
+.btn-pill-ghost {
+  border-radius: 9999px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  background: transparent;
+  border: 1px solid rgba(42, 47, 55, 0.9);
+  color: #8A93A0;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.btn-pill-ghost:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  color: #F5D06B;
+  background: rgba(212, 175, 55, 0.05);
+}
+
+.btn-pill-gold {
+  border-radius: 9999px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  color: #F5D06B;
+  cursor: pointer;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-pill-gold:hover {
+  background: rgba(212, 175, 55, 0.2);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.22);
+}
+
+/* ─── Pill Search Input ─── */
+.search-pill {
+  border-radius: 9999px;
+  background: rgba(22, 26, 32, 0.8);
+  border: 1px solid rgba(42, 47, 55, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.2s ease, width 0.3s ease, box-shadow 0.2s ease;
+}
+
+.search-pill:focus {
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.08);
+  outline: none;
+}
+
+/* ─── Chart line animation ─── */
 .chart-line {
   fill: none;
   stroke-width: 2;
@@ -64,19 +235,19 @@
   animation: drawLine 1.2s ease forwards;
 }
 
-/* Scrollbar */
+/* ─── Scrollbar ─── */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B0D10;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2A2F37;
-  border-radius: 4px;
+  background: rgba(42, 47, 55, 0.8);
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #5E6573;
+  background: rgba(94, 101, 115, 0.8);
 }
 
 /* Glass-morphism utilities */
