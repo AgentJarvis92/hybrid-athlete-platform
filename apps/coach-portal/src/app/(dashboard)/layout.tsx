@@ -25,7 +25,7 @@ export default function DashboardLayout({
         <main className="flex-1 flex flex-col overflow-hidden relative">
           {/* Top Nav */}
           <header className="h-16 flex items-center justify-between px-4 md:px-8 glass-header z-10">
-            <div className="text-base font-semibold flex items-center gap-3">
+            <div className="text-base font-semibold flex items-center gap-3 pl-10 md:pl-0">
               <span className="text-text-tertiary">Team</span>
               <span className="text-border">/</span>
               <span>Dashboard</span>

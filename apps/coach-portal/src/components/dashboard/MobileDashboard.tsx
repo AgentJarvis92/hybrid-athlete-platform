@@ -42,15 +42,15 @@ export function MobileDashboard() {
       </div>
 
       {/* Status strip — horizontal scroll */}
-      <div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-none">
+      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
         {ATHLETE_STATES.map(({ label, count, color }) => (
           <div
             key={label}
-            className="flex-none flex flex-col items-center gap-1 glass-panel rounded-xl px-4 py-3 min-w-[80px]"
+            className="flex-none flex flex-col items-center gap-1 glass-panel rounded-xl px-3 py-2.5 min-w-[68px]"
             style={{ borderTop: `2px solid ${color}` }}
           >
-            <span className="text-[20px] font-bold font-mono" style={{ color }}>{count}</span>
-            <span className="text-[9px] font-bold uppercase tracking-widest text-text-tertiary whitespace-nowrap">{label}</span>
+            <span className="text-[18px] font-bold font-mono" style={{ color }}>{count}</span>
+            <span className="text-[9px] font-bold uppercase tracking-wide text-text-tertiary whitespace-nowrap">{label}</span>
           </div>
         ))}
       </div>

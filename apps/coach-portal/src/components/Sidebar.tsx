@@ -177,8 +177,8 @@ export function Sidebar() {
       {/* Mobile drawer */}
       <aside
         className={cn(
-          "md:hidden fixed top-0 left-0 h-full w-[240px] glass-sidebar flex flex-col p-4 px-3 z-40 transition-transform duration-300",
-          open ? "translate-x-0" : "-translate-x-full"
+          "md:hidden fixed top-0 left-0 h-full w-[240px] glass-sidebar flex flex-col p-4 px-3 z-40 transition-all duration-300",
+          open ? "translate-x-0 opacity-100 visible" : "-translate-x-full opacity-0 invisible"
         )}
       >
         {sidebarContent}
