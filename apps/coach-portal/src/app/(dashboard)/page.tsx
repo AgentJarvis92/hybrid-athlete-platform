@@ -8,52 +8,48 @@ import { ProgramDistribution } from "@/components/dashboard/ProgramDistribution"
 import { FuelingSignals } from "@/components/dashboard/FuelingSignals";
 import { AthleteSnapshotTable } from "@/components/dashboard/AthleteSnapshotTable";
 import { LivePerformanceFeed } from "@/components/dashboard/LivePerformanceFeed";
+import { MobileDashboard } from "@/components/dashboard/MobileDashboard";
 
 export default function DashboardPage() {
   return (
     <>
-      {/* Section header */}
-      <div className="flex justify-between items-end">
-        <h1 className="text-[32px] font-bold tracking-[-0.03em] text-text-primary liquid-gold-text">
-          Performance Overview
-        </h1>
-        <div className="flex items-center gap-3">
-          {/* Pillar tabs */}
-          <div className="pill-switcher">
-            <div className="pill-tab-active">Training</div>
-            <div className="pill-tab-inactive">Recovery</div>
-            <div className="pill-tab-inactive">Nutrition</div>
+      {/* ── Mobile view ── */}
+      <div className="md:hidden">
+        <MobileDashboard />
+      </div>
+
+      {/* ── Desktop view ── */}
+      <div className="hidden md:contents">
+        {/* Section header */}
+        <div className="flex justify-between items-end">
+          <h1 className="text-[32px] font-bold tracking-[-0.03em] text-text-primary liquid-gold-text">
+            Performance Overview
+          </h1>
+          <div className="flex items-center gap-3">
+            <div className="pill-switcher">
+              <div className="pill-tab-active">Training</div>
+              <div className="pill-tab-inactive">Recovery</div>
+              <div className="pill-tab-inactive">Nutrition</div>
+            </div>
+            <LiveClock />
           </div>
-          {/* Live Clock */}
-          <LiveClock />
         </div>
-      </div>
 
-      {/* Team State Strip */}
-      <AthleteStateStrip />
+        <AthleteStateStrip />
+        <KpiCards />
+        <TeamPerformanceChart />
+        <TeamReadinessMap />
+        <TeamInsights />
 
-      {/* KPI Grid */}
-      <KpiCards />
+        <div className="grid grid-cols-2 gap-5">
+          <ProgramDistribution />
+          <FuelingSignals />
+        </div>
 
-      {/* Hero Chart */}
-      <TeamPerformanceChart />
-
-      {/* Readiness Map + Attention Queue */}
-      <TeamReadinessMap />
-
-      {/* Team Insights */}
-      <TeamInsights />
-
-      {/* Program Distribution + Fueling Signals */}
-      <div className="grid grid-cols-2 gap-5">
-        <ProgramDistribution />
-        <FuelingSignals />
-      </div>
-
-      {/* Athlete Snapshot + Live Feed */}
-      <div className="grid gap-5" style={{ gridTemplateColumns: "2fr 1fr" }}>
-        <AthleteSnapshotTable />
-        <LivePerformanceFeed />
+        <div className="grid gap-5" style={{ gridTemplateColumns: "2fr 1fr" }}>
+          <AthleteSnapshotTable />
+          <LivePerformanceFeed />
+        </div>
       </div>
     </>
   );

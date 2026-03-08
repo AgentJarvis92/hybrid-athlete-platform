@@ -1,4 +1,5 @@
 import { Sidebar } from "@/components/Sidebar";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 
 export default function DashboardLayout({
   children,
@@ -51,11 +52,12 @@ export default function DashboardLayout({
             </div>
           </header>
           {/* Workspace */}
-          <div className="flex-1 overflow-y-auto p-4 md:p-8 md:px-10 flex flex-col gap-7" style={{ minWidth: "320px" }}>
+          <div className="flex-1 overflow-y-auto p-4 md:p-8 md:px-10 flex flex-col gap-7 pb-20 md:pb-0" style={{ minWidth: "320px" }}>
             {children}
           </div>
         </main>
       </div>
+      <MobileBottomNav />
     </>
   );
 }
