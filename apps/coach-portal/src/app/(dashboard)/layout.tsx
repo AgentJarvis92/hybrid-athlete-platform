@@ -23,7 +23,7 @@ export default function DashboardLayout({
         <Sidebar />
         <main className="flex-1 flex flex-col overflow-hidden relative">
           {/* Top Nav */}
-          <header className="h-16 flex items-center justify-between px-8 glass-header z-10">
+          <header className="h-16 flex items-center justify-between px-4 md:px-8 glass-header z-10">
             <div className="text-base font-semibold flex items-center gap-3">
               <span className="text-text-tertiary">Team</span>
               <span className="text-border">/</span>
@@ -51,7 +51,7 @@ export default function DashboardLayout({
             </div>
           </header>
           {/* Workspace */}
-          <div className="flex-1 overflow-y-auto p-8 px-10 flex flex-col gap-7" style={{ minWidth: "320px" }}>
+          <div className="flex-1 overflow-y-auto p-4 md:p-8 md:px-10 flex flex-col gap-7" style={{ minWidth: "320px" }}>
             {children}
           </div>
         </main>

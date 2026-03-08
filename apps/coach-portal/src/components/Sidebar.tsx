@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const NAV_GROUPS = [
@@ -87,9 +88,10 @@ const NAV_GROUPS = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
-  return (
-    <aside className="w-[240px] glass-sidebar flex flex-col p-4 px-3 shrink-0 z-20">
+  const sidebarContent = (
+    <>
       {/* Brand */}
       <div className="flex items-center gap-3 px-3 pb-6">
         <div className="relative w-7 h-7">
@@ -116,6 +118,7 @@ export function Sidebar() {
               <Link
                 key={href}
                 href={href}
+                onClick={() => setOpen(false)}
                 className={cn(
                   "flex items-center gap-3 px-3 py-2 font-medium transition-all duration-200",
                   isActive ? "nav-item-active" : "nav-item-inactive"
@@ -141,6 +144,50 @@ export function Sidebar() {
           </div>
         </div>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile hamburger button */}
+      <button
+        className="md:hidden fixed top-4 left-4 z-50 w-9 h-9 flex items-center justify-center rounded-lg glass-sidebar border border-border"
+        onClick={() => setOpen(!open)}
+        aria-label="Toggle menu"
+      >
+        {open ? (
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        ) : (
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        )}
+      </button>
+
+      {/* Mobile overlay */}
+      {open && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/60 z-30"
+          onClick={() => setOpen(false)}
+        />
+      )}
+
+      {/* Mobile drawer */}
+      <aside
+        className={cn(
+          "md:hidden fixed top-0 left-0 h-full w-[240px] glass-sidebar flex flex-col p-4 px-3 z-40 transition-transform duration-300",
+          open ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        {sidebarContent}
+      </aside>
+
+      {/* Desktop sidebar — always visible on md+ */}
+      <aside className="hidden md:flex w-[240px] glass-sidebar flex-col p-4 px-3 shrink-0 z-20">
+        {sidebarContent}
+      </aside>
+    </>
   );
 }
